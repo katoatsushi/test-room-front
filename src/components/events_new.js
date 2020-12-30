@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { postEvent } from '../actions'
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button' 
+
 
 class EventsNew extends Component {
     constructor(props) {
@@ -12,12 +15,17 @@ class EventsNew extends Component {
 
     renderField(field) {
         const{input, label, type, meta: {touched, error}} = field
+        console.log(field)
         return (
-        <div>
-            <input {...input} placeholder={label} type={type} />
-             {/* touched は入力フォームをクリックしたら */}
-            {touched && error && <span>{error}</span>}
-        </div>
+            <TextField 
+                placeholder={label}
+                size={'medium'}
+                type={type}
+                error={touched && error}
+                {...input}
+                fullWidth={true}
+                // errorText={touched && error}
+            />
         )
     }
 
@@ -34,10 +42,8 @@ class EventsNew extends Component {
                 <form onSubmit={handleSubmit(this.onSubmit)}>
                     <div><Field label="Title" name="title" type="text" component={this.renderField}/></div>
                     <div><Field label="Body" name="body" type="text" component={this.renderField}/></div>
-                    <div>
-                        <input type="submit" value="Submit" disabled={pristine || submitting || invalid} />
-                        <Link to="/" >Cancel</Link>
-                    </div>
+                    <Button variant="contained" size='large' color="secondary" type="submit" disabled={pristine || submitting || invalid}>新規追加</Button>
+                    <Button variant="contained" size='large' color="primary" href="/">キャンセル</Button>
                 </form>
             </React.Fragment>
         )
