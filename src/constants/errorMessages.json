@@ -1,0 +1,24 @@
+{
+    "email": {
+      "text": "メールアドレス",
+      "maxLength": 254
+    },
+    "name": { "text": "ネーム", "maxLength": 254, "minLength": 4 },
+    "password": { "text": "パスワード", "maxLength": 254, "minLength": 6 },
+    "password_confirmation": {
+      "text": "パスワード確認",
+      "maxLength": 254,
+      "minLength": 6
+    },
+    "message": { "text": "お問い合わせ内容", "maxLength": 1500 },
+    "introduction": {
+      "text": "自己紹介文",
+      "maxLength": 160
+    },
+    "is": "は",
+    "validate_password_confirmation": "パスワードに誤りがあります",
+    "required": "の入力は必須です",
+    "maxLength": "文字以下で入力してください",
+    "minLength": "文字以上で入力してください"
+  }
+  

@@ -11,3 +11,378 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.date_select {
+  width: 40%;
+}
+
+.select_style {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.user_box {
+  margin: 10px;
+  padding: 10px;
+  color: black;
+  background-color: black;
+}
+
+.samplebtn {
+  margin-top: auto;
+}
+
+.insideBtn {
+  display: block;
+}
+
+.customer_my_page {
+  /* background-color: #C2EEFF; */
+  border-bottom: 0.5px solid #555555;
+}
+.session_log_all {
+  text-align: 'center';
+  padding-bottom: 10px;
+  padding-top: 0px;
+}
+.session_log_all_text {
+  text-align: center;
+  margin: 0 auto;
+  background-color: #4DA7F0;
+  width: 30%;
+  color: white; 
+  font-size: 1.2em;
+  font-weight: 700; 
+  border-radius: 10px;
+  border: 0.5px solid #555555;
+}
+
+.border {
+  border: 0.5px solid #555555;
+}
+
+.border_light {
+  border: 0.5px solid #AAAAAA;
+}
+
+.apos_paper {
+  margin: 5px;
+  padding: 10px 15px;
+  width: 100%;
+}
+.month_split{
+  /* text-align: center; */
+  color: #555555;
+  margin-left: 50px;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+.records_paper {
+  /* margin: 5px; */
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  width: 90%;
+}
+.inline_block {
+  display: inline-block;
+}
+
+.outer{
+  position: relative;
+}
+.inner{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 80%;
+  height: 3.2rem;
+}
+.footer_logo{
+  color: 'black';
+  font-size: '2.5em';
+}
+body {
+  background-color: #E7F1F7;
+}
+
+.calendar {
+  width: 90%;
+  text-align: center;
+  margin-top:0;
+  margin-right:auto;
+  margin-bottom:0;
+  margin-left:auto;
+}
+
+.calendar_page_button {
+  z-index: 1;
+  width: 40%;
+  position: fixed;
+  bottom: 20%;
+  right: 10%;
+}
+.chose_time {
+  overflow: auto; 
+  width: 90%;
+  height: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5em;
+  background-color: #ffffff;
+  border: 1px #c0c0c0 solid;
+  color: #000000;
+}
+.chose_jobs {
+  overflow: auto; 
+  width: 100%;
+  height: 350px;
+  padding-left: 2%;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  margin-bottom: 1.5em;
+  background-color: #f2f9fc;
+  color: #000000;
+}
+hr{
+  color: #959393;
+}
+.appointment_confirm {
+  width: '90%';
+  margin-left: auto;
+  margin-right: auto;
+}
+.button_primary{
+  background-color: #4DA7F0;
+  color: white;
+  font-weight: 700;
+}
+.button_cancel{
+  background-color: #F1F1F1;
+  color: #959393;
+  font-weight: 700;
+}
+.apo_success{
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+  border: 2px solid #005FFF;
+}
+
+.customer_info_tag {
+  font-size: 18px;
+  font-weight: 700;
+  color: #959393;
+  padding-bottom: 20px;
+  padding-top: 15px;
+}
+.customer_my_page_tag {
+  font-size: 15px;
+  color: #959393;
+  padding-bottom: 20px;
+  padding-top: 15px;
+}
+.customer_my_page_tag2 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #959393;
+  padding-bottom: 20px;
+  padding-top: 15px;
+}
+.box_center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.interests_tab {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: white;
+  color: #555555;
+  font-weight: 550;
+  text-align: center;
+  width: 20%;
+  margin: 2px 1%;
+  border-radius: 10px;
+} 
+
+/* checkboxの編集 */
+/* label {
+  margin-right: 5px; 
+}
+label input {
+  display: none;
+}
+label span {
+  color: #333; 
+  font-size: 14px;
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 5px 20px;
+}
+label input:checked + span {
+  color: #FFF;
+  background: #FBB;
+  border: 1px solid #FBB;
+} */
+
+.evaluation {
+  color: #555555;
+  background-color: white;
+  border: 20px solid;
+  text-align: center;
+}
+
+
+.paper_box {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.inner_date {
+	position: absolute;
+	bottom: 0;
+}
+
+.cell_box {
+  border: solid 1px silver;
+  width: auto;
+}
+
+.width_auto {
+  /* width: auto; */
+  width: 200px;
+  padding: 0;
+  margin: 0;
+}
+
+.trainer_box {
+  /* width: 90%;
+  margin: 20px;
+  padding: 10px; */
+  background-color: #EEEEEE;
+  border: 1px solid #888888;
+  /* border: 1px;
+  border-color: #888888; */
+}
+.karute_text {
+  font-size: 1.2em;
+  padding-top: 10px;
+  padding-left: 0px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  padding: 10
+}
+
+.box_2{
+  text-align: center;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #4DA7F0;
+  color: white;
+  font-weight: 500;
+  font-size: 10px;
+}
+
+.box_delete{
+  text-align: center;
+  border-radius: 5px;
+  background-color: red;
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+  margin-top: auto;
+  margin-bottom: auto;
+  /* width: 80%; */
+}
+
+
+.box_show{
+  text-align: center;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #808080;
+  color: #FFFFDD;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.button_submit{
+  text-align: center;
+  margin-right: 5px;
+  border-radius: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #4DA7F0;
+  color: white;
+  font-weight: 600;
+  font-size: 15px; 
+}
+.button_cancel{
+  text-align: center;
+  margin-right: 5px;
+  border-radius: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #9F9F9F;
+  color: white;
+  font-weight: 600;
+  font-size: 15px; 
+}
+
+.info_box{
+  border-radius: 5px;
+  background-color: #CCFFFF;
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid #3399FF;
+}
+.trainer_name_input_label{
+  font-weight: 700;
+  font-size: 18px; 
+  padding-left: 20px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  color: #959393;
+}
+
+.trainer_sign_up {
+  text-align: center;
+  margin-right: 5px;
+  border-radius: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #4DA7F0;
+  color: white;
+  font-weight: 600;
+  font-size: 16px; 
+}
