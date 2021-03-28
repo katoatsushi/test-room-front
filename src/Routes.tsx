@@ -37,7 +37,7 @@ import EditCustomerStatus from './components/admins/edit_customer_status'
 import AllCustomers from './components/admins/customer_all'
 import AdminMenues from './components/admins/admin_menues'
 import CreateAdminSchedule from './components/admins/create_admin_schedule'
-import ManageTrainerShift from './components/admins/trainer_shifts'
+import ManageTrainerShift from './components/admins/shifts/trainer_shifts'
 import EvaluationData from './components/customers/customer_evaluation_data';
 import TrainerMyPage from './components/trainers/my_page'
 import SessionRecordList from './components/trainers/customers_session_records'

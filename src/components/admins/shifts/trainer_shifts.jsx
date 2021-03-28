@@ -16,11 +16,26 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import MaskedTextFieldForTrainerShift from './masked_text_field_for_trainer_shift'
+import MaskedTextFieldForTrainerShift from '../masked_text_field_for_trainer_shift'
 import TextField from '@material-ui/core/TextField';
 import InputBase from '@material-ui/core/InputBase';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from '../../../slices/admin';
+import { useSelector, useDispatch } from 'react-redux';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import CreateTableCellEdit from './create_shifts'
+import ShiftTableCellEdit from './update_shifts.jsx'
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -39,36 +54,7 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-function DisabledTimeCell({checked, handleChange}){
-    const classes = useStyles();
-    return (<>
-        {/* <TableCell className="cell_box" style={{marginTop: 'auto', marginBottom: 'auto'}}> */}
-            <Checkbox
-                checked={checked}
-                onChange={handleChange}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-            />
-            <InputBase
-                id="time"
-                type="time"
-                disabled
-                className={classes.textField}
-                InputLabelProps={{ shrink: true, }}
-                inputProps={{ step: 300, }}
-                style={{display: 'inline-block', display: 'inline'}}
-            /><hr/>
-            <InputBase
-                id="time"
-                type="time"
-                disabled
-                className={classes.textField}
-                InputLabelProps={{ shrink: true, }}
-                inputProps={{ step: 300, }}
-                style={{display: 'inline-block', display: 'inline'}}
-            />
-        {/* </TableCell> */}
-    </>)
-}
+
 function TimeCell({checked, handleChange, start, finish, handleStartChange, handleFinishChange}){
     const classes = useStyles();
     return (<>
@@ -102,22 +88,32 @@ function TimeCell({checked, handleChange, start, finish, handleStartChange, hand
 
 function ShiftTableCellShow({data}){
     const classes = useStyles();
+
     function setDate(obj){
         const date = new Date(`${obj}`)
         var min = null
         var hour = null
         date.getMinutes()==0?  min = "00": min = String(date.getMinutes())
+        min.length == 1? min = "0" + min: min = min
         String(date.getHours()).length == 1? hour = "0" + String(date.getHours()): hour = String(date.getHours())
         const newDate = `${hour}:` + `${min}`
         return newDate
     }
+
     return(<>
-        <TableCell className="cell_box" style={{backgroundColor: '#CCFFFF', marginTop: 'auto', marginBottom: 'auto'}}>
+        <TableCell className="cell_box" style={{backgroundColor: '#CCFFFF', marginTop: 'auto', marginBottom: 'auto', paddingRight: 5, paddingLeft: 5}}>
+            {data.shifts?(<>
+                {data.shifts.store?(<>
+                    <span style={{color: 'grey', fontSize: 8}}>{data.shifts.store.store_name}店</span>
+                </>):(<>
+                    <span style={{color: 'red', fontSize: 8}}>店舗未選択</span>
+                </>)}
+            </>):(<></>)}
             <InputBase
                 id="time"
                 type="time"
                 disabled
-                value={setDate(data.shifts.[0].start)}
+                value={setDate(data.shifts.start)}
                 className={classes.textField}
                 InputLabelProps={{ shrink: true, }}
                 inputProps={{ step: 300, }}
@@ -127,7 +123,7 @@ function ShiftTableCellShow({data}){
                 id="time"
                 type="time"
                 disabled
-                value={setDate(data.shifts.[0].finish)}
+                value={setDate(data.shifts.finish)}
                 className={classes.textField}
                 InputLabelProps={{ shrink: true, }}
                 inputProps={{ step: 300, }}
@@ -137,132 +133,23 @@ function ShiftTableCellShow({data}){
     </>)
 }
 
-function CreateTableCellEdit({data, setSubmitNewData}){
-    const classes = useStyles();
-    
-    const [checked, setChecked] = React.useState(false);
-    const handleChange = (event) => {
-        console.log({data})
-        setChecked(event.target.checked);
-    };
-    const [start, setStart] = React.useState();
-    const [finish, setFinish] = React.useState(); 
-    function handleStartChange(e) {
-        console.log({data})
-        console.log({e})
-        console.log("aaa")
-        console.log(e.target.value)
-    }
-    function handleFinishChange(e) {
-        console.log({data})
-        console.log({e})
-        console.log("aaa")
-        console.log(e.target.value)
-    }
-    return(<>
-    {checked? (<>
-        <TableCell className="cell_box" style={{backgroundColor: '#FFDDFF', marginTop: 'auto', marginBottom: 'auto'}}>
-            <TimeCell checked={checked} handleChange={handleChange} start={start} finish={finish} 
-                    handleStartChange={handleStartChange} handleFinishChange={handleFinishChange} />
-        </TableCell>
-    </>):(<>
-        <TableCell className="cell_box" style={{marginTop: 'auto', marginBottom: 'auto'}}>
-            <DisabledTimeCell checked={checked} handleChange={handleChange} />
-        </TableCell>
-    </>)}
-    </>)
-}
-
-function ShiftTableCellEdit({data, setSubmitUpdateData, setDeleteData, submitUpdateData}){
-    const classes = useStyles();
-    const [checked, setChecked] = React.useState(true);
-    const [edit, setEdit] = React.useState(false);
-    const [start, setStart] = React.useState();
-    const [finish, setFinish] = React.useState(); 
-    useEffect(()=>{
-        setStart(setDate(data.shifts[0].start))
-        setFinish(setDate(data.shifts[0].finish))
-        // console.log(start)
-    },[]) 
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-        if (!checked){
-            // setDeleteData((prev)=> console.log(prev))
-            setStart(setDate(data.shifts[0].start))
-            setFinish(setDate(data.shifts[0].finish))
-            setEdit(false);
-        } else {
-            // setDeleteDataにdataが存在すれば削除
-        }
-    };
-
-    function handleStartChange(e) {
-        setStart(e.target.value)
-        setEdit(true);
-        // 型: shift_data: null, start: null, end: null
-        console.log({data})
-        console.log({submitUpdateData}) 
-        submitUpdateData.push({shift_data: data.shifts[0], start: start, end: finish});
-        console.log({submitUpdateData})
-        const index = submitUpdateData.findIndex(prev => prev.shift_data.id === data.shifts[0].id)
-        console.log(index)
-        // TODO:: submitUpdateDataのなかでdataとマッチするものがあれば、取り出し、statewを更新する
-        const ChangeData = submitUpdateData.filter((thisData, index) => {
-            if(thisData.shift_data.id == data.shifts[0].id){
-                console.log("ああああああ")
-            }
-            return thisData.shift_data.id == data.shifts[0].id;
-        });
-    }
-    function handleFinishChange(e) {
-        setFinish(e.target.value)
-        // setSubmitUpdateData((prev)=> console.log({prev}))
-        setEdit(true);
-    }
-
-    function setDate(obj){
-        const date = new Date(`${obj}`)
-        var min = null
-        var hour = null
-        date.getMinutes()==0?  min = "00": min = String(date.getMinutes())
-        String(date.getHours()).length == 1? hour = "0" + String(date.getHours()): hour = String(date.getHours())
-        const newDate = `${hour}:` + `${min}`
-        return newDate
-    }
-
-    return(<>
-        {checked? (<>{edit? (
-        <TableCell className="cell_box" style={{backgroundColor: '#f0aff0', marginTop: 'auto', marginBottom: 'auto'}}>
-            <TimeCell checked={checked} handleChange={handleChange} start={start} finish={finish} 
-                        handleStartChange={handleStartChange} handleFinishChange={handleFinishChange} />
-        </TableCell>
-        ):(
-            <TableCell className="cell_box" style={{backgroundColor: '#CCFFFF', marginTop: 'auto', marginBottom: 'auto'}}>
-                <TimeCell checked={checked} handleChange={handleChange} start={start} finish={finish} 
-                            handleStartChange={handleStartChange} handleFinishChange={handleFinishChange} />
-            </TableCell>
-        )}
-        </>): (
-            <TableCell className="cell_box" style={{backgroundColor: '#DDDDDD' ,marginTop: 'auto', marginBottom: 'auto'}}>
-                <DisabledTimeCell checked={checked} handleChange={handleChange} />
-            </TableCell>
-        )}
-    </>)
-}
-
 export default function ManageTrainerShift(){
     const classes = useStyles();
+    const currentAdmin = useSelector(selectCurrentAdmin);
+    const admin_headers = useSelector(selectAdminHeaders);
     const url = `http://localhost:3000/get_trainer_shifts`
     const [trainerShifts, setTrainerShifts] = useState([]);
+    const [submitData, setSubmitData] = useState([]);
+    const [stores, setsStores] = useState([]);
     const [days, setDays] = useState([]);
     const [checked, setChecked] = React.useState(false);
+    const [submitOpen, setSubmitOpen] = React.useState(false);
+    const [shiftEdit, setShiftEdit] = React.useState(false);
     const [edit, setEdit] = React.useState(false);
     const today = new Date()
     const next_month = today.getMonth() + 2
     const year = today.getFullYear();
-    const [ submitUpdateData, setSubmitUpdateData ] = React.useState([]);
-    const [ submitNewData, setSubmitNewData ] = React.useState([]);
-    const [ deleteData, setDeleteData ] = React.useState([{shift_data: null}]);
+
 
     const handleChange = (event) => {
         setChecked(event.target.checked);
@@ -270,25 +157,33 @@ export default function ManageTrainerShift(){
     function handleSubmitButtonChange(){
         setEdit(true);
     }
-    function handleSubmit(){
+    function handleSubmitButtonClose(){
         setEdit(false);
     }
+
+    useEffect(()=>{
+        console.log("シフトが変更されました")
+        console.log({submitData})
+        console.log({trainerShifts})
+    },[submitData, trainerShifts])
 
     useEffect(()=>{
         axios.get(url, {
         params: {
             year: year,
-            month: next_month
+            month: next_month,
+            company_id: currentAdmin.company_id
         }})
         .then(function (response) {
             setTrainerShifts(response.data.data)
             setDays(response.data.date_infos)
+            setSubmitData(response.data.submit_data)
+            setsStores(response.data.stores)
         })
         .catch(function (response) {
             console.log("error", {response})
         })
-
-    },[submitUpdateData])
+    },[])
 
     function setDate(obj){
         const date = new Date(`${obj}`)
@@ -299,6 +194,43 @@ export default function ManageTrainerShift(){
         const newDate = `${hour}:` + `${min}`
         return newDate
     }
+    function submitDialogOpen(){
+        setSubmitOpen(true)
+    }
+    function handleClose(){
+        setSubmitOpen(false)
+    }
+    function handleSubmit(){
+        const submit_url = `http://localhost:3000/update_trainer_shift`
+        console.log({submitData})
+        axios.put(submit_url, {
+            data: submitData
+        })
+        .then(function (response) {
+            console.log({response})
+            // axios.get(url, {
+            // params: {
+            //     year: year,
+            //     month: next_month,
+            //     company_id: currentAdmin.company_id
+            // }})
+            // .then(function (response) {
+            //     setTrainerShifts(response.data.data)
+            //     setDays(response.data.date_infos)
+            //     setSubmitData(response.data.submit_data)
+            //     setsStores(response.data.stores)
+            // })
+            // .catch(function (response) {
+            //     console.log("error", {response})
+            // })
+        })
+        .catch(function (response) {
+            console.log("error", {response})
+        })
+        // ダイアログを閉じる
+        setSubmitOpen(false)
+    }
+
     return(
         <>
         <TableContainer component={Paper}>
@@ -325,6 +257,7 @@ export default function ManageTrainerShift(){
                     </TableRow>
             </TableHead>
             <TableBody>
+            {trainerShifts?(<>
             {trainerShifts.map((row) => (
                 <TableRow key={row.name}>
                     <TableCell className="width_auto">
@@ -333,22 +266,32 @@ export default function ManageTrainerShift(){
                     
                     {row.data.map((r) => (
                         <>
-                            {r.shifts.length?(
+                            {/* {r.shifts.length?( */}
+                            {r.shifts?(
                                 <>
-                                {edit? (
-                                    <ShiftTableCellEdit data={r} submitUpdateData={submitUpdateData} setSubmitUpdateData={setSubmitUpdateData} setDeleteData={setDeleteData}/>
-                                ) : (
+                                {edit? (<>
+                                    {/* 編集用 */}
+                                    <ShiftTableCellEdit data={r} stores={stores} setSubmitData={setSubmitData} submitData={submitData} 
+                                        setTrainerShifts={setTrainerShifts} trainerShifts={trainerShifts}
+                                        setShiftEdit={setShiftEdit}
+                                    />
+                                </>) : (<>
+                                    {/* 閲覧用 */}
                                     <ShiftTableCellShow data={r} />
-                                )}
+                                </>)}
                                 </>
                             ):(<>
                             {edit? (
                                 <>
-                                    <CreateTableCellEdit data={r} setSubmitNewData={setSubmitNewData}/>
+                                    {/* 新規作成用 */}
+                                    <CreateTableCellEdit data={r} stores={stores} setSubmitData={setSubmitData} submitData={submitData} 
+                                        setTrainerShifts={setTrainerShifts} trainerShifts={trainerShifts}
+                                        setShiftEdit={setShiftEdit}
+                                    />
                                 </>
                             ):(
                                 <>
-                                <TableCell className="cell_box" style={{marginTop: 'auto', marginBottom: 'auto'}}>
+                                <TableCell className="cell_box" style={{marginTop: 'auto', marginBottom: 'auto', paddingRight: 5, paddingLeft: 5}}>
                                 <InputBase
                                     id="time"
                                     type="time"
@@ -377,18 +320,39 @@ export default function ManageTrainerShift(){
                     
                 </TableRow>
             ))}
+            </>):(<></>)}
             </TableBody>
         </Table>
         </TableContainer>
-        {edit? (
-            <Button variant="contained" size="large" color="secondary" onClick={handleSubmit}>
-                編集を完了する
+        {edit? (<>
+            {shiftEdit? (
+                <Button variant="contained" size="large" color="secondary" onClick={submitDialogOpen}>
+                    編集を完了する
+                </Button>
+            ): (
+            <Button variant="contained" size="large" color="secondary" onClick={handleSubmitButtonClose}>
+                編集を終了する
             </Button>
-        ):(
+            )}
+        </>):(
             <Button variant="contained" size="large" color="primary" onClick={handleSubmitButtonChange}>
                 編集する
             </Button>
         )}
+        <Dialog open={submitOpen} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">シフト変更部分を保存する</DialogTitle>
+            <DialogContent>
+                シフト変更部分を保存します。このまま保存をするには「変更を送信」を、戻る場合は「キャンセルを押してください」
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleClose} variant="contained">
+                キャンセル
+            </Button>
+            <Button onClick={handleSubmit} variant="contained" color="secondary">
+                変更を送信
+            </Button>
+            </DialogActions>
+        </Dialog>
         </>
     );  
 }

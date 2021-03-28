@@ -71,7 +71,6 @@ function AdminLogIn() {
       setSnackOpen(false);
     };
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
-      // setLoading(true);
       console.log({data})
       axios
       .post<ISignInSuccessResponse>(url, data)
