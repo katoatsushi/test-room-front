@@ -13,6 +13,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Select from '@material-ui/core/Select';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import axios from 'axios'
 
 function CustomerJobs(props) {
     const url = '/customer_info/jobs_new'
@@ -28,7 +29,7 @@ function CustomerJobs(props) {
         .catch(function(error) {
             console.log({error})
         });
-        
+
         props.setCustomerStatus((prev) => ({...prev, jobs: selectJob}))
     },[selectJob])
 

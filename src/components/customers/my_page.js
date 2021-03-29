@@ -12,7 +12,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {selectCurrentCustomer, selectCurrentCustomerInfos, selectCurrentCustomerInterests, selectCustomerHeaders} from '../../slices/customer'
 import {selectCurrentTrainer, selectTrainerHeaders} from '../../slices/trainer'
 import {selectCurrentAdmin, selectAdminHeaders} from '../../slices/admin'
-
 import Chip from '@material-ui/core/Chip';
 import EditIcon from '@material-ui/icons/Edit';
 import {

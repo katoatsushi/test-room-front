@@ -19,7 +19,6 @@ import styled from 'styled-components'
 import Evaluation from '../evaluation'
 import Chip from '@material-ui/core/Chip';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '20%',
@@ -112,7 +111,7 @@ export default function CustomerInterests(props) {
     const [interestIDs, setInterestIDs] = React.useState(interests_array)
 
     useEffect(()=>{
-        
+
         axios.get(url)
         .then(function(res) {
             setAllInterests(res.data.intarests)

@@ -25,7 +25,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chart from "react-google-charts";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,

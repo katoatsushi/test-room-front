@@ -17,13 +17,13 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-  } from 'react-router-dom';
+        BrowserRouter as Router,
+        Route,
+        Switch,
+        useParams,
+        useHistory,
+        useLocation,
+    } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {

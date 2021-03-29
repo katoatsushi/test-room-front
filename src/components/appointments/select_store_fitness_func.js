@@ -10,7 +10,6 @@ import {
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-// import { storeFitness } from '../actions'
 import Button from '@material-ui/core/Button'
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
