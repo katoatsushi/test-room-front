@@ -26,7 +26,7 @@ switch (process.env.NODE_ENV) {
     // httpsではなく、httpで通信
     // axios.defaults.baseURL = 'http://3.142.183.228';
     // 参考http://blackwhite.sakura.ne.jp/wp/2017/10/06/https%E3%81%A8http%E3%81%AE%E6%B7%B7%E5%90%88%E3%82%B5%E3%82%A4%E3%83%88%E3%81%A7%E5%A4%96%E9%83%A8%E3%83%AA%E3%83%B3%E3%82%AF%E3%81%8C%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%82%81%E3%81%AA%E3%81%84%E5%A0%B4/
-    axios.defaults.baseURL = '//3.142.183.228';
+    axios.defaults.baseURL = '/3.142.183.228';
     break;
   default:
     axios.defaults.baseURL = 'http://localhost:3000';
