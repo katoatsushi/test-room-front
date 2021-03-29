@@ -21,7 +21,7 @@ switch (process.env.NODE_ENV) {
     break;
   case 'production':
     // EC2のグローバルIPアドレス
-    axios.defaults.baseURL = 'https://3.142.183.228';
+    axios.defaults.baseURL = 'http://3.142.183.228';
     break;
   default:
     axios.defaults.baseURL = 'http://localhost:3000';
