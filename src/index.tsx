@@ -20,7 +20,8 @@ switch (process.env.NODE_ENV) {
     axios.defaults.baseURL = 'http://localhost:3000';
     break;
   case 'production':
-    axios.defaults.baseURL = 'https://reword-back.herokuapp.com/';
+    // EC2のグローバルIPアドレス
+    axios.defaults.baseURL = 'http://3.142.183.228/';
     break;
   default:
     axios.defaults.baseURL = 'http://localhost:3000';
