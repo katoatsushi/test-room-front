@@ -2,19 +2,23 @@ import React, { Component, useState, useEffect } from "react"
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer ,CartesianGrid} from "recharts"
 import {selectCurrentCustomer, selectCustomerHeaders} from '../../slices/customer'
 import { useSelector, useDispatch } from 'react-redux';
+import axios, { AxiosError } from 'axios';
 
 export default function LineGraph(props){
     const [weightHistory, setWeightHistory] = useState([]);
     const currentCustomer = useSelector(selectCurrentCustomer);
     const headers = useSelector(selectCustomerHeaders);
-    const url = `http://localhost:3000/customer_weights`
+    const url = `/customer_weights`
 
     useEffect(()=>{
-      fetch(url, headers)
-        .then( res => res.json() )
-        .then( res => {
-            setWeightHistory(res);
+        axios.get(url, headers)
+        .then(function(response) {
+            console.log({response}, "確認だよん")
+            setWeightHistory(response.data);
         })
+        .catch(function(error) {
+          console.log({error})
+        });
     },[])
 
      return (

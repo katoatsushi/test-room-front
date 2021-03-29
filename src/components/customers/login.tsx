@@ -50,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LogIn() {
-    const url = `http://localhost:3000/v1/customer_auth/sign_in`
-    const get_records_url = `http://localhost:3000/customer_feedback`
+    const url = `/v1/customer_auth/sign_in`
+    const get_records_url = `/customer_feedback`
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();

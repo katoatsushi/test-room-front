@@ -50,7 +50,7 @@ const AppointmentConfirm = (props) => {
 
     function handleCheckOk() {
         const params = props.match.params
-        const create_url = `http://localhost:3000/customer/${props.match.params.customer_id}/appointments/new/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
+        const create_url = `/customer/${props.match.params.customer_id}/appointments/new/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
         axios.post( create_url, {
             appointment_time: time_strings,
             free_box: props.location.state.free_box,
@@ -61,12 +61,14 @@ const AppointmentConfirm = (props) => {
     }
 
     useEffect(async()=>{
-      const url = `http://localhost:3000/customer_menu_serch/${props.match.params.customer_menu_id}`
-      await fetch(url)
-        .then( res => res.json() )
-        .then( res => {
-            setCustomerMenu(res.customer_menu);
+      const url = `/customer_menu_serch/${props.match.params.customer_menu_id}`
+       axios.get(url)
+        .then(function(res) {
+            setCustomerMenu(res.data.customer_menu);
         })
+        .catch(function(error) {
+          console.log({error})
+        });
     },[])
 
   function show_customer_menu() {

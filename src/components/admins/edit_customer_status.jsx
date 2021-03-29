@@ -10,15 +10,17 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Grid from '@material-ui/core/Grid';
 
 export default function EditCustomerStatus(){
-    const url = `http://localhost:3000/customer_statuses/:customer_id`
+    const url = `/customer_statuses/:customer_id`
     const [ customerStatus, setCustomerStatus] = useState({});
 
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json() )
-        .then( res => {
-            setCustomerStatus(res);
+       axios.get(url)
+        .then(function(res) {
+            setCustomerStatus(res.data);
         })
+        .catch(function(error) {
+          console.log({error})
+        });
     },[])
     function handleEditSubmit(){
         // TODO::ここに更新の処理をかく

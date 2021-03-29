@@ -96,20 +96,22 @@ export default function EvaluationData(props) {
     const classes = useStyles();
     const trainerHeader = useSelector(selectTrainerHeaders);
     const currentTrainer = useSelector(selectCurrentTrainer);
-    const url = `http://localhost:3000/check_evaluation/${props.customer_id}`
+    const url = `/check_evaluation/${props.customer_id}`
     const [avaTrainer, setAvaTrainer] = React.useState({details: null,name: [], score: []});
     const [fitnessTrainerData, setFitnessTrainerData] = React.useState([]);
     const [selectFitnessTrainerData, setSelectFitnessTrainerData] = React.useState({details: null,name: [], score: []});
     const [pieChartData, setPieChartData] = React.useState([]);
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json() )
-        .then( res => {
-           console.log({res})
-            setAvaTrainer({details: res.average.trainer[0], name: res.average.trainer[1], score: res.average.trainer[2]})
-            setFitnessTrainerData(res.average.all)
-            setPieChartData(res.count.all)
+        axios.get(url)
+        .then(function(res) {
+            console.log({res})
+            setAvaTrainer({details: res.data.average.trainer[0], name: res.data.average.trainer[1], score: res.data.average.trainer[2]})
+            setFitnessTrainerData(res.data.average.all)
+            setPieChartData(res.data.count.all)
         })
+        .catch(function(error) {
+          console.log({error})
+        });
     },[])
 
     function handleFitnessChange(e) {

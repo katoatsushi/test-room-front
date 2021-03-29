@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CreateCompany(props) {
-    const url = `http://localhost:3000/companies`
+    const url = `/companies`
     const classes = useStyles();
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");

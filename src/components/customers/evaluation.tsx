@@ -44,7 +44,7 @@ function RecordDialog({session}) {
     );
 
     function handleSubmit(e) {
-        const url = `http://localhost:3000/evaluations`
+        const url = `/evaluations`
         axios.post( url, {
             trainer_id:  e.trainer_id,
             customer_id: e.customer_id,

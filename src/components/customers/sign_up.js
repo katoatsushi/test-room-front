@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SignUp() {
     const company_id = 1
-    const url = `http://localhost:3000/companies/${ company_id }/v1/customer_auth`
+    const url = `/companies/${ company_id }/v1/customer_auth`
     const classes = useStyles();
     const [email, setEmail] = useState("ka.baseball1997@gmail.com");
     const [password, setPassword] = useState("gonza1026");

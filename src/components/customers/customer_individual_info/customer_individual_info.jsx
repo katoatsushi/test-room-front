@@ -104,7 +104,7 @@ export default function CreateCustomerIndividualInfo(props) {
       handleNext();
     }
     if (completedSteps() === totalSteps() - 1){
-      const url = `http://localhost:3000/customer_individual_infos`
+      const url = `/customer_individual_infos`
       axios.put(url, customerStatus, customerHeaders)
       .then(function (response) {
         console.log("success", {response})

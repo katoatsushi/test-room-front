@@ -73,7 +73,7 @@ function CustomerMyPage(props) {
     setOpen(false);
   };
   function handleInterestsUpdate(){
-    const submit_url = `http://localhost:3000/customer_update_interests`
+    const submit_url = `/customer_update_interests`
     setOpen(false);
     axios.put(submit_url, {ids: updateInterestsIDs} , customerHeaders)
     .then(res => {
@@ -86,12 +86,14 @@ function CustomerMyPage(props) {
     });
   }
   useEffect(()=>{
-    const url = `http://localhost:3000/return_customer_all_info/${props.match.params.id}`
-    fetch(url)
-      .then( res => res.json() )
-      .then( res => {
-          setThisCustomer(res.customer);
-    })
+    const url = `/return_customer_all_info/${props.match.params.id}`
+      axios.get(url)
+      .then(function(res) {
+        setThisCustomer(res.data.customer);
+      })
+      .catch(function(error) {
+        console.log({error})
+      });
   },[])
 
   // console.log({updateInterestsIDs})
@@ -107,7 +109,7 @@ function CustomerMyPage(props) {
   const [avatarData, setAvatarData] = useState({});
   function handleAvatarSubmit(){
       const formData = new FormData();
-      const url = `http://localhost:3000/customer/update_avatar/${props.match.params.id}`
+      const url = `/customer/update_avatar/${props.match.params.id}`
       formData.append("avatar", avatarData);
       axios.put(url, formData, customerHeaders)
       .then(res => {
@@ -338,7 +340,11 @@ function CustomerMyPage(props) {
                   (() => {
                     if (currentCustomer) {
                       if (currentCustomer.id == props.match.params.id){
-                        return(<div style={{textAlign: 'right'}}><EditIcon onClick={() => history.push(`/customer/weight/new`)} style={{fontSize: '1.2em'}}/></div>);
+                        return(
+                        <div style={{textAlign: 'right'}}>
+                          <EditIcon onClick={() => history.push(`/customer/weight/new`)} style={{fontSize: '1.2em'}}/>
+                        </div>
+                        );
                       }
                     } else {
                       return (<></>);

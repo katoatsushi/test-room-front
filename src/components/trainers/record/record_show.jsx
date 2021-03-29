@@ -38,7 +38,7 @@ export default function ShowRecord(props) {
     const history = useHistory();
     const currentTrainer = useSelector(selectCurrentTrainer);
     const trainerHeaders = useSelector(selectTrainerHeaders);
-    const url = `http://localhost:3000/show/record/${record_id}`
+    const url = `/show/record/${record_id}`
     const [customer, setCustomer] = React.useState();
     const [apo, setApo] = React.useState();
     const [record, setRecord] = React.useState();
@@ -63,19 +63,23 @@ export default function ShowRecord(props) {
     };
 
     useEffect(()=>{
-        fetch(url, trainerHeaders)
-        .then( res => res.json())
-        .then( res => {
+
+        axios.get(url, trainerHeaders)
+        .then(function(res) {
             console.log({res})
-            setCustomer(res.customer)
-            setApo(res.apo)
-            setRecord(res.record)
-            setRecordMenues(res.records_menues)
+            setCustomer(res.data.customer)
+            setApo(res.data.apo)
+            setRecord(res.data.record)
+            setRecordMenues(res.data.records_menues)
         })
+        .catch(function(error) {
+            console.log({error})
+        });
+        
     },[])
 
     function handleDelete(){
-        const delete_url =  `http://localhost:3000/delete/record/${record_id}`
+        const delete_url =  `/delete/record/${record_id}`
         axios.delete(delete_url, trainerHeaders)
         .then(res => {         
             console.log(res.data.message)

@@ -186,7 +186,7 @@ export default function CreateCustomerInfo() {
     }
     // 最終ステップ完了時
     if (completedSteps() === totalSteps() - 1){
-      const url = `http://localhost:3000/customer_infos`
+      const url = `/customer_infos`
       axios.put(url, customerInfo, customerHeaders)
       .then(function (response) {
         console.log({response})

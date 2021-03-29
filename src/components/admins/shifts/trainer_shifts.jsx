@@ -137,7 +137,7 @@ export default function ManageTrainerShift(){
     const classes = useStyles();
     const currentAdmin = useSelector(selectCurrentAdmin);
     const admin_headers = useSelector(selectAdminHeaders);
-    const url = `http://localhost:3000/get_trainer_shifts`
+    const url = `/get_trainer_shifts`
     const [trainerShifts, setTrainerShifts] = useState([]);
     const [submitData, setSubmitData] = useState([]);
     const [stores, setsStores] = useState([]);
@@ -201,7 +201,7 @@ export default function ManageTrainerShift(){
         setSubmitOpen(false)
     }
     function handleSubmit(){
-        const submit_url = `http://localhost:3000/update_trainer_shift`
+        const submit_url = `/update_trainer_shift`
         console.log({submitData})
         axios.put(submit_url, {
             data: submitData

@@ -61,7 +61,7 @@ const AppointmentRecordNew = (props) => {
     : 
         <div />
     function handleDataCreate() {
-      const url = `http://localhost:3000/customer/${ response.customer_id }/appointment/${ response.id }/create_customer_record`
+      const url = `/customer/${ response.customer_id }/appointment/${ response.id }/create_customer_record`
       axios.post(url)
         .then(function (response) {
             if (response.status==200) {

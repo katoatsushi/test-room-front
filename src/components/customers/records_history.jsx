@@ -26,14 +26,16 @@ function ShowRecords({record}) {
     );
 }
 export default function RecordsHistory(props) {
-    const url = `http://localhost:3000/customer_page/${props.match.params}`
+    const url = `/customer_page/${props.match.params}`
     const [finishRecords, setFinishRecords] = useState([]);
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json() )
-        .then( res => {
-            setFinishRecords(res.customer_records);
+        axios.get(url)
+        .then(function(res) {
+            setFinishRecords(res.data.customer_records);
         })
+        .catch(function(error) {
+            console.log({error})
+        });
     },[])
     
     return(

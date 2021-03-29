@@ -53,7 +53,7 @@ function Alert(props) {
 }
 
 function AdminLogIn() {
-    const url = `http://localhost:3000/v1/admin_auth/sign_in`
+    const url = `/v1/admin_auth/sign_in`
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();

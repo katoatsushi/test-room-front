@@ -41,7 +41,7 @@ export default function ShiftNew(props){
 
     function handleSubmit(){
         console.log(last_day.getMonth() + 1)
-        const url = `http://localhost:3000/trainer/shift/create/year/${last_day.getFullYear()}/month/${last_day.getMonth() + 1}/`
+        const url = `/trainer/shift/create/year/${last_day.getFullYear()}/month/${last_day.getMonth() + 1}/`
         axios.post( url, {
             trainer_shift: shift
           }, trainer_headers)

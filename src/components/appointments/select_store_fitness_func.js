@@ -33,13 +33,15 @@ const SelectStoreFitness = (props) => {
       const [selectStore, setSelectStore] = useState();
       const history = useHistory();
       useEffect(()=>{
-        const url = `http://localhost:3000/calendar`
-        fetch(url)
-          .then( res => res.json() )
-          .then( res => {
-            setCustomerMenu(res.fitnesses);
-            setStore(res.store);
-          })
+        const url = `/calendar`
+        axios.get(url)
+        .then(function(res) {
+            setCustomerMenu(res.data.fitnesses);
+            setStore(res.data.store);
+        })
+        .catch(function(error) {
+          console.log({error})
+        });
       },[])
     function handleCustomerMenuChange(e) { setSelectCustomerMenu(e.target.value) }
     function handleStoreChange(e) {  setSelectStore(e.target.value) }

@@ -58,7 +58,7 @@ export default function TrainerMyPage(props) {
   };
 
 //   useEffect(()=>{
-//     const url = `http://localhost:3000/return_customer_all_info/${props.match.params.id}`
+//     const url = `/return_customer_all_info/${props.match.params.id}`
 //     fetch(url)
 //       .then( res => res.json() )
 //       .then( res => {
@@ -72,7 +72,7 @@ export default function TrainerMyPage(props) {
   const [avatarData, setAvatarData] = useState({});
   function handleAvatarSubmit(){
       const formData = new FormData();
-      const url = `http://localhost:3000/trainer/update_avatar`
+      const url = `/trainer/update_avatar`
       console.log({trainerHeaders})
       formData.append("avatar", avatarData);
       axios.put(url, formData, trainerHeaders)

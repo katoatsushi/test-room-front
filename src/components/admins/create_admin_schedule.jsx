@@ -132,7 +132,7 @@ export default function CreateAdminSchedule(props){
         console.log({dayInfo})
         console.log({timeStart})
         console.log({selectStore})
-        const submit_url  = `http://localhost:3000/black_schedules`
+        const submit_url  = `/black_schedules`
         axios.post( submit_url, {
             dayInfo: dayInfo,
             timeStart: timeStart,
@@ -147,12 +147,15 @@ export default function CreateAdminSchedule(props){
         })
     }
     useEffect(()=>{
-        const check_scedule_url = `http://localhost:3000/admin/company_id/${currentAdmin.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`
-        fetch(check_scedule_url, adminHeaders)
-          .then( res => res.json() )
-          .then( res => {
-              setStores(res.today_schedules);
-          })
+        const check_scedule_url = `/admin/company_id/${currentAdmin.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`
+        axios.get(check_scedule_url, adminHeaders)
+        .then(function(res) {
+            console.log({res}, "確認だよん")
+            setStores(res.data.today_schedules);
+        })
+        .catch(function(error) {
+          console.log({error})
+        });
       },[selectedDate])
 
     const stores_box = stores.length ?  

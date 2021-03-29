@@ -20,15 +20,15 @@ const AppointmentNew = (props) => {
     const { handleSubmit } = useForm();
     const history = useHistory();
     const params = props.match.params
-    const url = `http://localhost:3000/appointments/new/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
+    const url = `/appointments/new/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json() )
-        .then( res => {
-            console.log({url})
-            console.log({res})
-            setAppointments(res);
+       axios.get(url)
+        .then(function(res) {
+            setAppointments(res.data);
         })
+        .catch(function(error) {
+          console.log({error})
+        });
     },[])
     function handleTimeSelect(e){
         setTimeValue(e);

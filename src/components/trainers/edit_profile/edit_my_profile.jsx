@@ -188,7 +188,7 @@ export default function EditMyProfile() {
     }
     // 最終ステップ完了時
     if (completedSteps() === totalSteps() - 1){
-      const url = `http://localhost:3000/trainer/update/myself`
+      const url = `/trainer/update/myself`
       axios.put(url, trainerInfo, trainerHeaders)
       .then(function (response) {
         console.log({response})

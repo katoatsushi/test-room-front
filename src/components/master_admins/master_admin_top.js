@@ -39,12 +39,16 @@ const MasterAdminTop = (props) => {
     const history = useHistory();
     const [companies, setCompanies] = useState([]);
     useEffect(()=>{
-        const url = `http://localhost:3000/companies`
-        fetch(url)
-          .then( res => res.json() )
-          .then( res => {
-            setCompanies(res);
-          })
+        const url = `/companies`
+
+        axios.get(url)
+        .then(function(res) {
+            setCompanies(res.data);
+        })
+        .catch(function(error) {
+            console.log({error})
+        });
+        
     },[])
     console.log(companies)
 

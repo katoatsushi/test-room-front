@@ -51,18 +51,18 @@ const AppointmentRecordMenusCreate = (props) => {
     const [setNum, setSetNum] = useState();
     const [detail, setDetail] = useState("");
     const { handleSubmit } = useForm();
-    const url = `http://localhost:3000/customer_record/${props.match.params.customer_record_id}/new`
+    const url = `/customer_record/${props.match.params.customer_record_id}/new`
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json() )
-        .then( res => {
-            if (res.status==200) {
-                setFitnessMenues(res.fitness_menues);
-            }
+       axios.get(url)
+        .then(function(res) {
+            setFitnessMenues(res.data.fitness_menues);
         })
+        .catch(function(error) {
+          console.log({error})
+        });
     },[])
     function onSubmit() {
-        const submit_url = `http://localhost:3000/customer/${props.match.params.customer_record_id}/fitness/${fitnessMenuesFirstID}/fitness_third/${getFitnessMenuesThird.id}/session/create`
+        const submit_url = `/customer/${props.match.params.customer_record_id}/fitness/${fitnessMenuesFirstID}/fitness_third/${getFitnessMenuesThird.id}/session/create`
         axios.post( submit_url, {
             time: time,
             set_num: setNum,

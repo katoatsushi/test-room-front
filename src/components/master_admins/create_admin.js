@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 
 function CreateAdmin(props) {
     const params = props.match.params
-    const url = `http://localhost:3000/companies/${ params.company_id }/v1/admin_auth`
+    const url = `/companies/${ params.company_id }/v1/admin_auth`
     const classes = useStyles();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

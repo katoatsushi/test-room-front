@@ -12,7 +12,19 @@ import Header from './components/applications/header';
 import Footer from './components/applications/footer';
 import { store, persistor } from './store';
 import 'fontsource-roboto';
+import axios from 'axios';
 const enhancer = process.env.NODE_ENV === 'development' ? composeWithDevTools(applyMiddleware(thunk)) : applyMiddleware(thunk)
+
+switch (process.env.NODE_ENV) {
+  case 'development':
+    axios.defaults.baseURL = 'http://localhost:3000';
+    break;
+  case 'production':
+    axios.defaults.baseURL = 'https://reword-back.herokuapp.com/';
+    break;
+  default:
+    axios.defaults.baseURL = 'http://localhost:3000';
+}
 
 ReactDOM.render(
   <>

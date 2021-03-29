@@ -71,13 +71,16 @@ export default function TrainerCreateRecord(props) {
     const [selectMenues, setSelectMenues] = React.useState([]);
     const classes = useStyles();
     const history = useHistory();
-    const url = `http://localhost:3000/get/res_second/fitness/${props.match.params.fitness_id}`
+    const url = `/get/res_second/fitness/${props.match.params.fitness_id}`
     useEffect(()=>{
-        fetch(url, trainerHeaders)
-        .then( res => res.json())
-        .then( res => {
-            setFitnessData(res.data)
+
+        axios.get(url, trainerHeaders)
+        .then(function(res) {
+            setFitnessData(res.data.data)
         })
+        .catch(function(error) {
+            console.log({error})
+        });
         // console.log("確認",{selectMenues})
     },[])
 

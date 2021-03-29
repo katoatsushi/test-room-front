@@ -172,26 +172,31 @@ function CustomerCell({customer, index, setAllCustomers}){
 
 export default function AllCustomers(){
     const classes = useStyles();
-    const url = `http://localhost:3000/get/all_customers`
-    const serch_url = `http://localhost:3000/serch/customers`
+    const url = `/get/all_customers`
+    const serch_url = `/serch/customers`
     const [allCustomers, setAllCustomers] = useState([]);
     const [searchCustomers, setSearchCustomers] = useState([]);
     const adminHeaders = useSelector(selectAdminHeaders);
     const trainerHeaders = useSelector(selectTrainerHeaders);
 
     useEffect(()=>{
+
       if(adminHeaders){
-        fetch(url, adminHeaders)
-          .then( res => res.json() )
-          .then( res => {
-              setAllCustomers(res.all_customers);
+       axios.get(url, adminHeaders)
+        .then(function(res) {
+            setAllCustomers(res.data.all_customers);
         })
+        .catch(function(error) {
+          console.log({error})
+        });
       }else if(trainerHeaders){
-        fetch(url, trainerHeaders)
-          .then( res => res.json() )
-          .then( res => {
-              setAllCustomers(res.all_customers);
+       axios.get(url, trainerHeaders)
+        .then(function(res) {
+            setAllCustomers(res.data.all_customers);
         })
+        .catch(function(error) {
+          console.log({error})
+        });
       }
     },[])
   console.log({allCustomers})

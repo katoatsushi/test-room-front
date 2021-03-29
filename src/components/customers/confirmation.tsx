@@ -55,8 +55,8 @@ function Confirmation(props) {
         let confirmations = confirmation_response.split('&');
         const confirmation_token = confirmations[1].split('=');
         const confirmation_token_values = confirmation_token[1]
-        const confirm_url = `http://localhost:3000/customer_confirm_ok`
-        const sign_in_url = `http://localhost:3000/v1/customer_auth/sign_in`
+        const confirm_url = `/customer_confirm_ok`
+        const sign_in_url = `/v1/customer_auth/sign_in`
         axios.post(confirm_url, {token: confirmation_token_values})
         .then((res) => {
             axios.post<ISignInSuccessResponse>(sign_in_url, data)

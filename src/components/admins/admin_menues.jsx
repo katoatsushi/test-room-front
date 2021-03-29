@@ -23,18 +23,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AdminMenues(){
-    const url = `http://localhost:3000/get/all_customers`
-    const serch_url = `http://localhost:3000/serch/customers`
+    const url = `/get/all_customers`
+    const serch_url = `/serch/customers`
     const [allCustomers, setAllCustomers] = useState([]);
     const [searchCustomers, setSearchCustomers] = useState([]);
     const classes = useStyles();
 
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json() )
-        .then( res => {
-            setAllCustomers(res.all_customers);
+        axios.get(url)
+        .then(function(res) {
+            console.log({res}, "確認だよん")
+            setAllCustomers(res.data.all_customers);
         })
+        .catch(function(error) {
+          console.log({error})
+        });
     },[])
 
     return(

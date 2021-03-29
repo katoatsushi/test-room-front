@@ -73,7 +73,7 @@ function Header(props) {
   const handleCustomerSignOut = () => {
     if (!customer_headers) return;
     axios
-      .delete('http://localhost:3000/v1/customer_auth/sign_out', customer_headers)
+      .delete('/v1/customer_auth/sign_out', customer_headers)
       .then(() => {
         dispatch(customerRemove());
         handleClose()
@@ -88,7 +88,7 @@ function Header(props) {
   const handleAdminSignOut = () => {
     if (!admin_headers) return;
     axios
-      .delete('http://localhost:3000/v1/admin_auth/sign_out', admin_headers)
+      .delete('/v1/admin_auth/sign_out', admin_headers)
       .then(() => {
         dispatch(adminRemove());
          handleClose()
@@ -102,7 +102,7 @@ function Header(props) {
   const handleTrainerSignOut = () => {
     if (!trainer_headers) return;
     axios
-      .delete('http://localhost:3000/v1/trainer_auth/sign_out', trainer_headers)
+      .delete('/v1/trainer_auth/sign_out', trainer_headers)
       .then(() => {
         dispatch(trainerRemove());
         handleClose()
@@ -116,7 +116,7 @@ function Header(props) {
   const handleMasterAdminSignOut = () => {
     if (!master_admin_headers) return;
     axios
-      .delete('http://localhost:3000/v1/master_admin_auth/sign_out', master_admin_headers)
+      .delete('/v1/master_admin_auth/sign_out', master_admin_headers)
       .then(() => {
         dispatch(masterAdminRemove());
         handleClose()

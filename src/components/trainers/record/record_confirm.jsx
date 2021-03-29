@@ -59,7 +59,7 @@ export default function RecordConfirm(props) {
     };
 
     function handleSubmit(){
-       const url = `http://localhost:3000/create/record/session_menues/appointment/${record.id}`
+       const url = `/create/record/session_menues/appointment/${record.id}`
         axios.post( url, 
         {customer_record_session_menu: {
             apo: record,

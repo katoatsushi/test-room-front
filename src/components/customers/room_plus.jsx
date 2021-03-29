@@ -114,7 +114,7 @@ function ShowSchedule(props){
         props.setOpen((prev)=>(prev, false))
     }
     function handleSubmit() {
-        const url = `http://localhost:3000/evaluations`
+        const url = `/evaluations`
         axios.post( url, {
             time: props.selectTime,
           })
@@ -161,14 +161,16 @@ export default function RoomPlusBox(){
     const [timesOpen ,setTimesOpen] = useState(false);
     const company_id = 1
     const customer_menu_id = 1
-    const url = `http://localhost:3000/appointments/vacancy/${company_id}/${customer_menu_id}/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`
+    const url = `/appointments/vacancy/${company_id}/${customer_menu_id}/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json())
-        .then( res => {
-            setVacancy(res.data);
-            setAllStores(res.stores);
+        axios.get(url)
+        .then(function(res) {
+            setVacancy(res.data.data);
+            setAllStores(res.data.stores);
         })
+        .catch(function(error) {
+            console.log({error})
+        });
     },[])   
     function handleOpen(){
         setOpen(true);

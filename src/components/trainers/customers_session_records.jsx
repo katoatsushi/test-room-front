@@ -97,14 +97,18 @@ export default function SessionRecordList() {
     const [currentRecords, setCurrentRecords] = React.useState();
     const history = useHistory();
 
-    const url = `http://localhost:3000/trainer/get/customer_records`
+    const url = `/trainer/get/customer_records`
 
     useEffect(()=>{
-        fetch(url, trainerHeaders)
-        .then( res => res.json())
-        .then( res => {
-            setRecords(res.data);
+
+        axios.get(url, trainerHeaders)
+        .then(function(res) {
+            setRecords(res.data.data);
         })
+        .catch(function(error) {
+            console.log({error})
+        });
+        
     },[])
 
     function handleStoreChange(e) {

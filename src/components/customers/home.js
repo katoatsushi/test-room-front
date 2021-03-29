@@ -98,7 +98,7 @@ function ShowApo({apo, apos, setApos}) {
     setOpen(false);
   };
   async function handleCancelClose(e) {
-      const url = `http://localhost:3000/appointment/${e.id}`
+      const url = `/appointment/${e.id}`
       try {
           await axios.delete(url);
           const newApos = apos.filter((apo, index) => {
@@ -159,7 +159,7 @@ function ShowApo({apo, apos, setApos}) {
 
 export default function CustomerHome(props) {
     const id =  props.props.match.params.id
-    const url = `http://localhost:3000/customer_page/${id}`
+    const url = `/customer_page/${id}`
     const [customer, setCustomer] = useState();
     const [records, setRecords] = useState([]);
     const [apos, setApos] = useState([]);
@@ -168,13 +168,15 @@ export default function CustomerHome(props) {
     const history = useHistory();
 
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json() )
-        .then( res => {
-            setCustomer(res.customer);
-            setRecords(res.customer_records);
-            setApos(res.appointments);
+        axios.get(url)
+        .then(function(res) {
+            setCustomer(res.data.customer);
+            setRecords(res.data.customer_records);
+            setApos(res.data.appointments);
         })
+        .catch(function(error) {
+          console.log({error})
+        });
     },[])
 
     const useCardStyles = makeStyles({

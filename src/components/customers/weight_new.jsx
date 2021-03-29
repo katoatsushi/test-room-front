@@ -55,19 +55,23 @@ export default function WeightNew(){
     const currentCustomer = useSelector(selectCurrentCustomer);
     const customerHeaders = useSelector(selectCustomerHeaders);
     const classes = useStyles();
-    const url = `http://localhost:3000/customer_weights`
+    const url = `/customer_weights`
     const history = useHistory();
     const data = null
 
     useEffect(async()=>{
-    fetch(url, customerHeaders)
-        .then( res => res.json() )
-        .then( res => {
+
+        axios.get(url, customerHeaders)
+        .then(function(res) {
             console.log({res})
-            setWeightHistory(res)
-            data = JSON.parse(res);
+            setWeightHistory(res.data)
+            data = JSON.parse(res.data);
             console.log({data})
         })
+        .catch(function(error) {
+            console.log({error})
+        });
+        
     },[])
     console.log({weightHistory})
     const showWeightTransition = weightHistory.map((customer_menu, index) =>

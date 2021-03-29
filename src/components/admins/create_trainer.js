@@ -74,20 +74,23 @@ function CreateTrainer(props) {
     const [trainerMenues, setTrainerMenues] = useState([]);
     const history = useHistory();
     const { handleSubmit } = useForm();
-    const getFitnesses = `http://localhost:3000/fitnesses`
+    const getFitnesses = `/fitnesses`
     const [allFitnesses, setAllFitnesses] = useState([]);
+
     useEffect(()=>{
-      fetch(getFitnesses, admin_headers)
-        .then( res => res.json() )
-        .then( res => {
-            if (res.status==200) {
-                setAllFitnesses(res.fitnesses);
+       axios.get(getFitnesses, admin_headers)
+        .then(function(res) {
+            if (res.data.status==200) {
+                setAllFitnesses(res.data.fitnesses);
             }
         })
+        .catch(function(error) {
+          console.log({error})
+        });
     },[])
 
     function onSubmit() {
-        const url = `http://localhost:3000/companies/${ currentAdmin.company_id }/v1/trainer_auth`
+        const url = `/companies/${ currentAdmin.company_id }/v1/trainer_auth`
         axios.post( url,
             // トレーナーの登録
             {
@@ -100,7 +103,7 @@ function CreateTrainer(props) {
         )
         .then(function (response) {
             // fitnessとの関連付け
-            const fitness_url = `http://localhost:3000/set_fitnesses`
+            const fitness_url = `/set_fitnesses`
             console.log({response})
             axios.post( fitness_url,
                 {

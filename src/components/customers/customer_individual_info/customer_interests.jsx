@@ -99,7 +99,7 @@ function SetChip({interest, setInterestIDs, interestIDs, clickedInterests, setUp
 }
 
 export default function CustomerInterests(props) {
-    const url = 'http://localhost:3000/customer_info/intarests_new'
+    const url = '/customer_info/intarests_new'
     const [allInterests, setAllInterests] = React.useState([])
     const classes = useStyles();
     // マイページから変更する際
@@ -112,13 +112,15 @@ export default function CustomerInterests(props) {
     const [interestIDs, setInterestIDs] = React.useState(interests_array)
 
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json() )
-        .then( res => { 
-            if (res.status==200) {
-                setAllInterests(res.intarests)
-            }
+        
+        axios.get(url)
+        .then(function(res) {
+            setAllInterests(res.data.intarests)
         })
+        .catch(function(error) {
+            console.log({error})
+        });
+
         if(props.setCustomerStatus){
             props.setCustomerStatus((prev) => ({...prev, interests: interestIDs}))
         }

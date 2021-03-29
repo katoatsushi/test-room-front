@@ -77,7 +77,7 @@ export default function CustomerSetInfoDialog({customer, setAllCustomers}) {
     },[])
 
     function handleUpdateSubmit(){
-        const url = `http://localhost:3000/customer_statuses/${customer.id}`
+        const url = `/customer_statuses/${customer.id}`
         axios.put(url, {paid: paid,room_plus: roomPlus, dozen_sessions: false, numbers_of_contractnt: currency}, adminHeaders)
         .then(res => {
             handleClose();

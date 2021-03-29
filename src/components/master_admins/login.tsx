@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MasterAdminLogIn() {
-    const url = `http://localhost:3000/v1/master_admin_auth/sign_in`
+    const url = `/v1/master_admin_auth/sign_in`
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();

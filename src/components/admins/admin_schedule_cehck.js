@@ -90,18 +90,20 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
     const history = useHistory();
     const [storeAppointments, setStoreAppointments] = useState([]);
     const [thisStoreAppointments, setThisStoreAppointments] = useState();
-    var url = `http://localhost:3000/admin/company_id/${company_id}/year/${day.year}/month/${day.month}/day/${day.day}`
+    var url = `/admin/company_id/${company_id}/year/${day.year}/month/${day.month}/day/${day.day}`
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json() )
-        .then( res => {
-            setStoreAppointments(res.today_schedules);
-            if (res.today_schedules.length){
+        axios.get(url)
+        .then(function(res) {
+            setStoreAppointments(res.data.today_schedules);
+            if (res.data.today_schedules.length){
               // 初期値を設定
               console.log({res})
-              setThisStoreAppointments(res.today_schedules[0].value);
+              setThisStoreAppointments(res.data.today_schedules[0].value);
             }
         })
+        .catch(function(error) {
+          console.log({error})
+        });
     },[day])
 
     function handlehange(e) {

@@ -15,18 +15,20 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
 function CustomerJobs(props) {
-    const url = 'http://localhost:3000/customer_info/jobs_new'
+    const url = '/customer_info/jobs_new'
     const [jobs, setJobs] = React.useState([])
     const [selectJob, setSelectJob] = React.useState()
 
     useEffect(()=>{
-      fetch(url)
-        .then( res => res.json() )
-        .then( res => {
-            if (res.status==200) {
-                setJobs(res.jobs)
-            }
+
+        axios.get(url)
+        .then(function(res) {
+            setJobs(res.data.jobs)
         })
+        .catch(function(error) {
+            console.log({error})
+        });
+        
         props.setCustomerStatus((prev) => ({...prev, jobs: selectJob}))
     },[selectJob])
 
