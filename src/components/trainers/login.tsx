@@ -66,7 +66,7 @@ function TrainerLogIn() {
         history.push('/');
       })
       .catch((err: AxiosError<IErrorResponse>) => {
-        // setLoading(false);
+        console.log("トレーナーログインエラー")
         setServerMessages({
           severity: 'error',
           alerts: err.response?.data.errors || [],
@@ -122,13 +122,6 @@ function TrainerLogIn() {
                     />
                   )}
                 />
-                {/* <ErrorMessage
-                  errors={errors}
-                  name="email"
-                  render={({ message }) => (
-                    <Alert severity="error">{message}</Alert>
-                  )}
-                /> */}
               </Box>
               <Box mb={2}>
                 <Controller
