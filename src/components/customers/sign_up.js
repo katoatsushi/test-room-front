@@ -238,7 +238,7 @@ function SignUp() {
                 fullWidth
                 id="email"
                 label="メールアドレスを入力してください"
-                value="ka.baseball1997@gmail.com"
+                value={email}
                 name="email"
                 onChange={ handleEMailChange }
                 autoComplete="email"
@@ -250,7 +250,7 @@ function SignUp() {
                 fullWidth
                 name="password"
                 label="パスワードを入力してください"
-                value="gonza1026"
+                value={password}
                 type="password"
                 id="password"
                 onChange={handlePasswordChange}
@@ -263,7 +263,7 @@ function SignUp() {
                 fullWidth
                 name="password"
                 label="再度パスワードを入力してください"
-                value="gonza1026"
+                value={password_confirmation}
                 type="password"
                 id="password"
                 onChange={handlePasswordConfirmationChange}
