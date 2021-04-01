@@ -51,26 +51,17 @@ function SetChipEdit({interest, setInterestIDs, interestIDs, clickedInterests, s
     },[])
 
     function handleValueChange(){
-        // // TODO::IDの削除追加
-        // if(value){
-        //     //削除
-        //     const deletedIDs = interestIDs.filter((ID, index) => {
-        //         return ID != interest.id;
-        //     });
-        //     setInterestIDs(deletedIDs)
-        //     console.log("削除",{interestIDs})
-        //     console.log("削除",{deletedIDs})
-        //     console.log("state変化")
-        //     setUpdateInterestsIDs((prev) => deletedIDs)
-        // }else{
-        //     // 追加
-        //     console.log("追加",{interest})
-        //     console.log("追加",{interestIDs})
-        //     const newIDs =  interestIDs.splice(-1, 0, interest.id);
-        //     setInterestIDs((prev) => [...prev, ...newIDs])
-        //     console.log("state変化")
-        //     setUpdateInterestsIDs((prev) => interestIDs)
-        // }
+        if(value){
+            const deletedIDs = interestIDs.filter((ID, index) => {
+                return ID != interest.id;
+            });
+            setInterestIDs(deletedIDs)
+            setUpdateInterestsIDs((prev) => deletedIDs)
+        }else{
+            const newIDs =  interestIDs.splice(-1, 0, interest.id);
+            setInterestIDs((prev) => [...prev, ...newIDs])
+            setUpdateInterestsIDs((prev) => interestIDs)
+        }
         setValue(!value);
     }
     return(
