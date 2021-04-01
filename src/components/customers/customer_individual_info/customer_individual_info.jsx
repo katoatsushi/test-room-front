@@ -143,7 +143,8 @@ export default function CreateCustomerIndividualInfo(props) {
         {allStepsCompleted() ? (
           <div>
             <Typography className={classes.instructions}>
-                <Evaluation />
+                {/* <Evaluation /> */}
+                ご回答ありがとうございました！
             </Typography>
           </div>
         ) : (
