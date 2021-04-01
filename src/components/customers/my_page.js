@@ -36,7 +36,7 @@ import InputFile from '../inputFile'
 import Avatar from '@material-ui/core/Avatar';
 import { setCurrentCustomer,setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders, customerRemove} from '../../slices/customer';
 import InterestChips from './my_page_interests_chips'
-import CustomerInterests from './customer_individual_info/customer_interests'
+import CustomerInterestsEdit from './customer_interests_edit'
 import EvaluationData from './customer_evaluation_data'
 
 const useStyles = makeStyles((theme) => ({
@@ -88,7 +88,7 @@ function CustomerMyPage(props) {
   const [allInterests, setallInterests] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [thisCustomerInterests, setThisCustomerInterests] = useState();
-  const [updateInterestsIDs, setUpdateInterestsIDs] = useState();
+  const [updateInterestsIDs, setUpdateInterestsIDs] = useState([]);
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const buttonClassname = clsx({
@@ -103,26 +103,31 @@ function CustomerMyPage(props) {
   function handleInterestsUpdate(){
     const submit_url = `/customer_update_interests`
     setOpen(false);
+    console.log("submit",{updateInterestsIDs})
     axios.put(submit_url, {ids: updateInterestsIDs} , customerHeaders)
     .then(res => {
-      dispatch(setCurrentCustomerInterests(res.data.interests));
-      history.push(`/customer/my_page/${currentCustomer.id}`);
       console.log({res})
+      dispatch(setCurrentCustomerInterests(res.data.interests));
+      // history.push(`/customer/my_page/${currentCustomer.id}`);
+      history.push(`/`);
     })
     .catch(error => {
         console.log({error})
     });
   }
+
   useEffect(()=>{
     const url = `/return_customer_all_info/${props.match.params.id}`
-      axios.get(url)
-      .then(function(res) {
-        setThisCustomer(res.data.customer);
-      })
-      .catch(function(error) {
-        console.log({error})
-      });
-  },[])
+    axios.get(url)
+    .then(function(res) {
+      setThisCustomer(res.data.customer);
+    })
+    .catch(function(error) {
+      console.log({error})
+    });
+    console.log("親で確認",{updateInterestsIDs})
+  },[updateInterestsIDs])
+  
 
   // console.log({updateInterestsIDs})
 
@@ -220,18 +225,10 @@ function CustomerMyPage(props) {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                {/* <Button onClick={handleAvatarClose} color="primary">
-                  キャンセル
-                </Button>
-      
-                <Button onClick={handleAvatarSubmit} color="primary">
-                  保存
-                </Button> */}
                 <div className={classes.wrapper}>
                 <Button
                     type="submit"
                     variant="contained"
-                    // color="primary"
                     fullWidth
                     onClick={handleAvatarClose}
                     className={buttonClassname}
@@ -261,7 +258,6 @@ function CustomerMyPage(props) {
         <Grid item xs={1}/>
         <Grid item xs={7} style={{paddingTop: 10}}>
           <div style={{fontSize: '1.3em', fontWeight: '700'}}>
-            {/* {currentCustomer.first_name}{currentCustomer.last_name} */}
             { thisCustomer.first_name }{ thisCustomer.last_name }
           </div>
           <div style={{fontSize: '1.0em', color: '#959393', fontWeight: 600}}>
@@ -347,7 +343,9 @@ function CustomerMyPage(props) {
             
                 <span className="customer_my_page_tag2">興味・関心</span>
                 {currentCustomer?
-                  <div style={{textAlign: 'right'}}><EditIcon style={{fontSize: '1.2em'}} onClick={handleClickOpen}/></div>
+                  <div style={{textAlign: 'right'}}>
+                    <EditIcon style={{fontSize: '1.2em'}} onClick={handleClickOpen}/>
+                  </div>
                   :
                   <></>
                 }
@@ -371,7 +369,7 @@ function CustomerMyPage(props) {
                                 >
                                   <DialogContent>
                                       {/* 興味がある分野の選択 */}
-                                      <CustomerInterests interests={currentCustomerInterests} setUpdateInterestsIDs={setUpdateInterestsIDs}/>
+                                      <CustomerInterestsEdit interests={currentCustomerInterests} setUpdateInterestsIDs={setUpdateInterestsIDs}/>
                                   </DialogContent>
                                   <DialogActions>
                                     <Button onClick={handleClose} color="primary">

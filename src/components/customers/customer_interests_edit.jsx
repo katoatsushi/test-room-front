@@ -16,7 +16,6 @@ import Container from '@material-ui/core/Container';
 import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
 import Select from '@material-ui/core/Select';
 import styled from 'styled-components'
-import Evaluation from '../evaluation'
 import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SetChip({interest, setInterestIDs, interestIDs, clickedInterests, setUpdateInterestsIDs}) {
+function SetChipEdit({interest, setInterestIDs, interestIDs, clickedInterests, setUpdateInterestsIDs}) {
+// function SetChipEdit({interest, setUpdateInterestsIDs}) {
     const classes = useStyles();
     const [value, setValue] = React.useState(false)
     useEffect(()=>{
@@ -58,19 +58,21 @@ function SetChip({interest, setInterestIDs, interestIDs, clickedInterests, setUp
                 return ID != interest.id;
             });
             setInterestIDs(deletedIDs)
-            if (setUpdateInterestsIDs){
-                setUpdateInterestsIDs((prev) => deletedIDs)
-            }
+            console.log("削除",{interestIDs})
+            console.log("削除",{deletedIDs})
+            console.log("state変化")
+            setUpdateInterestsIDs((prev) => deletedIDs)
+            // setUpdateInterestsIDs((prev) => [...prev, ...deletedIDs])
         }else{
             // 追加
-            console.log({interest})
-            console.log({interestIDs})
+            console.log("追加",{interest})
+            console.log("追加",{interestIDs})
             const newIDs =  interestIDs.splice(-1, 0, interest.id);
             console.log({newIDs})
             setInterestIDs((prev) => [...prev, ...newIDs])
-            if (setUpdateInterestsIDs){
-                setUpdateInterestsIDs((prev) => interestIDs)
-            }
+            console.log("state変化")
+            setUpdateInterestsIDs((prev) => interestIDs)
+            // setUpdateInterestsIDs((prev) => [...prev, ...interestIDs])
         }
         setValue(!value);
     }
@@ -100,7 +102,8 @@ function SetChip({interest, setInterestIDs, interestIDs, clickedInterests, setUp
     );
 }
 
-export default function CustomerInterests(props) {
+
+export default function CustomerInterestsEdit(props) {
     const url = '/customer_info/intarests_new'
     const [allInterests, setAllInterests] = React.useState([])
     const classes = useStyles();
@@ -131,9 +134,9 @@ export default function CustomerInterests(props) {
         allInterests.map((interest,index) =>
         <>
         {props?.interests? 
-            <SetChip key={index} interest={interest} setInterestIDs={setInterestIDs} interestIDs={interestIDs} clickedInterests={props.interests} setUpdateInterestsIDs={props.setUpdateInterestsIDs} />
+            <SetChipEdit key={index} interest={interest} setInterestIDs={setInterestIDs} interestIDs={interestIDs} clickedInterests={props.interests} setUpdateInterestsIDs={props.setUpdateInterestsIDs} />
             :
-            <SetChip key={index} interest={interest} setInterestIDs={setInterestIDs} interestIDs={interestIDs}/>
+            <SetChipEdit key={index} interest={interest} setInterestIDs={setInterestIDs} interestIDs={interestIDs}/>
         }
         </>
     )

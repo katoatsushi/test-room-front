@@ -122,7 +122,6 @@ const AppointmentNew = (props) => {
                         <RadioGroup aria-label="gender" name="gender1" onChange={ handleAppointmentChange }> 
                             { radio_buttons }
                         </RadioGroup>
-                        {/* {loading && <CircularProgress size={24} className={classes.buttonProgress} />} */}
                         {loading?(<>
                             <CircularProgress size={50} className={classes.buttonProgress} />
                             <div>
