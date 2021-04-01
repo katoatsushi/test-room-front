@@ -23,26 +23,31 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from 'react-redux';
+import {selectCurrentCustomer, selectCustomerHeaders} from '../../slices/customer'
 
 const SelectStoreFitness = (props) => {
-      console.log("SelectStoreFitness", {props})
-      const [customer_menu, setCustomerMenu] = useState([]);
-      const [store, setStore] = useState([]);
-      const [selectCustomerMenu, setSelectCustomerMenu] = useState();
-      const [selectStore, setSelectStore] = useState();
-      const history = useHistory();
-      useEffect(()=>{
+    console.log("SelectStoreFitness", {props})
+    const customerHeader = useSelector(selectCustomerHeaders);
+    const [customer_menu, setCustomerMenu] = useState([]);
+    const [store, setStore] = useState([]);
+    const [selectCustomerMenu, setSelectCustomerMenu] = useState();
+    const [selectStore, setSelectStore] = useState();
+    const history = useHistory();
+
+    useEffect(()=>{
         const url = `/calendar`
-        axios.get(url)
+        axios.get(url, customerHeader)
         .then(function(res) {
+            console.log("返り値チェック",{res})
             setCustomerMenu(res.data.fitnesses);
             setStore(res.data.store);
-            console.log("返り値チェック",{res})
         })
         .catch(function(error) {
-          console.log({error})
+            console.log({error})
         });
-      },[])
+    },[])
+
     function handleCustomerMenuChange(e) { setSelectCustomerMenu(e.target.value) }
     function handleStoreChange(e) {  setSelectStore(e.target.value) }
 

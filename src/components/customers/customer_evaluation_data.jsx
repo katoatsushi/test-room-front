@@ -36,8 +36,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 function BarChart({avaTrainer}) {
   const graphData= {
     // labels: [['2019年', '1月'],['2019年', '2月'],],
