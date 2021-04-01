@@ -37,6 +37,7 @@ const SelectStoreFitness = (props) => {
         .then(function(res) {
             setCustomerMenu(res.data.fitnesses);
             setStore(res.data.store);
+            console.log("返り値チェック",{res})
         })
         .catch(function(error) {
           console.log({error})
@@ -47,7 +48,6 @@ const SelectStoreFitness = (props) => {
 
     const onSubmit = (data) => console.log(data);
     const { handleSubmit } = useForm();
-        
     // const stores_box = store.map((store,store_index) =>
     //     <MenuItem value={store} key={store_index}>{ store.store_name }</MenuItem>
     // );
