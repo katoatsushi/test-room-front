@@ -62,17 +62,14 @@ function SetChipEdit({interest, setInterestIDs, interestIDs, clickedInterests, s
             console.log("削除",{deletedIDs})
             console.log("state変化")
             setUpdateInterestsIDs((prev) => deletedIDs)
-            // setUpdateInterestsIDs((prev) => [...prev, ...deletedIDs])
         }else{
             // 追加
             console.log("追加",{interest})
             console.log("追加",{interestIDs})
             const newIDs =  interestIDs.splice(-1, 0, interest.id);
-            console.log({newIDs})
             setInterestIDs((prev) => [...prev, ...newIDs])
             console.log("state変化")
             setUpdateInterestsIDs((prev) => interestIDs)
-            // setUpdateInterestsIDs((prev) => [...prev, ...interestIDs])
         }
         setValue(!value);
     }
