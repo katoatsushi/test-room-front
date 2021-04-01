@@ -137,7 +137,6 @@ function ShowApo({apo, apos, setApos}) {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {apo.id}:
               { apo.date[0] + '年' + apo.date[1] + '月' + apo.date[2] + '日' }<br/>
               { apo.start[0] + ':' + apo.start[1] } 〜 { apo.finish[0] + ':' + apo.finish[1] }
               の{ apo.menu }の予約をキャンセルしますか？
