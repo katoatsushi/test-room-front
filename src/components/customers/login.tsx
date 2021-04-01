@@ -15,7 +15,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
+import clsx from 'clsx';
 import {
   ISignInFormValues,
   ISignInSuccessResponse,
@@ -47,7 +49,31 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  // ロード
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
+
 
 export default function LogIn() {
     const url = `/v1/customer_auth/sign_in`
@@ -58,13 +84,24 @@ export default function LogIn() {
     const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
     const [serverMessages, setServerMessages] = useState<IServerMessages>();
     const customerRecords = useSelector(getCustomerRecords);
+    // ロード
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
 
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
-      console.log({data})
+      if (!loading) {
+        setSuccess(false);
+        setLoading(true);
+      }
       axios
       .post<ISignInSuccessResponse>(url, data)
       .then((res) => {
         console.log('customer sign in', {res})
+        setSuccess(true);
+        setLoading(false);
         dispatch(setCurrentCustomer(res.data.data));
         dispatch(setHeaders(res.headers));
         axios.get(get_records_url)
@@ -86,6 +123,7 @@ export default function LogIn() {
       })
       .catch((err: AxiosError<IErrorResponse>) => {
         console.log({err})
+        setLoading(false);
         setServerMessages({
           severity: 'error',
           alerts: err.response?.data.errors || [],
@@ -175,16 +213,22 @@ export default function LogIn() {
                     />
                   )}
                 />
-                {/* <ErrorMessage
-                  errors={errors}
-                  name="password"
-                  render={({ message }) => (
-                    <Alert severity="error">{message}</Alert>
-                  )}
-                /> */}
               </Box>
-              {/* <LoadingButton loading={loading} primary="SignIn" /> */}
+              <div className={classes.wrapper}>
               <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  className={buttonClassname}
+                  disabled={loading || success}
+              >
+                ログインする
+              </Button>
+              {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              </div>
+
+              {/* <Button
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -192,7 +236,7 @@ export default function LogIn() {
                 className={classes.submit}
               >
                 ログインする
-              </Button>
+              </Button> */}
               <Grid container justify="flex-end">
                 <Grid item>
                   <Link href="/customer/sign_up" variant="body2">

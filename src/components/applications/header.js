@@ -101,9 +101,11 @@ function Header(props) {
   }
   const handleTrainerSignOut = () => {
     if (!trainer_headers) return;
+    console.log("実際にここからログアウトする")
     axios
       .delete('/v1/trainer_auth/sign_out', trainer_headers)
-      .then(() => {
+      .then((res) => {
+        console.log({res})
         dispatch(trainerRemove());
         handleClose()
         history.push('/');

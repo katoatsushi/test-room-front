@@ -114,7 +114,6 @@ function SignUp() {
     const timer = React.useRef();
     const [open, setOpen] = React.useState(false);
     const [name, setName] = useState({first_name_kanji: "", last_name_kanji: "", first_name_kana: "",last_name_kana: ""});
-    console.log({name})
     const handleClose = () => {
       setOpen(false);
     };

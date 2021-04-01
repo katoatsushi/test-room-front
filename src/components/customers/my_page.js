@@ -14,6 +14,8 @@ import {selectCurrentTrainer, selectTrainerHeaders} from '../../slices/trainer'
 import {selectCurrentAdmin, selectAdminHeaders} from '../../slices/admin'
 import Chip from '@material-ui/core/Chip';
 import EditIcon from '@material-ui/icons/Edit';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import clsx from 'clsx';
 import {
     BrowserRouter as Router,
     Route,
@@ -38,12 +40,34 @@ import CustomerInterests from './customer_individual_info/customer_interests'
 import EvaluationData from './customer_evaluation_data'
 
 const useStyles = makeStyles((theme) => ({
+  // root: {
+  //   display: 'flex',
+  //   alignItems: 'center',
+  // },
   root: {
     flexGrow: 1,
   },
   paper: {
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   },
 }));
 
@@ -65,6 +89,11 @@ function CustomerMyPage(props) {
   const [open, setOpen] = React.useState(false);
   const [thisCustomerInterests, setThisCustomerInterests] = useState();
   const [updateInterestsIDs, setUpdateInterestsIDs] = useState();
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const buttonClassname = clsx({
+    [classes.buttonSuccess]: success,
+  });
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -106,17 +135,25 @@ function CustomerMyPage(props) {
   };
   const [preview, setPreview] = useState('');
   const [avatarData, setAvatarData] = useState({});
+
   function handleAvatarSubmit(){
       const formData = new FormData();
+      if (!loading) {
+        setSuccess(false);
+        setLoading(true);
+      }
       const url = `/customer/update_avatar/${props.match.params.id}`
       formData.append("avatar", avatarData);
       axios.put(url, formData, customerHeaders)
       .then(res => {
           setAvatarOpen(false);
           console.log({res})
+          setSuccess(true);
+          setLoading(false);
           dispatch(setCurrentCustomerInfo(res.data.data));
       })
       .catch(error => {
+          setLoading(false);
           console.log({error})
       });
 
@@ -183,12 +220,41 @@ function CustomerMyPage(props) {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleAvatarClose} color="primary">
+                {/* <Button onClick={handleAvatarClose} color="primary">
                   キャンセル
                 </Button>
+      
                 <Button onClick={handleAvatarSubmit} color="primary">
                   保存
+                </Button> */}
+                <div className={classes.wrapper}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    // color="primary"
+                    fullWidth
+                    onClick={handleAvatarClose}
+                    className={buttonClassname}
+                    disabled={loading || success}
+                >
+                  キャンセル
                 </Button>
+                </div>
+                <div className={classes.wrapper}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={handleAvatarSubmit}
+                    className={buttonClassname}
+                    disabled={loading || success}
+                >
+                  保存
+                </Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                </div>
+
               </DialogActions>
             </Dialog>
         </Grid>
