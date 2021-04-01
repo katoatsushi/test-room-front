@@ -47,13 +47,26 @@ const SelectStoreFitness = (props) => {
 
     const onSubmit = (data) => console.log(data);
     const { handleSubmit } = useForm();
-    const stores_box = store.map((store,store_index) =>
-        <MenuItem value={store} key={store_index}>{ store.store_name }</MenuItem>
-    );
+        
+    // const stores_box = store.map((store,store_index) =>
+    //     <MenuItem value={store} key={store_index}>{ store.store_name }</MenuItem>
+    // );
 
-    const customer_menu_box = customer_menu.map((customer_menu,customer_menu_index) =>
+    // const customer_menu_box = customer_menu.map((customer_menu,customer_menu_index) =>
+    //     <MenuItem value={customer_menu} key={customer_menu_index} >{ customer_menu.name }</MenuItem>
+    // );
+    const stores_box = store.length ?
+    store.map((store,store_index) =>
+        <MenuItem value={store} key={store_index}>{ store.store_name }</MenuItem>
+    ):
+        <MenuItem/>
+
+    const customer_menu_box = customer_menu.length ?
+    customer_menu.map((customer_menu,customer_menu_index) =>
         <MenuItem value={customer_menu} key={customer_menu_index} >{ customer_menu.name }</MenuItem>
-    );
+    ):
+        <MenuItem/>
+
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [year, setYear] = useState();
     const [month, setMonth] = useState();
