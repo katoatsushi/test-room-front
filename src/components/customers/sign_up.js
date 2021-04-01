@@ -121,16 +121,17 @@ function SignUp() {
     });
 
     React.useEffect(() => {
-      return () => {
-        clearTimeout(timer.current);
-      };
       axios.get('/customer/get_company_id')
       .then(function(res) {
           setCompanyId(res.data.id)
       })
+      return () => {
+        clearTimeout(timer.current);
+      };
     }, []);
 
     function onSubmit() {
+      console.log({companyId})
       const url = `/companies/${ companyId }/v1/customer_auth`
       if (!loading) {
         setSuccess(false);
@@ -149,13 +150,8 @@ function SignUp() {
           setSuccess(true);
           setLoading(false);
           setOpen(true);
-          console.log({response})
-          if (response.status=="success") {
-              history.push(`/`)
-          } else {
-              console.log(response);
-          }
-
+          console.log(response.data.data)
+          history.push(`/`)
       }).catch(function (response) {
           setLoading(false);
           console.log({response})
