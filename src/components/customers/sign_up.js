@@ -101,8 +101,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 function SignUp() {
-    const company_id = 1
-    const url = `/companies/${ company_id }/v1/customer_auth`
+    const [companyId, setCompanyId] = React.useState();
     const classes = useStyles();
     const [email, setEmail] = useState("ka.baseball1997@gmail.com");
     const [password, setPassword] = useState("gonza1026");
@@ -125,37 +124,42 @@ function SignUp() {
       return () => {
         clearTimeout(timer.current);
       };
+      axios.get('/customer/get_company_id')
+      .then(function(res) {
+          setCompanyId(res.data.id)
+      })
     }, []);
 
     function onSubmit() {
-        if (!loading) {
-          setSuccess(false);
-          setLoading(true);
-        }
-        axios.post( url, {
-            first_name_kana: name.first_name_kana,
-            last_name_kana: name.last_name_kana,
-            first_name_kanji: name.first_name_kanji,
-            last_name_kanji: name.last_name_kanji,
-            email: email,
-            password: password,
-            password_confirmation: password_confirmation
-        })
-        .then(function (response) {
-            setSuccess(true);
-            setLoading(false);
-            setOpen(true);
-            console.log({response})
-            if (response.status=="success") {
-                history.push(`/`)
-            } else {
-               console.log(response);
-            }
+      const url = `/companies/${ companyId }/v1/customer_auth`
+      if (!loading) {
+        setSuccess(false);
+        setLoading(true);
+      }
+      axios.post( url, {
+          first_name_kana: name.first_name_kana,
+          last_name_kana: name.last_name_kana,
+          first_name_kanji: name.first_name_kanji,
+          last_name_kanji: name.last_name_kanji,
+          email: email,
+          password: password,
+          password_confirmation: password_confirmation
+      })
+      .then(function (response) {
+          setSuccess(true);
+          setLoading(false);
+          setOpen(true);
+          console.log({response})
+          if (response.status=="success") {
+              history.push(`/`)
+          } else {
+              console.log(response);
+          }
 
-        }).catch(function (response) {
-            setLoading(false);
-            console.log({response})
-        })
+      }).catch(function (response) {
+          setLoading(false);
+          console.log({response})
+      })
     }
     const handleEMailChange = (e) => {
         setEmail(e.target.value);
