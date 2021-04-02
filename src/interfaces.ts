@@ -29,15 +29,15 @@ export interface ICustomer {
 }
 
 export interface ICustomerInfo {
-  id: integer;
-  age: integer;
+  id: number;
+  age: number;
   birthday: string;
   avatar_url: string;
-  customer_id: integer;
+  customer_id: number;
   phone_number: string;
   emergency_phone_number: string;
   gender: string;
-  job_id: integer;
+  job_id: number;
   job_name: string;
   postal_code: string;
   address: string;
@@ -50,14 +50,13 @@ export interface ICustomerStatus {
   numbers_of_contractnt: boolean;
 }
 export interface ICustomerInterests {
-  interests: IInterests
+  interests: IInterests[];
 }
 export interface IInterests {
-  id: integer;
+  id: number;
   name: string;
-  interest_family_id: integer;
+  interest_family_id: number;
 }
-
 export interface ITrainer {
   ['allow_password_change']?: false;
   email: string;
@@ -69,8 +68,14 @@ export interface ITrainer {
   last_name_kanji: string;
 }
 
+export interface IMasterAdmin {
+  ['allow_password_change']?: false;
+  email: string;
+  id: number;
+}
+
 export interface ITrainerInfo {
-  id: integer;
+  id: number;
   avatar_url: string;
   created_at: string;
   first_name: string;
@@ -78,7 +83,7 @@ export interface ITrainerInfo {
   gender: string;
   last_name: string;
   last_name_kana: string;
-  trainer_id: integer;
+  trainer_id: number;
 }
 
 export interface IAdmin {
@@ -96,6 +101,18 @@ export interface ISignInSuccessResponse {
   data: ICustomer;
   message: string;
 }
+export interface ISignInSuccessAdminResponse {
+  data: IAdmin;
+  message: string;
+}
+// export interface ISignInSuccessMasterAdminResponse {
+//   data: IMasterAdmin;
+//   message: string;
+// }
+export interface ISignInSuccessTrainerResponse {
+  data: ITrainer;
+  message: string;
+}
 export interface IErrorResponse {
   errors: string[];
 }
@@ -104,10 +121,15 @@ export interface IServerMessages {
   alerts: string[];
 }
 
-export interface ICustomerRecords {
+export interface ICustomerRecordResponse {
     data: ICustomerRecord[];
     message: string;
 }
+// export interface ICustomerRecords {
+//     data: ICustomerRecord[];
+//     message: string;
+// }
+
 export interface ICustomerRecord {
   id: number;
   trainer_id: number;
@@ -119,6 +141,7 @@ export interface ICustomerRecord {
   min: string;
   menues: ICustomerRecordMenu[];
 }
+
 export interface ICustomerRecordMenu {
   time: number;
   set_num: number;

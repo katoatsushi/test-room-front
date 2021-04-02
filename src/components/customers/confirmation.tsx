@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React , { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -52,7 +53,7 @@ function Confirmation(props) {
 
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
         const confirmation_response = props.location.search
-        let confirmations = confirmation_response.split('&');
+        const confirmations = confirmation_response.split('&');
         const confirmation_token = confirmations[1].split('=');
         const confirmation_token_values = confirmation_token[1]
         const confirm_url = `/customer_confirm_ok`

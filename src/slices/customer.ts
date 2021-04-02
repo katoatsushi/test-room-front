@@ -1,18 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ITokenHeaders, ICustomer , ICustomerInfo, ICustomerStatus, ICustomerInterests} from '../interfaces';
-/* eslint-disable import/no-cycle */
+import { ITokenHeaders, ICustomer , ICustomerInfo, ICustomerStatus, IInterests} from '../interfaces';
 import { RootState } from '../store';
 
 interface ICurrentCustomer {
   currentCustomer: null | ICustomer;
-  // ここ追加
   currentCustomerInfo: null | ICustomerInfo;
+
   currentCustomerStatus: null | ICustomerStatus;
-  currentCustomerInterests: null | ICustomerInterests;
-  // ここまで
+
+  currentCustomerInterests: null | IInterests[];
   headers: null | { headers: ITokenHeaders };
 }
-// const initialState: ICurrentCustomer = { currentCustomer: null, headers: null };
+
+// state.currentCustomer.currentCustomerStatus
+
 const initialState: ICurrentCustomer = { currentCustomerInfo: null, currentCustomerStatus: null, currentCustomerInterests: null, currentCustomer: null, headers: null };
 const currentCustomerSlice = createSlice({
   name: 'currentCustomer',
@@ -27,7 +28,7 @@ const currentCustomerSlice = createSlice({
     setCurrentCustomerStatus: (state, action: PayloadAction<ICustomerStatus>) => {
       state.currentCustomerStatus = action.payload;
     },
-    setCurrentCustomerInterests: (state, action: PayloadAction<ICustomerStatus>) => {
+    setCurrentCustomerInterests: (state, action: PayloadAction<IInterests[]>) => {
       state.currentCustomerInterests = action.payload;
     },
     setHeaders: (state, action: PayloadAction<ITokenHeaders>) => {
@@ -56,11 +57,12 @@ const currentCustomerSlice = createSlice({
   },
 });
 
+// state == combineReducers
 export const selectCurrentCustomer = (state: RootState): null | ICustomer =>
   state.currentCustomer.currentCustomer;
-export const selectCurrentCustomerInfos = (state: RootState): null | ICustomer =>
+export const selectCurrentCustomerInfos = (state: RootState): null | ICustomerInfo =>
   state.currentCustomer.currentCustomerInfo;
-export const selectCurrentCustomerInterests = (state: RootState): null | ICustomer =>
+export const selectCurrentCustomerInterests = (state: RootState): null | IInterests[] =>
   state.currentCustomer.currentCustomerInterests;
 export const selectCustomerHeaders = (
   state: RootState

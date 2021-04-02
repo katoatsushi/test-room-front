@@ -1,51 +1,27 @@
-import React, { useEffect, useState, Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import axios from 'axios'
-import { selectCurrentTrainer, selectTrainerHeaders } from '../../../slices/trainer';
+import { selectTrainerHeaders } from '../../../slices/trainer';
 import { useSelector } from 'react-redux';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function ShowRecord(props) {
     console.log({props})
     const record_id = props.match.params.id
     const history = useHistory();
-    const currentTrainer = useSelector(selectCurrentTrainer);
     const trainerHeaders = useSelector(selectTrainerHeaders);
     const url = `/show/record/${record_id}`
     const [customer, setCustomer] = React.useState();
     const [apo, setApo] = React.useState();
-    const [record, setRecord] = React.useState();
+    // const [record, setRecord] = React.useState();
     const [recordMenues, setRecordMenues] = React.useState([]);
     const [open, setOpen] = React.useState(false);
-
-    const data = []
     const message = ""
     function showDate(time){
         const date = new Date(`${time}`);
@@ -69,7 +45,7 @@ export default function ShowRecord(props) {
             console.log({res})
             setCustomer(res.data.customer)
             setApo(res.data.apo)
-            setRecord(res.data.record)
+            // setRecord(res.data.record)
             setRecordMenues(res.data.records_menues)
         })
         .catch(function(error) {
@@ -140,7 +116,7 @@ export default function ShowRecord(props) {
             </Paper>
             {recordMenues?(<>
                 {recordMenues.map((menu, index) => (<>
-                  <Grid container style={{fontWeight: 500}} style={{marginBottom: 10, marginTop: 3, fontSize: 12}}>
+                  <Grid container key={index} style={{fontWeight: 500, marginBottom: 10, marginTop: 3, fontSize: 12}}>
                     <Grid item xs={5} style={{justifyContent: 'center'}}>
                         {menu.fitness_third_name}
                     </Grid>

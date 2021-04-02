@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState} from 'react';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -9,17 +9,14 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-import TextField from '@material-ui/core/TextField';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentCustomer, selectCustomerHeaders, customerRemove, } from '../../slices/customer';
 import axios from 'axios'
 
 function ShowAllSchedules(props){
     const showVacancy = props.vacancy ?  
-    props.vacancy.map((obj, index) =>
+    props.vacancy.map((obj) =>
     <>
         【{obj.store.store_name}】<br/>
-        { obj.schedule.map((sch, index) => 
+        { obj.schedule.map((sch) => 
         <>
         {
             (() => {
@@ -50,7 +47,7 @@ function SelectStore(props){
         ): 
             <MenuItem />
     function handlehange(e) {
-        const res = props.vacancy.filter((vac, index) => {
+        const res = props.vacancy.filter((vac) => {
             return vac.store.id === e.target.value.id;
         });
         props.setSelectVacancy((prev)=> (prev, res[0]))
@@ -77,12 +74,11 @@ function SelectStore(props){
 }
 
 function ShowSchedule(props){
-    const customer_headers = useSelector(selectCustomerHeaders);
     function handleChenge(e){
         props.setSelectTime((prev) => (prev, e));
     }
     const radio_buttons = props.selectVacancy.schedule ?  
-    props.selectVacancy.schedule.map((time,index) =>
+    props.selectVacancy.schedule.map((time) =>
     <>
         {
             (() => {
@@ -91,16 +87,16 @@ function ShowSchedule(props){
                     <FormControlLabel 
                         control={<Radio />} 
                         disabled
-                        label= {time.times[0][0] + "時"+ time.times[0][1] + "分" + " 〜 " + time.times[1][0] + "時"　+ time.times[1][1] + "分"} 
+                        label= {time.times[0][0] + "時"+ time.times[0][1] + "分" + " 〜 " + time.times[1][0] + "時" + time.times[1][1] + "分"} 
                     />
                     );
                 } else {
                     return (
                         <FormControlLabel 
-                            value={ time.times[0][0] + "時"+ time.times[0][1] + "分" + " 〜 " + time.times[1][0] + "時"　+ time.times[1][1] + "分"}
+                            value={ time.times[0][0] + "時"+ time.times[0][1] + "分" + " 〜 " + time.times[1][0] + "時" + time.times[1][1] + "分"}
                             onClick={() => handleChenge(time.times)}
                             control={<Radio />} 
-                            label= {time.times[0][0] + "時"+ time.times[0][1] + "分" + " 〜 " + time.times[1][0] + "時"　+ time.times[1][1] + "分"} 
+                            label= {time.times[0][0] + "時"+ time.times[0][1] + "分" + " 〜 " + time.times[1][0] + "時" + time.times[1][1] + "分"} 
                         />
                     );
                 }
@@ -154,6 +150,7 @@ export default function RoomPlusBox(){
     const today = new Date
     const [vacancy, setVacancy] = useState([]);
     const [allStores, setAllStores] = useState([]);
+    // eslint-disable-next-line no-unused-vars
     const [selectStore, setSelectStore] = useState({});
     const [selectVacancy, setSelectVacancy] = useState({});
     const [selectTime, setSelectTime] = useState([]);

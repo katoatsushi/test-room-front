@@ -1,17 +1,15 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
-// import _ from 'lodash'
 import Button from '@material-ui/core/Button' 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { useForm } from "react-hook-form";
 import axios from 'axios'
 import TextField from '@material-ui/core/TextField';
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,16 +42,14 @@ const AppointmentNew = (props) => {
     console.log("AppointmentNew", {props})
     const classes = useStyles();
     const [appointments, setAppointments] = useState([]);
+    // eslint-disable-next-line no-unused-vars
     const [ appoDate, setAppoDate ] = useState();
     const [value, setValue] = useState('');
     const [timeValue, setTimeValue] = useState([]);
-    const { handleSubmit } = useForm();
     const history = useHistory();
     const [loading, setLoading] = React.useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [success, setSuccess] = React.useState(false);
-    const buttonClassname = clsx({
-      [classes.buttonSuccess]: success,
-    });
     const params = props.match.params
     const url = `/appointments/new/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
 
@@ -84,13 +80,13 @@ const AppointmentNew = (props) => {
                     value={time[0][0]}
                     onClick={() => handleTimeSelect(time)}
                     control={<Radio />} 
-                    label= {time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時"　+ time[2][1][1] + "分"} 
+                    label= {time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"} 
                 />
             )}
             {(time[1] == 0) && (
                 <FormControlLabel 
                     value="disabled" disabled control={<Radio />} 
-                    label={time[2][0][0]+ "時"+ time[2][0][1] + "分" +  " 〜 " + time[2][1][0] + "時"　+ time[2][1][1] + "分"}  
+                    label={time[2][0][0]+ "時"+ time[2][0][1] + "分" +  " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"}  
                 />
             )}
         </React.Fragment>

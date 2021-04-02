@@ -1,30 +1,16 @@
-import React, { useEffect, useState, Component } from 'react';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-  } from 'react-router-dom';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios'
-import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
 import Button from '@material-ui/core/Button'
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
 import { useForm } from "react-hook-form";
-import { useSelector, useDispatch } from 'react-redux';
-import {selectCurrentCustomer, selectCustomerHeaders} from '../../slices/customer'
+import { useSelector } from 'react-redux';
+import { selectCustomerHeaders} from '../../slices/customer'
 
 const SelectStoreFitness = (props) => {
     console.log("SelectStoreFitness", {props})
@@ -72,10 +58,6 @@ const SelectStoreFitness = (props) => {
     ):
         <MenuItem/>
 
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [year, setYear] = useState();
-    const [month, setMonth] = useState();
-    const [date, setDate] = useState();
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>

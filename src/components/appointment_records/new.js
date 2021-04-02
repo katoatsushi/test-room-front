@@ -1,4 +1,5 @@
-import React, { useEffect, useState ,useCallback} from 'react';
+/* eslint-disable react/prop-types */
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -6,14 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-  } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -39,27 +33,11 @@ const useStyles = makeStyles({
 const AppointmentRecordNew = (props) => {
     console.log({props})
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
     const history = useHistory();
 
     const response = props.location.state.response
     const time = props.location.state.time
-    
 
-    const render_response = response ?  
-      <>
-        id:{ response.id }<br/>
-        email:{ response.email }<br/>
-      </>
-    : 
-        <div />
-
-    const render_time = time ?  
-      <>
-        { time[0][0] + ":" + time[0][1] + "~" + time[1][0] + ":" + time[1][1]}
-      </>
-    : 
-        <div />
     function handleDataCreate() {
       const url = `/customer/${ response.customer_id }/appointment/${ response.id }/create_customer_record`
       axios.post(url)
@@ -81,18 +59,18 @@ const AppointmentRecordNew = (props) => {
                  { response.fitness_name }のフィードバックを作成しますか？
               </Typography>
               <hr/>
-              時間: {time[0][0]}:{time[0][1]} 〜　{time[1][0]}:{time[1][1]}<br/>
+              時間: {time[0][0]}:{time[0][1]} 〜 {time[1][0]}:{time[1][1]}<br/>
               予約時内容: { response.fitness_name }
               <Typography variant="body2" component="p">
               </Typography>
             </CardContent>
             <CardActions>
               <Button 
-                  style={{width: '100%', margin: '0 auto',textAlign: 'center'}} 
+                  style={{width: '100%', margin: '0 auto',textAlign: 'center',fontSize: '0.9em'}} 
                   variant="contained" 
                   size='large' 
                   color="secondary"
-                  onClick={() => handleDataCreate()} style={{fontSize: '0.9em'}}>
+                  onClick={() => handleDataCreate()}>
                 ここまま進む
               </Button>
             </CardActions>

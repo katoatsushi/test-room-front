@@ -1,7 +1,5 @@
-import React, { Component, useState, useEffect } from "react"
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer ,CartesianGrid} from "recharts"
-import {selectCurrentCustomer, selectCustomerHeaders} from '../../slices/customer'
-import { useSelector, useDispatch } from 'react-redux';
+/* eslint-disable react/prop-types */
+import React, {  useState, useEffect } from "react"
 import Chip from '@material-ui/core/Chip';
 
 
@@ -14,7 +12,7 @@ export default function InterestChips(props){
     console.log("チェック", {interests})
 
     const InterestsChips = interests.length ?  
-        interests.map((interest,index) =>
+        interests.map((interest) =>
         <>
         <Chip
             key={interest.id}

@@ -1,14 +1,13 @@
-import React, { useEffect, useState ,useCallback} from 'react';
+/* eslint-disable react/prop-types */
+import React from 'react';
 import ScheduleCheck from './admin_schedule_cehck'
 import Paper from '@material-ui/core/Paper';
-import {selectCurrentAdmin, selectAdminHeaders} from '../../slices/admin'
-import {selectCurrentTrainer, selectTrainerHeaders} from '../../slices/trainer'
-import { useSelector, useDispatch } from 'react-redux';
+import {selectCurrentAdmin} from '../../slices/admin'
+import {selectCurrentTrainer} from '../../slices/trainer'
+import { useSelector } from 'react-redux';
 
 export default function AdminTop(props){
-    const adminHeaders = useSelector(selectAdminHeaders);
     const currentAdmin = useSelector(selectCurrentAdmin);
-    const trainerHeaders = useSelector(selectTrainerHeaders);
     const currentTrainer = useSelector(selectCurrentTrainer);
     console.log("AdminTop", {props})
     const params = props.match.params

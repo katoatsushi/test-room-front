@@ -1,7 +1,7 @@
-import React, { useEffect, useState ,useCallback} from 'react';
-import Button from '@material-ui/core/Button' 
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,60 +10,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Link } from 'react-router-dom';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import DeleteIcon from '@material-ui/icons/Delete';
-import PropTypes from 'prop-types';
-import DialogActions from '@material-ui/core/DialogActions';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import InputBase from '@material-ui/core/InputBase';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import Avatar from '@material-ui/core/Avatar';
 import { deepOrange, green } from '@material-ui/core/colors';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import Grid from '@material-ui/core/Grid';
 
-const BootstrapInput = withStyles((theme) => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
-      borderRadius: 4,
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
-  },
-}))(InputBase);
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -122,7 +76,7 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
         },
     }))(TableCell);
     
-    const StyledTableRow = withStyles((theme) => ({
+    const StyledTableRow = withStyles(() => ({
         root: {
             '&:nth-of-type(odd)': {
             },
@@ -165,7 +119,6 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
 
 
     function ScheduleDetails(res,time) {
-      var blank_cells = [];
       function FillBlankRepeat() {
         var items = [];
         for (var i = 0;  i < thisStoreAppointments.store_rooms_num - res.length;  i++  ) {
@@ -219,7 +172,7 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
               </>
             ))}
             {repeat_materials.items.map((mate, index) => (
-              <StyledTableCell style={{backgroundColor: 'white', border: '1px solid', borderColor: '#DDDDDD'}}/>
+              <StyledTableCell key={index} style={{backgroundColor: 'white', border: '1px solid', borderColor: '#DDDDDD'}}/>
             ))}
           </>
        )

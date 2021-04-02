@@ -1,7 +1,8 @@
-import React, { useEffect, useState, Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios'
-import { selectCurrentTrainer, selectTrainerHeaders } from '../../../slices/trainer';
+import { selectTrainerHeaders } from '../../../slices/trainer';
 import { useSelector } from 'react-redux';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -9,21 +10,12 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import {
-        BrowserRouter as Router,
-        Route,
-        Switch,
-        useParams,
-        useHistory,
-        useLocation,
-    } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,12 +36,14 @@ function CheckBoxChip({data, setSelectMenues, selectMenues}){
         if(e.target.checked){
             //追加
             selectMenues.push(data);
+            // eslint-disable-next-line no-unused-vars
             setSelectMenues((prev)=> selectMenues)
         }else{
             //削除
-            const deletedDatas = selectMenues.filter((menu, index) => {
+            const deletedDatas = selectMenues.filter((menu) => {
                 return menu.id != data.id;
             });
+            // eslint-disable-next-line no-unused-vars
             setSelectMenues((prev) =>  deletedDatas)
         }
     }
@@ -63,9 +57,6 @@ function CheckBoxChip({data, setSelectMenues, selectMenues}){
 
 
 export default function TrainerCreateRecord(props) {
-    console.log({props})
-
-    const currentTrainer = useSelector(selectCurrentTrainer);
     const trainerHeaders = useSelector(selectTrainerHeaders);
     const [fitnessData, setFitnessData] = React.useState([]);
     const [selectMenues, setSelectMenues] = React.useState([]);
@@ -94,12 +85,12 @@ export default function TrainerCreateRecord(props) {
            <Paper variant="outlined"style={{padding: 20, margin: 10}}>
             <span className="karute_text">内容を選んでください</span>
             {fitnessData.map((data, index) => (
-                <Accordion style={{marginTop: 5}}>
+                <Accordion key={index} style={{marginTop: 5}}>
                     <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    style={{backgroundColor: '#4DA7F0'}}
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                        style={{backgroundColor: '#4DA7F0'}}
                     >
                     <Typography className={classes.heading} style={{color: 'white', fontWeight: 600}}>
                         {data.second.name}
@@ -109,8 +100,8 @@ export default function TrainerCreateRecord(props) {
                     <Typography>
                         <FormControl component="fieldset" className={classes.formControl}>
                             <FormGroup>
-                            {data.third.map((d, index) => (<>
-                                <CheckBoxChip data={d} setSelectMenues={setSelectMenues} selectMenues={selectMenues}/>
+                            {data.third.map((d, dindex) => (<>
+                                <CheckBoxChip key={dindex} data={d} setSelectMenues={setSelectMenues} selectMenues={selectMenues}/>
                             </>))}
                                 </FormGroup>
                             </FormControl>

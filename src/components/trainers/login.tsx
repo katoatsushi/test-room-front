@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React , { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -18,7 +19,7 @@ import Container from '@material-ui/core/Container';
 import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
 import {
   ISignInFormValues,
-  ISignInSuccessResponse,
+  ISignInSuccessTrainerResponse,
   IErrorResponse,
   IServerMessages,
 } from '../../interfaces';
@@ -58,7 +59,7 @@ function TrainerLogIn() {
       // setLoading(true);
       console.log({data})
       axios
-      .post<ISignInSuccessResponse>(url, data)
+      .post<ISignInSuccessTrainerResponse>(url, data)
       .then((res) => {
         console.log("trainer", {res})
         dispatch(setCurrentTrainer(res.data.data));

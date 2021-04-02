@@ -1,43 +1,26 @@
-import React, { useEffect, useState, Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import {  makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import Grid from '@material-ui/core/Grid';
-import { useTable } from 'react-table'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import MaskedTextFieldForTrainerShift from '../masked_text_field_for_trainer_shift'
-import TextField from '@material-ui/core/TextField';
 import InputBase from '@material-ui/core/InputBase';
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from '../../../slices/admin';
-import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentAdmin } from '../../../slices/admin';
+import { useSelector } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import CreateTableCellEdit from './create_shifts'
 import ShiftTableCellEdit from './update_shifts.jsx'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   table: {
     minWidth: 650
   },
@@ -50,41 +33,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+// function createData(name, calories, fat, carbs, protein) {
+//   return { name, calories, fat, carbs, protein };
+// }
 
 
-function TimeCell({checked, handleChange, start, finish, handleStartChange, handleFinishChange}){
-    const classes = useStyles();
-    return (<>
-        <Checkbox
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ 'aria-label': 'primary checkbox' }}
-        />
-        <InputBase
-            id="time"
-            type="time"
-            value={start}
-            className={classes.textField}
-            onChange={handleStartChange}
-            InputLabelProps={{ shrink: true, }}
-            inputProps={{ step: 300, }}
-            style={{display: 'inline-block', display: 'inline'}}
-        /><hr/>
-        <InputBase
-            id="time"
-            type="time"
-            value={finish}
-            className={classes.textField}
-            onChange={handleFinishChange}
-            InputLabelProps={{ shrink: true, }}
-            inputProps={{ step: 300, }}
-            style={{display: 'inline-block', display: 'inline'}}
-        />
-    </>)
-}
 
 function ShiftTableCellShow({data}){
     const classes = useStyles();
@@ -94,7 +47,7 @@ function ShiftTableCellShow({data}){
         var min = null
         var hour = null
         date.getMinutes()==0?  min = "00": min = String(date.getMinutes())
-        min.length == 1? min = "0" + min: min = min
+        min.length == 1? min = "0" + min: min
         String(date.getHours()).length == 1? hour = "0" + String(date.getHours()): hour = String(date.getHours())
         const newDate = `${hour}:` + `${min}`
         return newDate
@@ -117,7 +70,7 @@ function ShiftTableCellShow({data}){
                 className={classes.textField}
                 InputLabelProps={{ shrink: true, }}
                 inputProps={{ step: 300, }}
-                style={{display: 'inline-block', display: 'inline'}}
+                style={{display: 'inline-block'}}
             /><hr/>
             <InputBase
                 id="time"
@@ -127,7 +80,7 @@ function ShiftTableCellShow({data}){
                 className={classes.textField}
                 InputLabelProps={{ shrink: true, }}
                 inputProps={{ step: 300, }}
-                style={{display: 'inline-block', display: 'inline'}}
+                style={{display: 'inline-block'}}
             />
         </TableCell>
     </>)
@@ -136,12 +89,12 @@ function ShiftTableCellShow({data}){
 export default function ManageTrainerShift(){
     const classes = useStyles();
     const currentAdmin = useSelector(selectCurrentAdmin);
-    const admin_headers = useSelector(selectAdminHeaders);
     const url = `/get_trainer_shifts`
     const [trainerShifts, setTrainerShifts] = useState([]);
     const [submitData, setSubmitData] = useState([]);
-    const [stores, setsStores] = useState([]);
+    const [stores, setStores] = useState([]);
     const [days, setDays] = useState([]);
+    // eslint-disable-next-line no-unused-vars
     const [checked, setChecked] = React.useState(false);
     const [submitOpen, setSubmitOpen] = React.useState(false);
     const [shiftEdit, setShiftEdit] = React.useState(false);
@@ -151,6 +104,7 @@ export default function ManageTrainerShift(){
     const year = today.getFullYear();
 
 
+    // eslint-disable-next-line no-unused-vars
     const handleChange = (event) => {
         setChecked(event.target.checked);
     };
@@ -178,22 +132,22 @@ export default function ManageTrainerShift(){
             setTrainerShifts(response.data.data)
             setDays(response.data.date_infos)
             setSubmitData(response.data.submit_data)
-            setsStores(response.data.stores)
+            setStores(response.data.stores)
         })
         .catch(function (response) {
             console.log("error", {response})
         })
     },[])
 
-    function setDate(obj){
-        const date = new Date(`${obj}`)
-        var min = null
-        var hour = null
-        date.getMinutes()==0?  min = "00": min = String(date.getMinutes())
-        String(date.getHours()).length == 1? hour = "0" + String(date.getHours()): hour = String(date.getHours())
-        const newDate = `${hour}:` + `${min}`
-        return newDate
-    }
+    // function setDate(obj){
+    //     const date = new Date(`${obj}`)
+    //     var min = null
+    //     var hour = null
+    //     date.getMinutes()==0?  min = "00": min = String(date.getMinutes())
+    //     String(date.getHours()).length == 1? hour = "0" + String(date.getHours()): hour = String(date.getHours())
+    //     const newDate = `${hour}:` + `${min}`
+    //     return newDate
+    // }
     function submitDialogOpen(){
         setSubmitOpen(true)
     }
@@ -218,7 +172,7 @@ export default function ManageTrainerShift(){
             //     setTrainerShifts(response.data.data)
             //     setDays(response.data.date_infos)
             //     setSubmitData(response.data.submit_data)
-            //     setsStores(response.data.stores)
+            //     setStores(response.data.stores)
             // })
             // .catch(function (response) {
             //     console.log("error", {response})
@@ -241,16 +195,16 @@ export default function ManageTrainerShift(){
                             {next_month}<br/>
                             月
                         </TableCell>
-                        {days.map((row) => (
-                            <TableCell style={{textAlign: 'center'}} component="th" scope="row" className="cell_box">
+                        {days.map((row, index) => (
+                            <TableCell key={index} style={{textAlign: 'center'}} component="th" scope="row" className="cell_box">
                                 {row[0]}
                             </TableCell>
                         ))}
                     </TableRow>
                     <TableRow>
                         <TableCell/>
-                        {days.map((row) => (
-                            <TableCell style={{textAlign: 'center'}} component="th" scope="row" className="cell_box">
+                        {days.map((row, index) => (
+                            <TableCell key={index} style={{textAlign: 'center'}} component="th" scope="row" className="cell_box">
                                 {row[1]}
                             </TableCell>
                         ))}
@@ -284,8 +238,11 @@ export default function ManageTrainerShift(){
                             {edit? (
                                 <>
                                     {/* 新規作成用 */}
-                                    <CreateTableCellEdit data={r} stores={stores} setSubmitData={setSubmitData} submitData={submitData} 
+                                    {/* <CreateTableCellEdit data={r} stores={stores} setSubmitData={setSubmitData} submitData={submitData} 
                                         setTrainerShifts={setTrainerShifts} trainerShifts={trainerShifts}
+                                        setShiftEdit={setShiftEdit}
+                                    /> */}
+                                    <CreateTableCellEdit data={r} stores={stores}  submitData={submitData} 
                                         setShiftEdit={setShiftEdit}
                                     />
                                 </>
@@ -299,7 +256,8 @@ export default function ManageTrainerShift(){
                                     className={classes.textField}
                                     InputLabelProps={{shrink: true,}}
                                     inputProps={{step: 300, }}
-                                    style={{display: 'inline-block', display: 'inline', color: 'blue'}}
+                                    // style={{display: 'inline-block', display: 'inline', color: 'blue'}}
+                                    style={{display: 'inline-block',color: 'blue'}}
                                 /><hr/>
                                 <InputBase
                                     id="time"
@@ -308,7 +266,8 @@ export default function ManageTrainerShift(){
                                     className={classes.textField}
                                     InputLabelProps={{shrink: true,}}
                                     inputProps={{step: 300, }}
-                                    style={{display: 'inline-block', display: 'inline', color: 'blue'}}
+                                    // style={{display: 'inline-block', display: 'inline', color: 'blue'}}
+                                    style={{display: 'inline-block',color: 'blue'}}
                                 />
                                 </TableCell>
                                 </>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React , { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -21,7 +22,6 @@ function CustomerJobs(props) {
     const [selectJob, setSelectJob] = React.useState()
 
     useEffect(()=>{
-
         axios.get(url)
         .then(function(res) {
             setJobs(res.data.jobs)
@@ -29,20 +29,21 @@ function CustomerJobs(props) {
         .catch(function(error) {
             console.log({error})
         });
-
         props.setCustomerStatus((prev) => ({...prev, jobs: selectJob}))
     },[selectJob])
 
 
-    const select_jobs = jobs.map((job ,index) =>
+    const select_jobs = jobs.map((job,index) =>
+        // TODO
         <FormControlLabel 
             key={index} 
-            value={job.name} 
+            value={job.name}
+            label= { job.name }
             onClick={()=>handleJobChange(job)} 
             control={<Radio/>} 
-            label= { job.name }/>
+        />
     );
-    
+
     function handleJobChange(e){
         console.log({e})
         setSelectJob(e);

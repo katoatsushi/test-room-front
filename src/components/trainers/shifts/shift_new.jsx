@@ -1,19 +1,12 @@
-import React, { useEffect, useState, Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, {  useState } from 'react';
 import axios from 'axios'
 import FormattedInputs from './text_field'
 import Grid from '@material-ui/core/Grid';
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import { selectCurrentTrainer, selectTrainerHeaders, trainerRemove, } from '../../../slices/trainer';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-  } from 'react-router-dom';
+import { selectCurrentTrainer, selectTrainerHeaders } from '../../../slices/trainer';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export default function ShiftNew(props){
     const history = useHistory();
@@ -62,7 +55,7 @@ export default function ShiftNew(props){
         <Grid container spacing={3}>
            {dateInits.items.map((date, index) => (
                 <>
-                    <FormattedInputs setButton={setButton} date={date} shift={shift} setShift={setShift}/>
+                    <FormattedInputs key={index} setButton={setButton} date={date} shift={shift} setShift={setShift}/>
                 </>
             ))}
         </Grid>

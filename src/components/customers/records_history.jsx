@@ -1,11 +1,6 @@
-import React, { useEffect, useState, Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios'
 
@@ -20,7 +15,7 @@ function ShowRecords({record}) {
                 { record.appointment_start[0] + ':' + record.appointment_start[1] } 〜 
                 { record.appointment_finish[0] + ':' + record.appointment_finish[1] }
             </div>
-            { record.session_menus.map((menu, index) => <span> {menu} </span>) }
+            { record.session_menus.map((menu, index) => <span key={index}> {menu} </span>) }
             </Grid>
         </Grid>
         </Paper>

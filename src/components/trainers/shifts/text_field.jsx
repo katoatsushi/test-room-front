@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import InputBase from '@material-ui/core/InputBase';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -83,7 +83,8 @@ export default function FormattedInputs(props) {
                 inputProps={{
                     step: 300, // 5 min
                 }}
-                style={{display: 'inline-block', display: 'inline'}}
+                // style={{display: 'inline-block'}}
+                style={{display: 'inline-block'}}
             />
             <TextField
                 id="time"
@@ -97,7 +98,8 @@ export default function FormattedInputs(props) {
                 inputProps={{
                     step: 300, // 5 min
                 }}
-                style={{display: 'inline-block', display: 'inline'}}
+                // style={{display: 'inline-block'}}
+                style={{display: 'inline-block'}}
             />
       </>
     ):(
@@ -115,7 +117,7 @@ export default function FormattedInputs(props) {
                 inputProps={{
                     step: 300, // 5 min
                 }}
-                style={{display: 'inline-block', display: 'inline'}}
+                style={{display: 'inline-block'}}
             />
             <TextField
                 id="time"
@@ -130,7 +132,7 @@ export default function FormattedInputs(props) {
                 inputProps={{
                     step: 300, // 5 min
                 }}
-                style={{display: 'inline-block', display: 'inline'}}
+                style={{display: 'inline-block'}}
             />
         </>
     )}

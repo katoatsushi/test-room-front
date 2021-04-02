@@ -1,23 +1,10 @@
-import React, { useEffect, useState, Component } from 'react';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-  } from 'react-router-dom';
-import axios from 'axios'
-import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
+import { useHistory} from 'react-router-dom';
 import Button from '@material-ui/core/Button'
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Grid from '@material-ui/core/Grid';
 import { useForm } from "react-hook-form";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import moment from 'moment';
 
 const SelectDate = (props) => {
     console.log("SelectDate", {props})
@@ -37,7 +24,6 @@ const SelectDate = (props) => {
                 onChange={onChange}
                 value={value}
                 className="calendar"
-                // tileContent={getTileContent()}
             />
 
             <div className="calendar_page_button">

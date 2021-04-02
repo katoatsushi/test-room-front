@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -5,22 +6,14 @@ import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import CustomerConditions from './customer_condition';
 import CustomerJobs from './customer_jobs';
 import CustomerInterests from  './customer_interests';
-import Evaluation from '../evaluation'
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
-import {selectCurrentCustomer, selectCustomerHeaders} from '../../../slices/customer'
+import { BrowserRouter as useHistory } from 'react-router-dom';
+import {selectCustomerHeaders} from '../../../slices/customer'
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
-import { setCurrentCustomer,setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders, customerRemove} from '../../../slices/customer';
+import { setCurrentCustomerInfo, setCurrentCustomerInterests} from '../../../slices/customer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,14 +52,13 @@ function getStepContent(step, setCustomerStatus) {
   }
 }
 
-export default function CreateCustomerIndividualInfo(props) {
+export default function CreateCustomerIndividualInfo() {
   const classes = useStyles();
   const history = useHistory();
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState(new Set());
   const steps = getSteps();
   const dispatch = useDispatch();
-  const currentCustomer = useSelector(selectCurrentCustomer);
   const customerHeaders = useSelector(selectCustomerHeaders);
   const [customerStatus, setCustomerStatus] = React.useState({condition: {weight: null, height: null}, jobs: {}, interests: []});
 

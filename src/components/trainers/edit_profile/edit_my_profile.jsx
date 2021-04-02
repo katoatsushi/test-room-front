@@ -1,4 +1,5 @@
-import React, {useContext,  useEffect, useState ,useCallback} from 'react';
+/* eslint-disable react/prop-types */
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -9,19 +10,16 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
-import { Controller, useForm, SubmitHandler } from 'react-hook-form';
-import { selectCurrentTrainer, selectTrainerHeaders } from '../../../slices/trainer';
-import { useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter as useHistory } from 'react-router-dom';
+import {  selectTrainerHeaders } from '../../../slices/trainer';
+import { useSelector } from 'react-redux';
 import axios from 'axios'
 import InputName from './input_name'
 import TrainerBirthDay from './trainer_birthday'
@@ -132,17 +130,15 @@ function PhoneNumber(props) {
 export default function EditMyProfile() {
     const classes = useStyles();
     const history = useHistory();
-    const dispatch = useDispatch();
     const [activeStep, setActiveStep] = React.useState(0);
     const [completed, setCompleted] = React.useState(new Set());
     const steps = getSteps();
-    const [open, setOpen] = React.useState(true);
-    const [customerInfo, setCustomerInfo] = React.useState({gender: "", birthday: null, address: {}, phoneNumber: {}});
+    // const [open, setOpen] = React.useState(true);
     const [trainerInfo, setTrainerInfo] = React.useState(
               {name: {first_name_kanji: "", last_name_kanji: "", first_name_kana: "", last_name_kana: ""}, 
               gender: "", birthday: null, phoneNumber: {}});
+    // eslint-disable-next-line no-unused-vars
     const [button, setButton] = React.useState(false);
-    const currentTrainer = useSelector(selectCurrentTrainer);
     const trainerHeaders = useSelector(selectTrainerHeaders);
 
   console.log({trainerInfo})
@@ -168,16 +164,16 @@ export default function EditMyProfile() {
 
     setActiveStep(newActiveStep);
   };
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleSkip = () => {
-    setOpen(false);
-    history.push('/');
-  }
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+  // const handleSkip = () => {
+  //   setOpen(false);
+  //   history.push('/');
+  // }
 
   const handleComplete = () => {
     const newCompleted = new Set(completed);

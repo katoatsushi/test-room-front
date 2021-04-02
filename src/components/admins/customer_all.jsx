@@ -1,25 +1,11 @@
-import React, { useEffect, useState, Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState} from 'react';
 import axios from 'axios'
 import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import Grid from '@material-ui/core/Grid';
 import {selectCurrentAdmin, selectAdminHeaders} from '../../slices/admin'
 import {selectCurrentTrainer, selectTrainerHeaders} from '../../slices/trainer'
-import { useSelector, useDispatch } from 'react-redux';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-  } from 'react-router-dom';
-import { DataGrid } from '@material-ui/data-grid';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -28,10 +14,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CustomerSetInfoDialog from './customer_set_info_dialog'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -74,7 +56,7 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function TrainerBooking({customer, setAllCustomers}){
+function TrainerBooking({customer}){
     const [open, setOpen] = React.useState(false);
     const history = useHistory();
     const handleClickOpen = () => {
@@ -128,7 +110,6 @@ function TrainerBooking({customer, setAllCustomers}){
 }
 
 function CustomerCell({customer, index, setAllCustomers}){
-  const history = useHistory();
   const classes = useStyles();
   const currentAdmin = useSelector(selectCurrentAdmin);
   const currentTrainer = useSelector(selectCurrentTrainer);
@@ -160,7 +141,7 @@ function CustomerCell({customer, index, setAllCustomers}){
                     if (currentAdmin) {
                         return(<CustomerSetInfoDialog customer={customer} setAllCustomers={setAllCustomers}/>);
                     } else if(currentTrainer) {
-                      return (<TrainerBooking customer={customer} setAllCustomers={setAllCustomers}/>);
+                      return (<TrainerBooking customer={customer}/>);
                     }
                   })()
                 }
@@ -173,9 +154,7 @@ function CustomerCell({customer, index, setAllCustomers}){
 export default function AllCustomers(){
     const classes = useStyles();
     const url = `/get/all_customers`
-    const serch_url = `/serch/customers`
     const [allCustomers, setAllCustomers] = useState([]);
-    const [searchCustomers, setSearchCustomers] = useState([]);
     const adminHeaders = useSelector(selectAdminHeaders);
     const trainerHeaders = useSelector(selectTrainerHeaders);
 

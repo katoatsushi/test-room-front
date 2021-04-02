@@ -1,41 +1,21 @@
-import React, { useEffect, useState, Component } from 'react';
-import axios from 'axios'
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import Grid from '@material-ui/core/Grid';
-import { useTable } from 'react-table'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
+import {  makeStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import MaskedTextFieldForTrainerShift from '../masked_text_field_for_trainer_shift'
 import TextField from '@material-ui/core/TextField';
 import InputBase from '@material-ui/core/InputBase';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from '../../../slices/admin';
-import { useSelector, useDispatch } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   table: {
     minWidth: 650
   },
@@ -64,7 +44,7 @@ function DisabledTimeCell({checked, handleChange}){
                 className={classes.textField}
                 InputLabelProps={{ shrink: true, }}
                 inputProps={{ step: 300, }}
-                style={{display: 'inline-block', display: 'inline'}}
+                style={{display: 'inline-block'}}
             /><hr/>
             <InputBase
                 id="time"
@@ -73,7 +53,7 @@ function DisabledTimeCell({checked, handleChange}){
                 className={classes.textField}
                 InputLabelProps={{ shrink: true, }}
                 inputProps={{ step: 300, }}
-                style={{display: 'inline-block', display: 'inline'}}
+                style={{display: 'inline-block'}}
             />
         {/* </TableCell> */}
     </>)
@@ -141,11 +121,11 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
         var finish_date = new Date(data.year, data.month - 1, data.day, Number(ftimes[0]), Number(ftimes[1]));
         start_date  = `${start_date}`
         finish_date = `${finish_date}`
-        const new_data_for_submit = {trainer_id: data.trainer_id, day:　data.day, day_ja: data.day_ja, 
+        const new_data_for_submit = {trainer_id: data.trainer_id, day: data.day, day_ja: data.day_ja, 
                                     shifts: {id: data.shifts.id, start: start_date, finish: finish_date, trainer_id: data.trainer_id, store_id: selectStore.id, store: selectStore}}
-        data.shifts = {id: data.shifts.id, start: start, finish: finish, trainer_id: data.trainer_id,store_id: selectStore.id, trainer_id: data.shifts.trainer_id, store: selectStore}
+        data.shifts = {id: data.shifts.id, start: start, finish: finish, trainer_id: data.trainer_id,store_id: selectStore.id, store: selectStore}
         // ここをfilterにすると上手く行かなかった
-        const updateShiftData = submitData.map((sd, index) => {
+        const updateShiftData = submitData.map((sd) => {
             if(sd.day == data.day && sd.trainer_id == data.trainer_id){
                 return new_data_for_submit
             }else{
@@ -156,9 +136,9 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
 
         setOpen(false);
         // 表示用のステート(TrainerShifts)の方も変更する
-        const updateTrainerShifts = trainerShifts.filter((shifts, index) => {
+        const updateTrainerShifts = trainerShifts.filter((shifts) => {
             if (shifts.trainer.id == data.trainer_id){
-                const updateShiftData = shifts.data.filter((shiftd, index) => {
+                const updateShiftData = shifts.data.filter((shiftd) => {
                     if(shiftd.day == data.day){
                         // ここは変更後のデータを格納
                         return data
@@ -184,7 +164,7 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
         var min = null
         var hour = null
         date.getMinutes()==0?  min = "00": min = String(date.getMinutes())
-        min.length == 1? min = "0" + min: min = min
+        min.length == 1? min = "0" + min: min
         String(date.getHours()).length == 1? hour = "0" + String(date.getHours()): hour = String(date.getHours())
         const newDate = `${hour}:` + `${min}`
         return newDate
@@ -214,7 +194,7 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
                         // onChange={handleStartChange}
                         InputLabelProps={{ shrink: true, }}
                         inputProps={{ step: 300, }}
-                        style={{display: 'inline-block', display: 'inline'}}
+                        style={{display: 'inline-block'}}
                     /><hr/>
                     <InputBase
                         id="time"
@@ -224,7 +204,7 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
                         // onChange={handleFinishChange}
                         InputLabelProps={{ shrink: true, }}
                         inputProps={{ step: 300, }}
-                        style={{display: 'inline-block', display: 'inline'}}
+                        style={{display: 'inline-block'}}
                     />
                 </div>
             </TableCell>

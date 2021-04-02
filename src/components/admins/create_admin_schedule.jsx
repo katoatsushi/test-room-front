@@ -1,14 +1,13 @@
-import React, { useEffect, useState ,useCallback} from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
 import {selectCurrentAdmin, selectAdminHeaders} from '../../slices/admin'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import Calendar from 'react-calendar';
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -24,7 +23,7 @@ import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -52,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 function TrialSession({setTrialValue}){
-    const classes = useStyles();
     function handleName(e){
         setTrialValue((prev) => ({...prev, name: e.target.value}))
     }
@@ -95,13 +93,12 @@ function TrialSession({setTrialValue}){
     )
 }
 
-export default function CreateAdminSchedule(props){
+export default function CreateAdminSchedule(){
     const history = useHistory();
     const classes = useStyles();
     const adminHeaders = useSelector(selectAdminHeaders);
     const currentAdmin = useSelector(selectCurrentAdmin);
     const today = new Date()
-    const [value, onChange] = useState(today);
     const [selectedDate, setSelectedDate] = React.useState(today);
     const company_id = currentAdmin.company_id
     const [dayInfo, setDayInfo] = useState({year: selectedDate.getFullYear(), month: selectedDate.getMonth() + 1, day: selectedDate.getDate()});
@@ -247,7 +244,7 @@ export default function CreateAdminSchedule(props){
                 </form>
                 <Grid container justifyContent="space-around" style={{marginTop: 15}}>
                     <FormLabel component="legend" style={{marginBottom: 10}}>スケジュールを選択してください</FormLabel>
-                    <FormControl component="fieldset"　style={{backgroundColor: 'white', padding: 10}}>
+                    <FormControl component="fieldset" style={{backgroundColor: 'white', padding: 10}}>
                         <RadioGroup aria-label="gender" name="gender1" value={check} onChange={handleCheckChange}>
                             <FormLabel component="legend">体験トレーニングの予約ですか？</FormLabel>
                             <FormControlLabel value="true" control={<Radio />} label="はい" />

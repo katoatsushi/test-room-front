@@ -1,41 +1,20 @@
-import React, { useEffect, useState, Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
-import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
 import Button from '@material-ui/core/Button'
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import { useForm } from "react-hook-form";
+import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-  } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 
-const MasterAdminTop = (props) => {
+const MasterAdminTop = () => {
     const history = useHistory();
     const [companies, setCompanies] = useState([]);
     useEffect(()=>{
@@ -73,8 +52,8 @@ const MasterAdminTop = (props) => {
    
     console.log(companies)
     const readCompanies = companies.length ?  
-        companies.map((company ,companies_index) =>
-            <StyledTableRow key={ company[0].id } >
+        companies.map((company , index) =>
+            <StyledTableRow key={ index } >
                 {/* <StyledTableCell align="center">{company[0].id}</StyledTableCell> */}
                 <StyledTableCell align="center">
                     <Link to={`/company/${company[0].id}`}> 
@@ -104,7 +83,7 @@ const MasterAdminTop = (props) => {
     : 
         <></>
     function readAdmins(admins){
-        return admins.map((admin,index) =>
+        return admins.map((admin) =>
             <>
                 { admin.email }
             </>

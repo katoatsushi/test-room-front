@@ -15,16 +15,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
-import {
-  ISignInFormValues,
-  ISignInSuccessResponse,
-  IErrorResponse,
-  IServerMessages,
-} from '../../interfaces';
+// import { BrowserRouter as useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { setHeaders, setCurrentMasterAdmin } from '../../slices/master_admin';
 import Paper from '@material-ui/core/Paper';
-import errorMessages from '../../constants/errorMessages.json';
+import SignIn from '../applications/sign_in'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,25 +46,20 @@ function MasterAdminLogIn() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
-    const [serverMessages, setServerMessages] = useState<IServerMessages>();
+    const [submitData, setSubmitData] = useState({email: "", password: ""});
 
-    const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
+    function handleSubmit(){
       axios
-      .post<ISignInSuccessResponse>(url, data)
+      .post(url,submitData)
       .then((res) => {
-        console.log({res})
         dispatch(setCurrentMasterAdmin(res.data.data));
         dispatch(setHeaders(res.headers));
         history.push('/');
       })
-      .catch((err: AxiosError<IErrorResponse>) => {
-        setServerMessages({
-          severity: 'error',
-          alerts: err.response?.data.errors || [],
-        });
+      .catch((err) => {
+        console.log({err})
       });
-  };
+    }
 
   return (
     <>
@@ -84,102 +74,17 @@ function MasterAdminLogIn() {
             <Typography variant="h5" align="center" gutterBottom>
               マスタ管理者ログイン
             </Typography>
-            {/* <ServerAlert serverMessages={serverMessages} /> */}
-            <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-              <Box mb={2}>
-                <Controller
-                  name="email"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: {
-                      value: true,
-                      message:
-                        errorMessages.email.text + errorMessages.required,
-                    },
-                    maxLength: {
-                      value: errorMessages.email.maxLength,
-                      message:
-                        errorMessages.email.text +
-                        errorMessages.is +
-                        String(errorMessages.email.maxLength) +
-                        errorMessages.maxLength,
-                    },
-                  }}
-                  render={({ ref, value, onChange }, { invalid }) => (
-                    <TextField
-                      variant="outlined"
-                      label="メールアドレス"
-                      error={invalid}
-                      // disabled={loading}
-                      fullWidth
-                      inputRef={ref}
-                      value={value as string}
-                      onChange={(e) => onChange(e.target.value)}
-                    />
-                  )}
-                />
-                {/* <ErrorMessage
-                  errors={errors}
-                  name="email"
-                  render={({ message }) => (
-                    <Alert severity="error">{message}</Alert>
-                  )}
-                /> */}
-              </Box>
-              <Box mb={2}>
-                <Controller
-                  name="password"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: {
-                      value: true,
-                      message:
-                        errorMessages.password.text + errorMessages.required,
-                    },
-                    maxLength: {
-                      value: errorMessages.password.maxLength,
-                      message:
-                        errorMessages.password.text +
-                        errorMessages.is +
-                        String(errorMessages.password.maxLength) +
-                        errorMessages.maxLength,
-                    },
-                  }}
-                  render={({ ref, value, onChange }, { invalid }) => (
-                    <TextField
-                      type="password"
-                      variant="outlined"
-                      label="パスワード"
-                      error={invalid}
-                      // disabled={loading}
-                      fullWidth
-                      inputRef={ref}
-                      value={value as string}
-                      onChange={(e) => onChange(e.target.value)}
-                    />
-                  )}
-                />
-                {/* <ErrorMessage
-                  errors={errors}
-                  name="password"
-                  render={({ message }) => (
-                    <Alert severity="error">{message}</Alert>
-                  )}
-                /> */}
-              </Box>
-              {/* <LoadingButton loading={loading} primary="SignIn" /> */}
+              <SignIn setSubmitData={setSubmitData} />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
+                onClick={handleSubmit}
                 className={classes.submit}
               >
                 ログインする
               </Button>
-            </form>
           </Box>
         </div>
         </Paper>

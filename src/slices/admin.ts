@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITokenHeaders, IAdmin } from '../interfaces';
-/* eslint-disable import/no-cycle */
 import { RootState } from '../store';
 
 interface ICurrentAdmin {

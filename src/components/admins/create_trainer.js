@@ -1,47 +1,20 @@
-import React, { useEffect, useState, Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
-import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
 import Button from '@material-ui/core/Button'
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import {  makeStyles } from '@material-ui/core/styles';
 import { useForm } from "react-hook-form";
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-  } from 'react-router-dom';
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from '../../slices/admin';
+import { useSelector} from 'react-redux';
+import { selectCurrentAdmin, selectAdminHeaders } from '../../slices/admin';
 import CheckTrainerMenues from './check_trainer_menues'
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -63,11 +36,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CreateTrainer(props) {
+function CreateTrainer() {
     const classes = useStyles();
     const currentAdmin = useSelector(selectCurrentAdmin);
     const admin_headers = useSelector(selectAdminHeaders);
-    const [companyId, setCompanyId] = useState();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [password_confirmation, setPasswordConfirmation] = useState("");
@@ -113,6 +85,7 @@ function CreateTrainer(props) {
                 admin_headers
             )
             .then(function (response) {
+                console.log({response})
                 history.push(`/`)
             })
         })

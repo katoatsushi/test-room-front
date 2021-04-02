@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -16,10 +17,6 @@ const Label = styled.label`
 const Input = styled.input`
   display: none;
 `;
-const FileName = styled.p`
-  お好きにどうぞ
-`;
-
 const onChange = (event, cb, setFileName) => {
   cb(event);
   const targetName = event.target.files.item(0).name;
@@ -27,8 +24,9 @@ const onChange = (event, cb, setFileName) => {
 };
 
 const InputFile = props => {
+  // eslint-disable-next-line no-unused-vars
   const [filename, setFileName] = useState('選択されていません');
-  if (props.type !== 'file') return <p>Input type must be 'file'</p>;
+  if (props.type !== 'file') return <p>Input type must be file</p>;
   return (
     <Wrapper>
       <Label>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import './index.css';
@@ -33,7 +34,6 @@ import CreateCustomerIndividualInfo from  './components/customers/customer_indiv
 import { selectCurrentCustomer, selectCustomerHeaders, customerRemove, } from './slices/customer';
 import WeightNew from './components/customers/weight_new';
 import RecordsHistory from './components/customers/records_history'
-import EditCustomerStatus from './components/admins/edit_customer_status'
 import AllCustomers from './components/admins/customer_all'
 import AdminMenues from './components/admins/admin_menues'
 import CreateAdminSchedule from './components/admins/create_admin_schedule'
@@ -63,7 +63,6 @@ const Routes: React.FC = () => {
         <Route exact path="/customer_info/interests" component={ CustomerInterests } />
         <Route exact path="/customer_info/conditions" component={ CustomerConditions } />
         <Route exact path="/customer_info_indivi/new" component={ CreateCustomerIndividualInfo } />
-        {/* TODO::customer_idを入力 */}
         <Route exact path="/customer/:customer_id/calendar_new" component={ SelectStoreFitness } />
         <Route exact path="/customer/:customer_id/calendar_new/customer_menu/:customer_menu_id/store/:store_id" component={ SelectDate } />
         <Route exact path="/customer/:customer_id/appointments/new/:store_id/:customer_menu_id/:year/:month/:day" component={AppointmentNew} />
@@ -84,20 +83,19 @@ const Routes: React.FC = () => {
         <Route exact path="/customer/weight/new" component={ WeightNew } />
         <Route exact path="/customer/:customer_id/appointment/:appointment_id/new_record" component={ AppointmentRecordNew } />
         <Route exact path="/customer_record/:customer_record_id/new" component={ AppointmentRecordMenusCreate  } />
-        <Route exact path="/customer_records/:id" component={ RecordsHistory }　/>
-        <Route exact path="/customer/edit_status/:id" component={ EditCustomerStatus }　/>
-        <Route exact path="/customer_all" component={ AllCustomers }　/>
-        <Route exact path="/admin_menues" component={ AdminMenues }　/>
-        <Route exact path="/admin_schedule" component={ CreateAdminSchedule }　/>
-        <Route exact path="/admin/trainer_shifts" component={ ManageTrainerShift }　/>
-        <Route exact path="/customer_evaluation_data/:customer_id" component={ EvaluationData }　/>
-        <Route exact path="/trainer/:id" component={ TrainerMyPage }　/>
-        <Route exact path="/trainers/customer_session_records" component={ SessionRecordList }　/>
-        <Route exact path="/trainers/:trainer_id/fitness/:fitness_id" component={ TrainerCreateRecord }　/>
-        <Route exact path="/trainers/set/details" component={ SetTimesWeight}　/>
-        <Route exact path="/trainers/record/confirm" component={  RecordConfirm }　/>
-        <Route exact path="/record/:id" component={ ShowRecord }　/>
-        <Route exact path="/trainer/edit/me" component={ EditMyProfile }　/>
+        <Route exact path="/customer_records/:id" component={ RecordsHistory } />
+        <Route exact path="/customer_all" component={ AllCustomers } />
+        <Route exact path="/admin_menues" component={ AdminMenues } />
+        <Route exact path="/admin_schedule" component={ CreateAdminSchedule } />
+        <Route exact path="/admin/trainer_shifts" component={ ManageTrainerShift } />
+        <Route exact path="/customer_evaluation_data/:customer_id" component={ EvaluationData } />
+        <Route exact path="/trainer/:id" component={ TrainerMyPage } />
+        <Route exact path="/trainers/customer_session_records" component={ SessionRecordList } />
+        <Route exact path="/trainers/:trainer_id/fitness/:fitness_id" component={ TrainerCreateRecord } />
+        <Route exact path="/trainers/set/details" component={ SetTimesWeight} />
+        <Route exact path="/trainers/record/confirm" component={  RecordConfirm } />
+        <Route exact path="/record/:id" component={ ShowRecord } />
+        <Route exact path="/trainer/edit/me" component={ EditMyProfile } />
   
     </Switch>
     </BrowserRouter>

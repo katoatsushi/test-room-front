@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITokenHeaders, ITrainer, ITrainerInfo } from '../interfaces';
-/* eslint-disable import/no-cycle */
 import { RootState } from '../store';
 
 interface ICurrentTrainer {
@@ -47,7 +46,7 @@ const currentTrainerSlice = createSlice({
 
 export const selectCurrentTrainer = (state: RootState): null | ITrainer =>
   state.currentTrainer.currentTrainer;
-export const selectCurrentTrainerInfos = (state: RootState): null | ITrainer =>
+export const selectCurrentTrainerInfos = (state: RootState): null | ITrainerInfo =>
   state.currentTrainer.currentTrainerInfo;
 export const selectTrainerHeaders = (
   state: RootState

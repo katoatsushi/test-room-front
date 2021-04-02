@@ -1,12 +1,12 @@
-import React, { Component, useState, useEffect } from "react"
+/* eslint-disable react/prop-types */
+import React, {  useState, useEffect } from "react"
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer ,CartesianGrid} from "recharts"
-import {selectCurrentCustomer, selectCustomerHeaders} from '../../slices/customer'
-import { useSelector, useDispatch } from 'react-redux';
-import axios, { AxiosError } from 'axios';
+import { selectCustomerHeaders} from '../../slices/customer'
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
-export default function LineGraph(props){
+export default function LineGraph(){
     const [weightHistory, setWeightHistory] = useState([]);
-    const currentCustomer = useSelector(selectCurrentCustomer);
     const headers = useSelector(selectCustomerHeaders);
     const url = `/customer_weights`
 

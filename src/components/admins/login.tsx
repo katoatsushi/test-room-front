@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React , { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -18,7 +19,7 @@ import Container from '@material-ui/core/Container';
 import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
 import {
   ISignInFormValues,
-  ISignInSuccessResponse,
+  ISignInSuccessAdminResponse,
   IErrorResponse,
   IServerMessages,
 } from '../../interfaces';
@@ -73,21 +74,24 @@ function AdminLogIn() {
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
       console.log({data})
       axios
-      .post<ISignInSuccessResponse>(url, data)
+      .post<ISignInSuccessAdminResponse>(url, data)
       .then((res) => {
         console.log("admin",{res})
         dispatch(setCurrentAdmin(res.data.data));
         dispatch(setHeaders(res.headers));
         history.push('/');
       })
-      .catch((err: AxiosError<IErrorResponse>) => {
-        setErrorMessage(err.response.data.errors);
-        handleSnackbarClick()
-        setServerMessages({
-          severity: 'error',
-          alerts: err.response?.data.errors || [],
-        });
+      .catch((err) => {
+        console.log({err})
       });
+      // .catch((err: AxiosError<IErrorResponse>) => {
+      //   setErrorMessage(err.response.data.errors);
+      //   handleSnackbarClick()
+      //   setServerMessages({
+      //     severity: 'error',
+      //     alerts: err.response?.data.errors || [],
+      //   });
+      // });
   };
 
   return (

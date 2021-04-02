@@ -1,11 +1,9 @@
-import React, { useEffect, useState ,useCallback} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
-import FormLabel from '@material-ui/core/FormLabel';
 
 export default function TrainerBirthDay(props) {
   const [year, setYear] = React.useState(1990);
@@ -51,7 +49,6 @@ export default function TrainerBirthDay(props) {
 
 
   const today =  new Date
-  const this_yaer = today.getFullYear()
   const old_year =  today.getFullYear() - 100
   const years = [...Array(100)].map((_, i) => i + old_year)
   const months = [...Array(12)].map((_, i) => i + 1)
@@ -66,13 +63,13 @@ export default function TrainerBirthDay(props) {
   }
 
   const years_box =  years.map((year,index) =>
-    <MenuItem value={year}>{year}</MenuItem>
+    <MenuItem key={index} value={year}>{year}</MenuItem>
   );
   const months_box =  months.map((month,index) =>
-    <MenuItem value={month}>{month}</MenuItem>
+    <MenuItem key={index} value={month}>{month}</MenuItem>
   );
   const days_box = days.map((day,index) =>
-    <MenuItem value={day}>{day}</MenuItem>
+    <MenuItem key={index} value={day}>{day}</MenuItem>
   );
   return (
     <div style={{margin: 'auto 0', textAlign: 'center'}}>

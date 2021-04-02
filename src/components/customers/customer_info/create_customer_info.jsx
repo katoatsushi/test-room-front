@@ -1,4 +1,5 @@
-import React, {useContext,  useEffect, useState ,useCallback} from 'react';
+/* eslint-disable react/prop-types */
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -9,7 +10,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -20,10 +20,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import BirthDay from './customer_birthday';
 import Address from './customer_address';
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
-import { Controller, useForm, SubmitHandler } from 'react-hook-form';
-import {selectCurrentCustomer, selectCustomerHeaders} from '../../../slices/customer'
-import { setCurrentCustomer,setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders, customerRemove} from '../../../slices/customer';
+import { BrowserRouter as useHistory, } from 'react-router-dom';
+import { selectCustomerHeaders} from '../../../slices/customer'
+import { setCurrentCustomerInfo} from '../../../slices/customer';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
 
@@ -141,8 +140,8 @@ export default function CreateCustomerInfo() {
   const steps = getSteps();
   const [open, setOpen] = React.useState(true);
   const [customerInfo, setCustomerInfo] = React.useState({gender: "", birthday: null, address: {}, phoneNumber: {}});
+  // eslint-disable-next-line no-unused-vars
   const [button, setButton] = React.useState(false);
-  const currentCustomer = useSelector(selectCurrentCustomer);
   const customerHeaders = useSelector(selectCustomerHeaders);
 
   const totalSteps = () => {
@@ -166,12 +165,12 @@ export default function CreateCustomerInfo() {
 
     setActiveStep(newActiveStep);
   };
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
   const handleSkip = () => {
     setOpen(false);
     history.push('/');

@@ -1,21 +1,8 @@
-import React , { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+/* eslint-disable react/prop-types */
+import React , { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import { Controller, useForm, SubmitHandler } from 'react-hook-form';
-import axios, { AxiosError } from 'axios';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
-import Select from '@material-ui/core/Select';
-import styled from 'styled-components'
 import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,8 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SetChipEdit({interest, setInterestIDs, interestIDs, clickedInterests, setUpdateInterestsIDs}) {
-// function SetChipEdit({interest, setUpdateInterestsIDs}) {
-    const classes = useStyles();
+
     const [value, setValue] = React.useState(false)
     useEffect(()=>{
         if (clickedInterests){
@@ -52,14 +38,16 @@ function SetChipEdit({interest, setInterestIDs, interestIDs, clickedInterests, s
 
     function handleValueChange(){
         if(value){
-            const deletedIDs = interestIDs.filter((ID, index) => {
+            const deletedIDs = interestIDs.filter((ID) => {
                 return ID != interest.id;
             });
             setInterestIDs(deletedIDs)
+            // eslint-disable-next-line no-unused-vars
             setUpdateInterestsIDs((prev) => deletedIDs)
         }else{
             const newIDs =  interestIDs.splice(-1, 0, interest.id);
             setInterestIDs((prev) => [...prev, ...newIDs])
+            // eslint-disable-next-line no-unused-vars
             setUpdateInterestsIDs((prev) => interestIDs)
         }
         setValue(!value);
@@ -98,6 +86,7 @@ export default function CustomerInterestsEdit(props) {
     // マイページから変更する際
     let interests_array = []
     if (props.interests){
+        // eslint-disable-next-line no-unused-vars
         var index = props.interests.map(function( item ) {
             interests_array.push(item.id)            
         });
@@ -137,7 +126,7 @@ export default function CustomerInterestsEdit(props) {
         <Grid item xs={11}>
             <div className="customer_info_tag">関心のある分野を選んでください</div>
             <div className={classes.chip}>
-            　{ select_interests }
+             { select_interests }
             </div>
         </Grid>   
         </Grid>

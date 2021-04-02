@@ -1,12 +1,7 @@
-import React, { useEffect, useState ,useCallback} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-import FormLabel from '@material-ui/core/FormLabel';
-import axios, { AxiosError } from 'axios';
+import axios  from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
@@ -16,6 +11,7 @@ function Address(props) {
   const [prefecture, setPrefecture] = React.useState('');
   const [city, setCity] = React.useState('');
   const [town, setTown] = React.useState('');
+  // eslint-disable-next-line no-unused-vars
   const [addressDetail, setAddressDetail] = React.useState('');
 
   async function handleAddressSearch(){

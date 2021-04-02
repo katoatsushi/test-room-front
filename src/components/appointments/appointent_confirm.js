@@ -1,26 +1,19 @@
-import React, { useEffect, useState } from 'react';
-// import _ from 'lodash'
+/* eslint-disable react/prop-types */
+import React, {  useState } from 'react';
 import Button from '@material-ui/core/Button' 
-import { useForm } from "react-hook-form";
 import axios from 'axios'
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const useStyles = makeStyles({
   root: {
-    // minWidth: 275,
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: 80,
-    // fontSize: '1.2em',
-    // color: '#959393',
-    // fontWeight: '900'
   },
   bullet: {
     display: 'inline-block',
@@ -40,13 +33,11 @@ const useStyles = makeStyles({
 const AppointmentConfirm = (props) => {
     console.log("AppointmentConfirm", {props})
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
     const time_strings = props.location.state.time_default
     const time_array_start = props.location.state.time_array[0]
     const time_array_finish = props.location.state.time_array[1]
     const [check, setCheck] = useState(false);
-    const [customerMenu, setCustomerMenu] = useState();
-    const history = useHistory();
+    // const [customerMenu, setCustomerMenu] = useState();
 
     function handleCheckOk() {
         const params = props.match.params
@@ -56,31 +47,21 @@ const AppointmentConfirm = (props) => {
             free_box: props.location.state.free_box,
           })
           .then(function (response) {
+            console.log({response})
             setCheck(true);
           })
     }
 
-    useEffect(async()=>{
-      const url = `/customer_menu_serch/${props.match.params.customer_menu_id}`
-       axios.get(url)
-        .then(function(res) {
-            setCustomerMenu(res.data.customer_menu);
-        })
-        .catch(function(error) {
-          console.log({error})
-        });
-    },[])
-
-  function show_customer_menu() {
-    if(customerMenu.name){
-      return(
-          <>{customerMenu.name}</>
-          );
-    }else{
-      return <></>;
-    }
-  }
-
+    // useEffect(async()=>{
+    //   const url = `/customer_menu_serch/${props.match.params.customer_menu_id}`
+    //    axios.get(url)
+    //     .then(function(res) {
+    //         setCustomerMenu(res.data.customer_menu);
+    //     })
+    //     .catch(function(error) {
+    //       console.log({error})
+    //     });
+    // },[])
 
     return (
         <>

@@ -1,30 +1,10 @@
-import React, { useEffect, useState, Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios'
-import { selectCurrentTrainer, selectTrainerHeaders } from '../../../slices/trainer';
-import { useSelector } from 'react-redux';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,29 +22,31 @@ const useStyles = makeStyles((theme) => ({
 
 function InputTimesWeight({data, setSubmitData, submitData}){
     function handleTimeChange(e){
-        const changeTime = submitData.map((sd, index) => {
+        const changeTime = submitData.map((sd) => {
             if(sd.data.id == data.data.id){
                 return {data: sd.data, time: e.target.value, weight: sd.value}
             }else{
                 return sd
             }
         });
+        // eslint-disable-next-line no-unused-vars
         setSubmitData((prev) => changeTime)
     }
 
     function handleWeightChange(e){
-         const changeWeight = submitData.map((sd, index) => {
+         const changeWeight = submitData.map((sd) => {
             if(sd.data.id == data.data.id){
                 return {data: sd.data, time: sd.time, weight: e.target.value}
             }else{
                 return sd
             }
         });
+        // eslint-disable-next-line no-unused-vars
         setSubmitData((prev) => changeWeight)
     }
 
     return(
-        <Grid container style={{fontWeight: 500}} style={{marginBottom: 10, marginTop: 3}}>
+        <Grid container  style={{fontWeight: 500, marginBottom: 10, marginTop: 3}}>
             <Grid item xs={5} >
                 {data.data.name}
             </Grid>
@@ -98,7 +80,7 @@ export default function SetTimesWeight(props) {
                 return {data: d, time: null, weight: null}
             })
         }else{
-            var DataInit = []
+            DataInit = []
         }
         setSubmitData(DataInit)
     },[])
@@ -134,7 +116,7 @@ export default function SetTimesWeight(props) {
 
             {submitData?(<>
                 {submitData.map((data, index) => (<>
-                    <InputTimesWeight data={data} setSubmitData={setSubmitData} submitData={submitData}/>
+                    <InputTimesWeight key={index} data={data} setSubmitData={setSubmitData} submitData={submitData}/>
                     <hr/>
                 </>))}
             </>):(<></>)}

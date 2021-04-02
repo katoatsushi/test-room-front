@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICustomerRecords } from '../interfaces';
+import { ICustomerRecord } from '../interfaces';
 import { RootState } from '../store';
 
 interface ICustomerRecords {
-  customerRecords: null | ICustomerRecords;
+  customerRecords: ICustomerRecord[] | null;
 }
+
 const initialState: ICustomerRecords = { customerRecords: null};
 
 const customerRecordsSlice = createSlice({
   name: 'customerRecords',
   initialState,
   reducers: {
-    setCustomerRecords: (state, action: PayloadAction<ICustomerRecords>) => {
+    setCustomerRecords: (state, action: PayloadAction<ICustomerRecord[]>) => {
      console.log('state',{state}, 'action',{action})
       state.customerRecords = action.payload;
     },
@@ -23,8 +24,7 @@ const customerRecordsSlice = createSlice({
   },
 });
 
-
-export const getCustomerRecords = (state: RootState): null | ICustomerRecords =>
+export const getCustomerRecords = (state: RootState): null | ICustomerRecord[] =>
   state.customerRecord.customerRecords;
 export const { setCustomerRecords, customerRecordRemove } = customerRecordsSlice.actions;
 export default customerRecordsSlice.reducer;

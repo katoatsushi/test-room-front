@@ -11,7 +11,6 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-// eslint-disable-next-line import/no-cycle
 import rootReducer from './rootReducer';
 
 const persistConfig = {

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React,{ useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 function RecordDialog({session}) {
     const [open, setOpen] = useState(true);
+    // const [value, setValue] = React.useState(0);
     const [value, setValue] = React.useState(0);
     const [food, setFood] = React.useState(0);
     const handleClose = () => {
@@ -40,7 +42,7 @@ function RecordDialog({session}) {
     const menues = session.menues
     const classes = useStyles();
     const show_menues = menues.map((menu,index) =>
-        <div>・{menu.fitness_name}/{menu.fitness_third_name}:{menu.time}回×{menu.set_num}セット</div>
+        <div key={index}>・{menu.fitness_name}/{menu.fitness_third_name}:{menu.time}回×{menu.set_num}セット</div>
     );
 
     function handleSubmit(e) {
@@ -82,12 +84,12 @@ function RecordDialog({session}) {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                     >
-                    <Typography className={classes.heading}>セッション詳細</Typography>
+                    <Typography >セッション詳細</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                     <Typography style={{textAlign: 'left', fontSize: '0.8em'}}>
-                        {　show_menues　}
-                        {　show_menues　}
+                        { show_menues }
+                        { show_menues }
                     </Typography>
                     </AccordionDetails>
                 </Accordion>
@@ -97,12 +99,12 @@ function RecordDialog({session}) {
                 </Typography>
                 <Typography  color="textSecondary">
                     <Rating
-                    name="simple-controlled-session"
-                    size="large"
-                    value={ value }
-                    onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}
+                        name="simple-controlled-session"
+                        size="large"
+                        value={ value }
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }}
                     />
                 </Typography>
                 <Typography variant="h6" component="h4">
@@ -110,12 +112,12 @@ function RecordDialog({session}) {
                 </Typography>
                 <Typography  color="textSecondary">
                     <Rating
-                    name="simple-controlled-food"
-                    size="large"
-                    food={ food }
-                    onChange={(event, newValue) => {
-                        setFood(newValue);
-                    }}
+                        name="simple-controlled-food"
+                        size="large"
+                        food={ food }
+                        onChange={(event, newValue) => {
+                            setFood(newValue);
+                        }}
                     />
                 </Typography>
                 <Typography variant="body2" component="p">
@@ -144,12 +146,14 @@ export default function Evaluation(props) {
     const classes = useStyles();
     const customerRecords = useSelector(getCustomerRecords);
     function CustomerRecordsDialog() {
-        if(customerRecords.length){
-            console.log({customerRecords})
-            const this_session = customerRecords.slice(-1)[0]
-            return (
-                <RecordDialog session={ this_session } />
-            )
+        if (customerRecords){
+            if(customerRecords.length){
+                console.log({customerRecords})
+                const this_session = customerRecords.slice(-1)[0]
+                return (
+                    <RecordDialog session={ this_session } />
+                )
+            }
         }
     }
     return (

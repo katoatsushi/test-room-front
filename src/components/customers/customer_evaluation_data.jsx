@@ -1,22 +1,8 @@
-import React , { useEffect, useState, PureComponent } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+/* eslint-disable react/prop-types */
+import React , { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import { Controller, useForm, SubmitHandler } from 'react-hook-form';
-import axios, { AxiosError } from 'axios';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
-import { selectCurrentTrainer, selectTrainerHeaders }  from '../../slices/trainer';
-import { useSelector, useDispatch } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import { Bar } from 'react-chartjs-2';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -71,6 +57,7 @@ function BarChart({avaTrainer}) {
         ticks: { // 軸目盛設定
             beginAtZero: true,
             max: 5,
+            // eslint-disable-next-line no-unused-vars
             callback: function (value, index, values) {
               return `${value}`;
             },
@@ -91,8 +78,6 @@ function BarChart({avaTrainer}) {
 
 export default function EvaluationData(props) {
     const classes = useStyles();
-    const trainerHeader = useSelector(selectTrainerHeaders);
-    const currentTrainer = useSelector(selectCurrentTrainer);
     const url = `/check_evaluation/${props.customer_id}`
     const [avaTrainer, setAvaTrainer] = React.useState({details: null,name: [], score: []});
     const [fitnessTrainerData, setFitnessTrainerData] = React.useState([]);
@@ -142,7 +127,7 @@ export default function EvaluationData(props) {
                         onChange={ handleFitnessChange }
                     >
                      <MenuItem value="reset">全体</MenuItem>
-                    { select_fitness　}
+                    { select_fitness }
                 </Select>
             </FormControl>
             {selectFitnessTrainerData?.details? (
@@ -159,21 +144,17 @@ export default function EvaluationData(props) {
         {pieChartData?(
             <>
             {pieChartData.map((chartData,index) => (
-                <Grid item xs={12} sm={4}> 
+                <Grid key={index} item xs={12} sm={4}> 
                     <Chart
-                    width={'100%'}
-                    height={'300px'}
-                    chartType="PieChart"
-                    loader={<div>Loading Chart</div>}
-                    // data={[
-                    //     ['Task', 'Hours per Day'],
-                    //     ['Work', 11],['Eat', 2],['Commute', 2],['Watch TV', 2],['Sleep', 7],
-                    // ]}
-                    data={chartData[2]}
-                    options={{
-                        title: `${chartData[0]}`,
-                    }}
-                    rootProps={{ 'data-testid': '1' }}
+                      width={'100%'}
+                      height={'300px'}
+                      chartType="PieChart"
+                      loader={<div>Loading Chart</div>}
+                      data={chartData[2]}
+                      options={{
+                          title: `${chartData[0]}`,
+                      }}
+                      rootProps={{ 'data-testid': '1' }}
                     />
                 </Grid>
             ))}

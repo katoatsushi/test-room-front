@@ -1,24 +1,17 @@
-import React, {useEffect, useState} from 'react';
+/* eslint-disable react/prop-types */
+import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {selectCurrentTrainer, selectTrainerHeaders, setCurrentTrainerInfo, selectCurrentTrainerInfos} from '../../slices/trainer'
-import Chip from '@material-ui/core/Chip';
-import EditIcon from '@material-ui/icons/Edit';
-import { BrowserRouter as Router,Route,Switch,useParams,useHistory,useLocation, } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import InputFile from '../inputFile'
 import Avatar from '@material-ui/core/Avatar';
 
@@ -38,11 +31,10 @@ export default function TrainerMyPage(props) {
   const trainerHeaders = useSelector(selectTrainerHeaders);
   const currentTrainerInfo = useSelector(selectCurrentTrainerInfos);
 
-  const history = useHistory();
   const dispatch = useDispatch();
-  const [thisTrainer, setThisTrainer] = useState({});
-  const [avatarURL, setAvatarURL] = useState("");
-  const [open, setOpen] = React.useState(false);
+  // const [thisTrainer, setThisTrainer] = useState({});
+  // const [avatarURL, setAvatarURL] = useState("");
+  // const [open, setOpen] = React.useState(false);
   const [avatarOpen, setAvatarOpen] = React.useState(false);
   const handleClickAvatarOpen = () => {
     setAvatarOpen(true);
@@ -50,12 +42,12 @@ export default function TrainerMyPage(props) {
   const handleAvatarClose = () => {
     setAvatarOpen(false);
   };
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
 //   useEffect(()=>{
 //     const url = `/return_customer_all_info/${props.match.params.id}`
@@ -66,6 +58,7 @@ export default function TrainerMyPage(props) {
 //           // setThisCustomer(res.customer);
 //     })
 //   },[])
+
   console.log({currentTrainerInfo})
 
   const [preview, setPreview] = useState('');
@@ -90,7 +83,7 @@ export default function TrainerMyPage(props) {
     const handleChangeFile = (e) => {
       const { files } = e.target;
       setPreview((prev) => (prev, window.URL.createObjectURL(files[0])));
-      setAvatarData((prev)　=> (prev, e.target.files[0]));
+      setAvatarData((prev) => (prev, e.target.files[0]));
     };
     return (
       <>

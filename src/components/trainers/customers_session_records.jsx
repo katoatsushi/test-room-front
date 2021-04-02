@@ -1,44 +1,19 @@
-import React, { useEffect, useState, Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import axios from 'axios'
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Grid from '@material-ui/core/Grid';
-import { useTable } from 'react-table'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TextField from '@material-ui/core/TextField';
 import InputBase from '@material-ui/core/InputBase';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
 import { useSelector } from 'react-redux';
 import { selectCurrentTrainer, selectTrainerHeaders } from '../../slices/trainer';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-  } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -149,7 +124,7 @@ export default function SessionRecordList() {
     }
     const selectStore = records?  
        records.map((r, index) =>
-       <MenuItem value={r} onChange={handleStoreChange}>{r.store.store_name}</MenuItem>
+        <MenuItem key={index} value={r} onChange={handleStoreChange}>{r.store.store_name}</MenuItem>
         )
     : 
         <MenuItem />
@@ -196,7 +171,7 @@ export default function SessionRecordList() {
         </Paper>
         {currentRecords? (<>
             {currentRecords.map((record, index) => (
-                <Paper variant="outlined" style={{ marginTop: 10, marginBottom: 10}}>
+                <Paper variant="outlined" key={index} style={{ marginTop: 10, marginBottom: 10}}>
                     <Grid container spacing={3} style={{fontWeight: 500,overflowWrap: 'break-word'}}>
                         <Grid item xs={3} style={{marginTop: 'auto', marginBottom: 'auto'}}>
                                 <span style={{fontSize: 15, marginLeft: 10}}>

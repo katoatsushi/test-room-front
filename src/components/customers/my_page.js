@@ -1,40 +1,29 @@
+/* eslint-disable react/prop-types */
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {selectCurrentCustomer, selectCurrentCustomerInfos, selectCurrentCustomerInterests, selectCustomerHeaders} from '../../slices/customer'
-import {selectCurrentTrainer, selectTrainerHeaders} from '../../slices/trainer'
-import {selectCurrentAdmin, selectAdminHeaders} from '../../slices/admin'
+import {selectCurrentTrainer} from '../../slices/trainer'
+import {selectCurrentAdmin} from '../../slices/admin'
 import Chip from '@material-ui/core/Chip';
 import EditIcon from '@material-ui/icons/Edit';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from 'clsx';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    useParams,
-    useHistory,
-    useLocation,
-  } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import CustomerHome from './home'
 import  LineGraph  from "./my_page_weight_line_graph";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import InputFile from '../inputFile'
 import Avatar from '@material-ui/core/Avatar';
-import { setCurrentCustomer,setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders, customerRemove} from '../../slices/customer';
+import { setCurrentCustomerInfo, setCurrentCustomerInterests} from '../../slices/customer';
 import InterestChips from './my_page_interests_chips'
 import CustomerInterestsEdit from './customer_interests_edit'
 import EvaluationData from './customer_evaluation_data'
@@ -76,18 +65,13 @@ function CustomerMyPage(props) {
   const currentCustomer = useSelector(selectCurrentCustomer);
   const customerHeaders = useSelector(selectCustomerHeaders);
   const currentTrainer = useSelector(selectCurrentTrainer);
-  const trainerHeaders = useSelector(selectTrainerHeaders);
   const currentAdmin = useSelector(selectCurrentAdmin);
-  const adminHeaders = useSelector(selectAdminHeaders);
   const currentCustomerInfos = useSelector(selectCurrentCustomerInfos);
   var currentCustomerInterests = useSelector(selectCurrentCustomerInterests);
   const history = useHistory();
   const dispatch = useDispatch();
   const [thisCustomer, setThisCustomer] = useState({});
-  const [avatarURL, setAvatarURL] = useState("");
-  const [allInterests, setallInterests] = useState([]);
   const [open, setOpen] = React.useState(false);
-  const [thisCustomerInterests, setThisCustomerInterests] = useState();
   const [updateInterestsIDs, setUpdateInterestsIDs] = useState([]);
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -117,6 +101,7 @@ function CustomerMyPage(props) {
   }
 
   useEffect(()=>{
+    // eslint-disable-next-line react/prop-types
     const url = `/return_customer_all_info/${props.match.params.id}`
     axios.get(url)
     .then(function(res) {
@@ -163,11 +148,12 @@ function CustomerMyPage(props) {
       });
 
   }
+  // eslint-disable-next-line react/prop-types
   function UpdateAvatar({setPreview, setAvatarData}) {
     const handleChangeFile = (e) => {
       const { files } = e.target;
       setPreview((prev) => (prev, window.URL.createObjectURL(files[0])));
-      setAvatarData((prev)　=> (prev, e.target.files[0]));
+      setAvatarData((prev) => (prev, e.target.files[0]));
     };
     return (
       <>
@@ -194,6 +180,7 @@ function CustomerMyPage(props) {
           {
             (() => {
               if (currentCustomer) {
+                // eslint-disable-next-line react/prop-types
                 if (currentCustomer.id == props.match.params.id){
                   return(
                     <> 
@@ -276,17 +263,19 @@ function CustomerMyPage(props) {
       <Grid container style={{marginBottom: 10}}>
         <Grid container  style={{paddingTop: 5}}>
           <Grid item xs={2}/>
-          <Grid item xs={4}　style={{textAlign: 'center'}}>
+          <Grid item xs={4} style={{textAlign: 'center'}}>
               <span className="customer_my_page_tag">過去のカルテ数</span><br/>
               <span style={{fontSize: '2em'}}>20</span><br/>
             {
                 (() => {
+                    // eslint-disable-next-line react/prop-types
                     if (currentCustomer && currentCustomer.id == props.match.params.id) {
                         return(
                           <Chip
                             size="small"
                             label="全て"
                             clickable
+                            // eslint-disable-next-line react/prop-types
                             onClick={() => history.push(`/customer_records/${props.match.params.id}`)}
                             style={{backgroundColor: '#4DA7F0', fontWeight: 700, color: 'white', paddingLeft: 20,paddingRight: 20}}
                           />

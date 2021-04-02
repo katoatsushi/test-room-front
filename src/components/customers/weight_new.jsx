@@ -1,15 +1,15 @@
-import React , { useEffect, useState } from 'react';
+/* eslint-disable react/prop-types */
+import React , { useEffect } from 'react';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import {  withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { green, purple } from '@material-ui/core/colors';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentCustomer , selectCustomerHeaders, setHeaders, setCurrentCustomer } from '../../slices/customer';
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCurrentCustomer , selectCustomerHeaders } from '../../slices/customer';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios'
 
 const BootstrapButton = withStyles({
@@ -65,8 +65,8 @@ export default function WeightNew(){
         .then(function(res) {
             console.log({res})
             setWeightHistory(res.data)
-            data = JSON.parse(res.data);
-            console.log({data})
+            // data = JSON.parse(res.data);
+            // console.log({data})
         })
         .catch(function(error) {
             console.log({error})
@@ -74,9 +74,9 @@ export default function WeightNew(){
         
     },[])
     console.log({weightHistory})
-    const showWeightTransition = weightHistory.map((customer_menu, index) =>
-        <div value={customer_menu.id} key={index} >{ customer_menu.name }</div>
-    );
+    // const showWeightTransition = weightHistory.map((customer_menu, index) =>
+    //     <div value={customer_menu.id} key={index} >{ customer_menu.name }</div>
+    // );
     function handleWeightChange(e){
         setWeight(e.target.value);
     }
@@ -143,7 +143,7 @@ export default function WeightNew(){
             </Grid>
             </Paper>
             <div style={{paddingTop: 30}}/>
-            <Paper elevation={3} variant="outlined" square　style={{textAlign: 'center', padding: 10, fontSize: '1em', fontWeight: 600}}>
+            <Paper elevation={3} variant="outlined" square style={{textAlign: 'center', padding: 10, fontSize: '1em', fontWeight: 600}}>
                 履歴
             </Paper>
             { renderLineChart }

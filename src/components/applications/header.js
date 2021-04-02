@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,10 +11,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import Button from '@material-ui/core/Button';
 import axios from 'axios'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { selectCurrentCustomer, selectCustomerHeaders, customerRemove, } from '../../slices/customer';
 import { selectCurrentTrainer, selectTrainerHeaders, trainerRemove, } from '../../slices/trainer';
 import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from '../../slices/admin';
@@ -40,12 +39,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Header(props) {
+function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const [headrModel, setHeaderModel] = useState()
-  const [serverError, setServerError] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
   const currentCustomer = useSelector(selectCurrentCustomer);
@@ -60,9 +57,6 @@ function Header(props) {
   const currentMasterAdmin = useSelector(selectCurrentMasterAdmin);
   const master_admin_headers = useSelector(selectMasterAdminHeaders);
 
-  const handleLogOut = async() => {
-    setAnchorEl(null);
-  }
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -80,7 +74,7 @@ function Header(props) {
         console.log("成功する")
         history.push('/');
       })
-      .catch((err: AxiosError<IErrorResponse>) => {
+      .catch((err) => {
         dispatch(customerRemove());
         console.log({err})
       });
@@ -94,7 +88,7 @@ function Header(props) {
          handleClose()
          history.push('/');
       })
-      .catch((err: AxiosError<IErrorResponse>) => {
+      .catch((err) => {
         dispatch(adminRemove());
         console.log({err})
       });
@@ -110,7 +104,7 @@ function Header(props) {
         handleClose()
         history.push('/');
       })
-      .catch((err: AxiosError<IErrorResponse>) => {
+      .catch((err) => {
         dispatch(trainerRemove());
         console.log({err})
       });
@@ -124,7 +118,7 @@ function Header(props) {
         handleClose()
         history.push('/');
       })
-      .catch((err: AxiosError<IErrorResponse>) => {
+      .catch((err) => {
         dispatch(masterAdminRemove());
         console.log({err})
       });

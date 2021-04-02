@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
+/* eslint-disable react/prop-types */
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';

@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-// eslint-disable-next-line import/no-cycle
 import currentCustomerReducer from './slices/customer';
 import currentTrainerReducer  from './slices/trainer';
 import currentAdminReducer  from './slices/admin';

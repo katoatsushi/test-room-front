@@ -1,4 +1,5 @@
-import React, { useEffect, useState, Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -13,9 +14,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import axios, { AxiosError } from 'axios';
-import {selectCurrentAdmin, selectAdminHeaders} from '../../slices/admin'
-import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { selectAdminHeaders} from '../../slices/admin'
+import { useSelector} from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,7 +62,6 @@ export default function CustomerSetInfoDialog({customer, setAllCustomers}) {
         setChange(true);
     };
     const numbers = [ 4,8,12,16,20,24,28 ];
-    const all_numbers = [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28 ];
 
     useEffect(()=>{
         if(customer.room_plus){
@@ -81,7 +81,7 @@ export default function CustomerSetInfoDialog({customer, setAllCustomers}) {
         axios.put(url, {paid: paid,room_plus: roomPlus, dozen_sessions: false, numbers_of_contractnt: currency}, adminHeaders)
         .then(res => {
             handleClose();
-            setAllCustomers((prev) => prev.map((p, index) => {
+            setAllCustomers((prev) => prev.map((p) => {
                 if(p.id == res.data.id) {
                     p = res.data
                 }
