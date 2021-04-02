@@ -42,12 +42,10 @@ function SetChipEdit({interest, setInterestIDs, interestIDs, clickedInterests, s
                 return ID != interest.id;
             });
             setInterestIDs(deletedIDs)
-            // eslint-disable-next-line no-unused-vars
             setUpdateInterestsIDs((prev) => deletedIDs)
         }else{
             const newIDs =  interestIDs.splice(-1, 0, interest.id);
             setInterestIDs((prev) => [...prev, ...newIDs])
-            // eslint-disable-next-line no-unused-vars
             setUpdateInterestsIDs((prev) => interestIDs)
         }
         setValue(!value);

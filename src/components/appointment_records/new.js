@@ -55,7 +55,7 @@ const AppointmentRecordNew = (props) => {
           <Card className={classes.root}>
             <CardContent>
               <Typography variant="h5" component="h2" style={{fontSize: '1.0em'}}>
-                 {response.first_name + response.last_name}様の
+                 { response.first_name + response.last_name}様の
                  { response.fitness_name }のフィードバックを作成しますか？
               </Typography>
               <hr/>

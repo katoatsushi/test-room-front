@@ -32,7 +32,7 @@ function ShowAllSchedules(props){
 
         </>) }
     </>
-    ): <></>   
+    ): <>現在予約可能なスケジュールありません</>   
     return (
         <div>
             {showVacancy}

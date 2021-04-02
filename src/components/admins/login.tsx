@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
+import clsx from 'clsx';
 import {
   ISignInFormValues,
   ISignInSuccessAdminResponse,
@@ -28,6 +29,7 @@ import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../constants/errorMessages.json';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,6 +49,28 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
 function Alert(props) {
@@ -62,6 +86,12 @@ function AdminLogIn() {
     const [serverMessages, setServerMessages] = useState<IServerMessages>();
     const [snackOpen, setSnackOpen] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState();
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
+
     const handleSnackbarClick = () => {
       setSnackOpen(true);
     };
@@ -73,25 +103,24 @@ function AdminLogIn() {
     };
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
       console.log({data})
+      if (!loading) {
+        setSuccess(false);
+        setLoading(true);
+      }
       axios
       .post<ISignInSuccessAdminResponse>(url, data)
       .then((res) => {
+        setSuccess(true);
+        setLoading(false);
         console.log("admin",{res})
         dispatch(setCurrentAdmin(res.data.data));
         dispatch(setHeaders(res.headers));
         history.push('/');
       })
       .catch((err) => {
+        setLoading(false);
         console.log({err})
       });
-      // .catch((err: AxiosError<IErrorResponse>) => {
-      //   setErrorMessage(err.response.data.errors);
-      //   handleSnackbarClick()
-      //   setServerMessages({
-      //     severity: 'error',
-      //     alerts: err.response?.data.errors || [],
-      //   });
-      // });
   };
 
   return (
@@ -178,15 +207,19 @@ function AdminLogIn() {
                   )}
                 />
               </Box>
+              <div className={classes.wrapper}>
               <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  className={buttonClassname}
+                  disabled={loading || success}
               >
                 ログインする
               </Button>
+              {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              </div>
             </form>
           </Box>
         </div>

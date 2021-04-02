@@ -45,6 +45,7 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
     const [storeAppointments, setStoreAppointments] = useState([]);
     const [thisStoreAppointments, setThisStoreAppointments] = useState();
     var url = `/admin/company_id/${company_id}/year/${day.year}/month/${day.month}/day/${day.day}`
+    
     useEffect(()=>{
         axios.get(url)
         .then(function(res) {
@@ -114,6 +115,8 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
 
     function handleClickOpen(res,time) {
       const next_url = `/customer/${ res.customer_id }/appointment/${ res.id }/new_record`
+      // customer_session_record.jsxで使われている
+      // var url_use_in_customer_session_record = `/trainers/${currentTrainer.id}/fitness/${record.fitness_id}`
       history.push({ pathname: next_url, state: { response: res, time: time }});
     }
 
@@ -129,14 +132,13 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
       const repeat_materials = FillBlankRepeat()
        return (
           <>
-
             {res.map((r,index) => (
               <>
               {
                 (() => {
                   if (r.customer_id) {
                     return(<>
-                      <StyledTableCell key={index} align="center" onClick={() => handleClickOpen(r, time)} style={{fontSize: '0.9em',border: '1px solid', borderColor: '#DDDDDD'}}>
+                      <StyledTableCell key={index} align="center" style={{fontSize: '0.9em',border: '1px solid', borderColor: '#DDDDDD'}}>
                         <Grid container spacing={3}>
                           <Grid item xs={3} sm={2}>
                           {r.avatar_url? (

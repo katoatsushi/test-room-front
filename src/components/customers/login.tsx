@@ -25,7 +25,8 @@ import {
   IErrorResponse,
   IServerMessages,
 } from '../../interfaces';
-import { setHeaders, setCurrentCustomer } from '../../slices/customer';
+// import { setHeaders, setCurrentCustomer } from '../../slices/customer';
+import {setCurrentCustomer, setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders} from  '../../slices/customer';
 import selectCurrentCustomer from '../../slices/customer';
 import { setCustomerRecords, customerRecordRemove, getCustomerRecords } from '../../slices/customer_record';
 import Paper from '@material-ui/core/Paper';
@@ -75,17 +76,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function LogIn() {
     const url = `/v1/customer_auth/sign_in`
-    const get_records_url = `/customer_feedback`
+    // const get_records_url = `/customer_feedback`
+    const get_customer_datas_url = `/customer/after/sign_in`
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
     const [serverMessages, setServerMessages] = useState<IServerMessages>();
     const customerRecords = useSelector(getCustomerRecords);
-    // ロード
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
     const buttonClassname = clsx({
@@ -105,12 +105,15 @@ export default function LogIn() {
         setLoading(false);
         dispatch(setCurrentCustomer(res.data.data));
         dispatch(setHeaders(res.headers));
-        axios.get(get_records_url)
+        axios.get(get_customer_datas_url, {headers: res.headers} )
         .then(function(response) {
           // TODO::トレーナーを評価するものを取得
           console.log("成功",{response})
           if(response.data.evaluations.length){
             dispatch(setCustomerRecords(response.data.evaluations));
+            dispatch(setCurrentCustomerInfo(response.data.customer_info));
+            dispatch(setCurrentCustomerStatus(response.data.customer_status));
+            dispatch(setCurrentCustomerInterests(response.data.customer_interests));
             history.push('/');
           }else{
             console.log("現在返すべきトレーナーの評価はありません")
@@ -228,16 +231,6 @@ export default function LogIn() {
               </Button>
               {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
               </div>
-
-              {/* <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                ログインする
-              </Button> */}
               <Grid container justify="flex-end">
                 <Grid item>
                   <Link href="/customer/sign_up" variant="body2">

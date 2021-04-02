@@ -128,6 +128,10 @@ export default function SessionRecordList() {
         )
     : 
         <MenuItem />
+    
+    function SeeLog(log){
+        console.log({log})
+    }
     return(
         <>
         <FormControl component="fieldset" style={{margin: '2%',padding: 10, width: '90%' , backgroundColor: '#EEEEEE',border: 1, borderColor: '#888888'}}>
@@ -192,12 +196,15 @@ export default function SessionRecordList() {
                             </Grid>
                         ) : (
                             <Grid item xs={3} style={{paddingLeft: 0, marginTop: 'auto',marginBottom: 'auto'}}>
-                                <div className="box_2" onClick = {() => 
-                                    history.push({
-                                        pathname: [`/trainers/${currentTrainer.id}/fitness/${record.fitness_id}`],
-                                        data: record
-                                    })}>
-                                    カルテを発行
+                                <div className="box_2" 
+                                    onClick = {() => console.log({record})}
+                                    // onClick = {() => 
+                                    // history.push({
+                                    //     pathname: [`/trainers/${currentTrainer.id}/fitness/${record.fitness_id}`],
+                                    //     data: record
+                                    // })}
+                                >
+                                    カルテを発行だ
                                 </div>
                             </Grid>
                         )}

@@ -67,6 +67,5 @@ export const selectCurrentCustomerInterests = (state: RootState): null | IIntere
 export const selectCustomerHeaders = (
   state: RootState
 ): null | { headers: ITokenHeaders } => state.currentCustomer.headers;
-// export const { setCurrentCustomer, setHeaders, customerRemove } = currentCustomerSlice.actions;
 export const { setCurrentCustomer, setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders, customerRemove } = currentCustomerSlice.actions;
 export default currentCustomerSlice.reducer;
