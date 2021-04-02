@@ -100,7 +100,6 @@ export default function LogIn() {
       axios
       .post<ISignInSuccessResponse>(url, data)
       .then((res) => {
-        console.log('customer sign in', {res})
         setSuccess(true);
         setLoading(false);
         dispatch(setCurrentCustomer(res.data.data));
@@ -109,11 +108,11 @@ export default function LogIn() {
         .then(function(response) {
           // TODO::トレーナーを評価するものを取得
           console.log("成功",{response})
+          dispatch(setCurrentCustomerInfo(response.data.customer_info));
+          dispatch(setCurrentCustomerStatus(response.data.customer_status));
+          dispatch(setCurrentCustomerInterests(response.data.customer_interests));
           if(response.data.evaluations.length){
             dispatch(setCustomerRecords(response.data.evaluations));
-            dispatch(setCurrentCustomerInfo(response.data.customer_info));
-            dispatch(setCurrentCustomerStatus(response.data.customer_status));
-            dispatch(setCurrentCustomerInterests(response.data.customer_interests));
             history.push('/');
           }else{
             console.log("現在返すべきトレーナーの評価はありません")
