@@ -71,8 +71,10 @@ function Header() {
       .then(() => {
         dispatch(customerRemove());
         handleClose()
-        console.log("成功する")
+        console.log("ログアウトしました")
         history.push('/');
+        window.location.reload()
+        setAnchorEl(null);
       })
       .catch((err) => {
         dispatch(customerRemove());
@@ -87,10 +89,10 @@ function Header() {
         dispatch(adminRemove());
          handleClose()
          history.push('/');
+         setAnchorEl(null);
       })
       .catch((err) => {
         dispatch(adminRemove());
-        console.log({err})
       });
   }
   const handleTrainerSignOut = () => {
@@ -103,6 +105,7 @@ function Header() {
         dispatch(trainerRemove());
         handleClose()
         history.push('/');
+        setAnchorEl(null);
       })
       .catch((err) => {
         dispatch(trainerRemove());
@@ -117,12 +120,43 @@ function Header() {
         dispatch(masterAdminRemove());
         handleClose()
         history.push('/');
+        setAnchorEl(null);
       })
       .catch((err) => {
         dispatch(masterAdminRemove());
         console.log({err})
       });
   }
+
+  function MoveToMyPage(){
+    setAnchorEl(null);
+    history.push(`/customer/my_page/${currentCustomer.id}`)
+    window.location.reload()
+  }
+  function MoveToHome(){
+    setAnchorEl(null);
+    history.push(`/`)
+    window.location.reload()
+  }
+
+  function MoveToTrainerPage(){
+    setAnchorEl(null);
+    history.push(`/trainer/${currentTrainer.id}`)
+    window.location.reload()
+  }
+  function MoveToCheckTodaySchedule(){
+    setAnchorEl(null);
+    const today = new Date
+    var company_id = null
+    if(currentTrainer){
+      company_id = currentTrainer.company_id
+    }else if(currentAdmin){
+      company_id = currentAdmin.company_id
+    }
+    history.push(`/admin/company_id/${company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`)
+    window.location.reload()
+  }
+
 
   return (
     <div className={classes.root}>
@@ -160,8 +194,9 @@ function Header() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>マイページへ</MenuItem><hr/>
-                <MenuItem onClick={handleClose}>プロフィールを編集する</MenuItem><hr/>
+                <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/>
+                <MenuItem onClick={MoveToMyPage}>マイページ</MenuItem><hr/>
+                {/* <MenuItem onClick={handleClose}>プロフィールを編集する</MenuItem><hr/> */}
                 <MenuItem onClick={handleCustomerSignOut}>ログアウトする</MenuItem>
               </Menu>
             </div>
@@ -192,10 +227,11 @@ function Header() {
                     open={open}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={handleClose}>マイページへ</MenuItem><hr/>
-                    <MenuItem onClick={handleClose}>プロフィールを編集する</MenuItem><hr/>
-                    <MenuItem onClick={handleTrainerSignOut}>ログアウトする</MenuItem><hr/>
-                    <MenuItem onClick = {() => history.push(`/trainer/edit/me`)}>プロフィールの編集</MenuItem>
+                    <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/>
+                    <MenuItem onClick={MoveToCheckTodaySchedule}>本日の予約を確認する</MenuItem><hr/>
+                    <MenuItem onClick={MoveToTrainerPage}>マイページへ</MenuItem><hr/>
+                    <MenuItem onClick={handleTrainerSignOut}>ログアウトする</MenuItem>
+                    {/* <MenuItem onClick = {() => history.push(`/trainer/edit/me`)}>プロフィールの編集</MenuItem> */}
                     
                   </Menu>
                 </div>
@@ -228,8 +264,8 @@ function Header() {
                     open={open}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={handleClose}>マイページへ</MenuItem><hr/>
-                    <MenuItem onClick={handleClose}>プロフィールを編集する</MenuItem><hr/>
+                    <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/>
+                    <MenuItem onClick={MoveToCheckTodaySchedule}>本日の予約を確認する</MenuItem><hr/>
                     <MenuItem onClick={handleAdminSignOut}>ログアウトする</MenuItem>
                   </Menu>
                 </div>

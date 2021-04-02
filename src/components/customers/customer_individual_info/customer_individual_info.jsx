@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CustomerConditions from './customer_condition';
 import CustomerJobs from './customer_jobs';
 import CustomerInterests from  './customer_interests';
-import { BrowserRouter as useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {selectCustomerHeaders} from '../../../slices/customer'
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'

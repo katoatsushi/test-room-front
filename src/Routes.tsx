@@ -6,7 +6,6 @@ import Root from './components/root';
 import { useSelector, useDispatch } from 'react-redux';
 import SelectStoreFitness from './components/appointments/select_store_fitness_func';
 import AppointmentNew from './components/appointments/appointment_new_func';
-// import ScheduleCheck from './components/admins/admin_schedule_cehck';
 import SignUp from './components/customers/sign_up';
 import LogIn from './components/customers/login';
 import MasterAdminLogIn from './components/master_admins/login';
@@ -17,8 +16,6 @@ import CreateTrainer from './components/admins/create_trainer';
 import MasterAdminTop from './components/master_admins/master_admin_top';
 import CreateAdmin from './components/master_admins/create_admin';
 import CreateCompany from './components/master_admins/create_companies';
-// import Header from './components/applications/header';
-// import Footer from './components/applications/footer';
 import CustomerHome from './components/customers/home';
 import CustomerMyPage from './components/customers/my_page'
 import AppointmentRecordNew from './components/appointment_records/new';

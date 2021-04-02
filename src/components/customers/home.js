@@ -107,8 +107,6 @@ function ShowApo({apo, apos, setApos}) {
 export default function CustomerHome(props) {
     const id =  props.props.match.params.id
     const url = `/customer_page/${id}`
-    // const [customer, setCustomer] = useState();
-    // const [records, setRecords] = useState([]);
     const [apos, setApos] = useState([]);
     const classes = useStyles();
 

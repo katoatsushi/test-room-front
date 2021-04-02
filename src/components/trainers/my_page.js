@@ -30,11 +30,7 @@ export default function TrainerMyPage(props) {
   const currentTrainer = useSelector(selectCurrentTrainer);
   const trainerHeaders = useSelector(selectTrainerHeaders);
   const currentTrainerInfo = useSelector(selectCurrentTrainerInfos);
-
   const dispatch = useDispatch();
-  // const [thisTrainer, setThisTrainer] = useState({});
-  // const [avatarURL, setAvatarURL] = useState("");
-  // const [open, setOpen] = React.useState(false);
   const [avatarOpen, setAvatarOpen] = React.useState(false);
   const handleClickAvatarOpen = () => {
     setAvatarOpen(true);
@@ -42,24 +38,6 @@ export default function TrainerMyPage(props) {
   const handleAvatarClose = () => {
     setAvatarOpen(false);
   };
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-
-//   useEffect(()=>{
-//     const url = `/return_customer_all_info/${props.match.params.id}`
-//     fetch(url)
-//       .then( res => res.json() )
-//       .then( res => {
-//           console.log({res})
-//           // setThisCustomer(res.customer);
-//     })
-//   },[])
-
-  console.log({currentTrainerInfo})
 
   const [preview, setPreview] = useState('');
   const [avatarData, setAvatarData] = useState({});

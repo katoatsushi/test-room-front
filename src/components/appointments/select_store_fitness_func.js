@@ -11,10 +11,12 @@ import Grid from '@material-ui/core/Grid';
 import { useForm } from "react-hook-form";
 import { useSelector } from 'react-redux';
 import { selectCustomerHeaders} from '../../slices/customer'
+import { selectTrainerHeaders} from '../../slices/trainer'
 
 const SelectStoreFitness = (props) => {
     console.log("SelectStoreFitness", {props})
     const customerHeader = useSelector(selectCustomerHeaders);
+    const trainerHeader = useSelector(selectTrainerHeaders);
     const [customer_menu, setCustomerMenu] = useState([]);
     const [store, setStore] = useState([]);
     const [selectCustomerMenu, setSelectCustomerMenu] = useState();
@@ -23,7 +25,13 @@ const SelectStoreFitness = (props) => {
 
     useEffect(()=>{
         const url = `/calendar`
-        axios.get(url, customerHeader)
+        var header = null
+        if(customerHeader){
+            header = customerHeader
+        }else if(trainerHeader){
+            header = trainerHeader
+        }
+        axios.get(url, header)
         .then(function(res) {
             console.log("返り値チェック",{res})
             setCustomerMenu(res.data.fitnesses);
@@ -39,13 +47,7 @@ const SelectStoreFitness = (props) => {
 
     const onSubmit = (data) => console.log(data);
     const { handleSubmit } = useForm();
-    // const stores_box = store.map((store,store_index) =>
-    //     <MenuItem value={store} key={store_index}>{ store.store_name }</MenuItem>
-    // );
 
-    // const customer_menu_box = customer_menu.map((customer_menu,customer_menu_index) =>
-    //     <MenuItem value={customer_menu} key={customer_menu_index} >{ customer_menu.name }</MenuItem>
-    // );
     const stores_box = store.length ?
     store.map((store,store_index) =>
         <MenuItem value={store} key={store_index}>{ store.store_name }</MenuItem>

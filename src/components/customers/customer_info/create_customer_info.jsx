@@ -20,7 +20,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import BirthDay from './customer_birthday';
 import Address from './customer_address';
-import { BrowserRouter as useHistory, } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { selectCustomerHeaders} from '../../../slices/customer'
 import { setCurrentCustomerInfo} from '../../../slices/customer';
 import { useSelector, useDispatch } from 'react-redux';
@@ -29,8 +29,6 @@ import axios from 'axios'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    // color: '#FF9352',
-    // backgroundColor: '#FF9352',
   },
   button: {
     marginRight: theme.spacing(1),

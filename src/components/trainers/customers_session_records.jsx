@@ -197,14 +197,13 @@ export default function SessionRecordList() {
                         ) : (
                             <Grid item xs={3} style={{paddingLeft: 0, marginTop: 'auto',marginBottom: 'auto'}}>
                                 <div className="box_2" 
-                                    onClick = {() => console.log({record})}
-                                    // onClick = {() => 
-                                    // history.push({
-                                    //     pathname: [`/trainers/${currentTrainer.id}/fitness/${record.fitness_id}`],
-                                    //     data: record
-                                    // })}
+                                    onClick = {() => 
+                                    history.push({
+                                        pathname: [`/trainers/${currentTrainer.id}/fitness/${record.fitness_id}`],
+                                        data: record
+                                    })}
                                 >
-                                    カルテを発行だ
+                                    カルテを発行
                                 </div>
                             </Grid>
                         )}

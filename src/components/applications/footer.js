@@ -83,28 +83,22 @@ function Footer() {
               <AppBar position="static" style={{backgroundColor: 'white'}}>
                 <Toolbar>
                 <Grid container spacing={6} style={{textAlign: 'center'}}>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                         <Link href={`/admin/company_id/${currentTrainer.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`}>
                             <HomeIcon style={{color: 'black', fontSize: '2.5em'}}/>
                         </Link>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                         <Link href="/trainers/customer_session_records">
                             <DehazeIcon  style={{color: 'black', fontSize: '2.5em'}} />
                         </Link>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                         <Link href="/customer_all">
                             <PortraitIcon  style={{color: 'black', fontSize: '2.5em'}} />
                         </Link>
                     </Grid>
-                    <Grid item xs={2}>
-                        <Link href="/">
-                            <NotificationsIcon style={{color: 'black', fontSize: '2.5em'}} />
-                        </Link>
-                    </Grid>
-                    
-                    <Grid item xs={2} >
+                    <Grid item xs={3} >
                         <Link href={`/trainer/${currentTrainer.id}`}>
                             <PermIdentityIcon  style={{color: 'black', fontSize: '2.5em'}} />
                         </Link>
