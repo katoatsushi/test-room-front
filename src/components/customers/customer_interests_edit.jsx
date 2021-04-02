@@ -37,17 +37,19 @@ function SetChipEdit({interest, setInterestIDs, interestIDs, clickedInterests, s
     },[])
 
     function handleValueChange(){
-        if(value){
-            const deletedIDs = interestIDs.filter((ID) => {
-                return ID != interest.id;
-            });
-            setInterestIDs(deletedIDs)
-            setUpdateInterestsIDs((prev) => deletedIDs)
-        }else{
-            const newIDs =  interestIDs.splice(-1, 0, interest.id);
-            setInterestIDs((prev) => [...prev, ...newIDs])
-            setUpdateInterestsIDs((prev) => interestIDs)
-        }
+        // if(value){
+        //     //  console.log("AAAAAAAAAAAAAAAA")
+        //     const deletedIDs = interestIDs.filter((ID) => {
+        //         return ID != interest.id;
+        //     });
+        //     setInterestIDs(deletedIDs)
+        //     setUpdateInterestsIDs((prev) => deletedIDs)
+        // }else{
+        //     // console.log("AAAAAAAAAAAAAAAA")
+        //     const newIDs =  interestIDs.splice(-1, 0, interest.id);
+        //     setInterestIDs((prev) => [...prev, ...newIDs])
+        //     setUpdateInterestsIDs((prev) => interestIDs)
+        // }
         setValue(!value);
     }
     return(
