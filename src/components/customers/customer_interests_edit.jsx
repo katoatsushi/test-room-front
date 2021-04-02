@@ -24,32 +24,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SetChipEdit({interest, setInterestIDs, interestIDs, clickedInterests, setUpdateInterestsIDs}) {
-
+function SetChipEdit({thisInterest, setInterestIDs, interestIDs}) {
     const [value, setValue] = React.useState(false)
+
     useEffect(()=>{
-        if (clickedInterests){
-            const index = clickedInterests.findIndex(item => item.name === interest.name)
-            if (index != -1){
-                setValue(true);
-            }
-        }
+        interestIDs.includes(thisInterest.id)? setValue(true) :setValue(false);
     },[])
 
     function handleValueChange(){
-        // if(value){
-        //     //  console.log("AAAAAAAAAAAAAAAA")
-        //     const deletedIDs = interestIDs.filter((ID) => {
-        //         return ID != interest.id;
-        //     });
-        //     setInterestIDs(deletedIDs)
-        //     setUpdateInterestsIDs((prev) => deletedIDs)
-        // }else{
-        //     // console.log("AAAAAAAAAAAAAAAA")
-        //     const newIDs =  interestIDs.splice(-1, 0, interest.id);
-        //     setInterestIDs((prev) => [...prev, ...newIDs])
-        //     setUpdateInterestsIDs((prev) => interestIDs)
-        // }
+        if(value){
+            //  console.log("AAAAAAAAAAAAAAAA")
+            const deletedIDs = interestIDs.filter((ID) => {
+                return ID != thisInterest.id;
+            });
+            setInterestIDs(deletedIDs)
+        }else{
+            // console.log("AAAAAAAAAAAAAAAA")
+            setInterestIDs((prev) => [...prev, thisInterest.id])
+            // setUpdateInterestsIDs(interestIDs)
+        }
         setValue(!value);
     }
     return(
@@ -57,16 +50,16 @@ function SetChipEdit({interest, setInterestIDs, interestIDs, clickedInterests, s
         {
             value?
             (<Chip
-                key={interest.id}
-                label={ interest.name }
+                key={thisInterest.id}
+                label={ thisInterest.name }
                 clickable
                 color="primary"
                 onClick={ handleValueChange }
             />)
             :
             (<Chip
-                key={interest.id}
-                label={ interest.name }
+                key={thisInterest.id}
+                label={ thisInterest.name }
                 clickable
                 color="primary"
                 variant="outlined"
@@ -79,19 +72,10 @@ function SetChipEdit({interest, setInterestIDs, interestIDs, clickedInterests, s
 }
 
 
-export default function CustomerInterestsEdit(props) {
+export default function CustomerInterestsEdit({interestIDs, setInterestIDs, setUpdateInterestsIDs}) {
     const url = '/customer_info/intarests_new'
     const [allInterests, setAllInterests] = React.useState([])
     const classes = useStyles();
-    // マイページから変更する際
-    let interests_array = []
-    if (props.interests){
-        // eslint-disable-next-line no-unused-vars
-        var index = props.interests.map(function( item ) {
-            interests_array.push(item.id)            
-        });
-    }
-    const [interestIDs, setInterestIDs] = React.useState(interests_array)
 
     useEffect(()=>{
         axios.get(url)
@@ -101,20 +85,13 @@ export default function CustomerInterestsEdit(props) {
         .catch(function(error) {
             console.log({error})
         });
-
-        if(props.setCustomerStatus){
-            props.setCustomerStatus((prev) => ({...prev, interests: interestIDs}))
-        }
      },[interestIDs])
 
     const select_interests = allInterests.length ?  
         allInterests.map((interest,index) =>
         <>
-        {props?.interests? 
-            <SetChipEdit key={index} interest={interest} setInterestIDs={setInterestIDs} interestIDs={interestIDs} clickedInterests={props.interests} setUpdateInterestsIDs={props.setUpdateInterestsIDs} />
-            :
-            <SetChipEdit key={index} interest={interest} setInterestIDs={setInterestIDs} interestIDs={interestIDs}/>
-        }
+
+            <SetChipEdit key={index} thisInterest={interest} setInterestIDs={setInterestIDs} interestIDs={interestIDs} />
         </>
     )
     : 

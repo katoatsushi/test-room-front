@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ITokenHeaders, ICustomer , ICustomerInfo, ICustomerStatus, IInterests} from '../interfaces';
+import { ITokenHeaders, ICustomer , ICustomerInfo, ICustomerStatus, IMyInterests} from '../interfaces';
 import { RootState } from '../store';
 
 interface ICurrentCustomer {
@@ -8,7 +8,7 @@ interface ICurrentCustomer {
 
   currentCustomerStatus: null | ICustomerStatus;
 
-  currentCustomerInterests: null | IInterests[];
+  currentCustomerInterests: null | IMyInterests[];
   headers: null | { headers: ITokenHeaders };
 }
 
@@ -28,7 +28,7 @@ const currentCustomerSlice = createSlice({
     setCurrentCustomerStatus: (state, action: PayloadAction<ICustomerStatus>) => {
       state.currentCustomerStatus = action.payload;
     },
-    setCurrentCustomerInterests: (state, action: PayloadAction<IInterests[]>) => {
+    setCurrentCustomerInterests: (state, action: PayloadAction<IMyInterests[]>) => {
       state.currentCustomerInterests = action.payload;
     },
     setHeaders: (state, action: PayloadAction<ITokenHeaders>) => {
@@ -62,7 +62,7 @@ export const selectCurrentCustomer = (state: RootState): null | ICustomer =>
   state.currentCustomer.currentCustomer;
 export const selectCurrentCustomerInfos = (state: RootState): null | ICustomerInfo =>
   state.currentCustomer.currentCustomerInfo;
-export const selectCurrentCustomerInterests = (state: RootState): null | IInterests[] =>
+export const selectCurrentCustomerInterests = (state: RootState): null | IMyInterests[] =>
   state.currentCustomer.currentCustomerInterests;
 export const selectCustomerHeaders = (
   state: RootState

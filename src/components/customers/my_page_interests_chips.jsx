@@ -3,13 +3,13 @@ import React, {  useState, useEffect } from "react"
 import Chip from '@material-ui/core/Chip';
 
 
-export default function InterestChips(props){
+export default function InterestChips({interests}){
 
-    const [interests, setInterests] = useState([]);
-    useEffect(()=>{
-        setInterests(props.interests);
-    },[])
-    console.log("チェック", {interests})
+    // const [interests, setInterests] = useState([]);
+    // useEffect(()=>{
+    //     setInterests(props.interests);
+    // },[])
+
 
     const InterestsChips = interests.length ?  
         interests.map((interest) =>

@@ -49,10 +49,10 @@ export interface ICustomerStatus {
   dozen_sessions: boolean;
   numbers_of_contractnt: boolean;
 }
-export interface ICustomerInterests {
-  interests: IInterests[];
-}
-export interface IInterests {
+// export interface ICustomerInterests {
+//   interests: IMyInterests[];
+// }
+export interface IMyInterests {
   id: number;
   name: string;
   interest_family_id: number;

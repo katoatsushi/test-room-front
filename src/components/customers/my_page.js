@@ -68,6 +68,15 @@ function CustomerMyPage(props) {
   const currentAdmin = useSelector(selectCurrentAdmin);
   const currentCustomerInfos = useSelector(selectCurrentCustomerInfos);
   var currentCustomerInterests = useSelector(selectCurrentCustomerInterests);
+  // 既存の興味のある分野のIDだけそ作成
+  let interests_array = []
+  if (currentCustomerInterests){
+    var index = currentCustomerInterests.map(function( item ) {
+      interests_array.push(item.id)            
+    });
+  }
+  const [interestIDs, setInterestIDs] = React.useState(interests_array)
+
   const history = useHistory();
   const dispatch = useDispatch();
   const [thisCustomer, setThisCustomer] = useState({});
@@ -84,11 +93,12 @@ function CustomerMyPage(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
   function handleInterestsUpdate(){
     const submit_url = `/customer_update_interests`
     setOpen(false);
-    console.log("submit",{updateInterestsIDs})
-    axios.put(submit_url, {ids: updateInterestsIDs} , customerHeaders)
+    console.log({interestIDs})
+    axios.put(submit_url, {ids: interestIDs} , customerHeaders)
     .then(res => {
       console.log({res})
       dispatch(setCurrentCustomerInterests(res.data.interests));
@@ -358,7 +368,7 @@ function CustomerMyPage(props) {
                                 >
                                   <DialogContent>
                                       {/* 興味がある分野の選択 */}
-                                      <CustomerInterestsEdit interests={currentCustomerInterests} setUpdateInterestsIDs={setUpdateInterestsIDs}/>
+                                      <CustomerInterestsEdit interestIDs={interestIDs} setInterestIDs={setInterestIDs} setUpdateInterestsIDs={setUpdateInterestsIDs}/>
                                   </DialogContent>
                                   <DialogActions>
                                     <Button onClick={handleClose} color="primary">
