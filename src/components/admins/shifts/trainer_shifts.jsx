@@ -19,6 +19,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CreateTableCellEdit from './create_shifts'
 import ShiftTableCellEdit from './update_shifts.jsx'
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   table: {
@@ -32,12 +33,6 @@ const useStyles = makeStyles(() => ({
     width: 200,
   },
 }));
-
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-
 
 function ShiftTableCellShow({data}){
     const classes = useStyles();
@@ -102,7 +97,7 @@ export default function ManageTrainerShift(){
     const today = new Date()
     const next_month = today.getMonth() + 2
     const year = today.getFullYear();
-
+    const history = useHistory();
 
     // eslint-disable-next-line no-unused-vars
     const handleChange = (event) => {
@@ -117,7 +112,7 @@ export default function ManageTrainerShift(){
 
     useEffect(()=>{
         console.log("シフトが変更されました")
-        console.log({submitData})
+        // console.log({submitData})
         console.log({trainerShifts})
     },[submitData, trainerShifts])
 
@@ -129,6 +124,7 @@ export default function ManageTrainerShift(){
             company_id: currentAdmin.company_id
         }})
         .then(function (response) {
+            // console.log({response})
             setTrainerShifts(response.data.data)
             setDays(response.data.date_infos)
             setSubmitData(response.data.submit_data)
@@ -139,15 +135,6 @@ export default function ManageTrainerShift(){
         })
     },[])
 
-    // function setDate(obj){
-    //     const date = new Date(`${obj}`)
-    //     var min = null
-    //     var hour = null
-    //     date.getMinutes()==0?  min = "00": min = String(date.getMinutes())
-    //     String(date.getHours()).length == 1? hour = "0" + String(date.getHours()): hour = String(date.getHours())
-    //     const newDate = `${hour}:` + `${min}`
-    //     return newDate
-    // }
     function submitDialogOpen(){
         setSubmitOpen(true)
     }
@@ -162,21 +149,23 @@ export default function ManageTrainerShift(){
         })
         .then(function (response) {
             console.log({response})
-            // axios.get(url, {
-            // params: {
-            //     year: year,
-            //     month: next_month,
-            //     company_id: currentAdmin.company_id
-            // }})
-            // .then(function (response) {
-            //     setTrainerShifts(response.data.data)
-            //     setDays(response.data.date_infos)
-            //     setSubmitData(response.data.submit_data)
-            //     setStores(response.data.stores)
-            // })
-            // .catch(function (response) {
-            //     console.log("error", {response})
-            // })
+            setEdit(false)
+            setShiftEdit(false)
+            axios.get(url, {
+            params: {
+                year: year,
+                month: next_month,
+                company_id: currentAdmin.company_id
+            }})
+            .then(function (response) {
+                setTrainerShifts(response.data.data)
+                setDays(response.data.date_infos)
+                setSubmitData(response.data.submit_data)
+                setStores(response.data.stores)
+            })
+            .catch(function (response) {
+                console.log("error", {response})
+            })
         })
         .catch(function (response) {
             console.log("error", {response})

@@ -33,19 +33,22 @@ export default function ShiftNew(props){
 
 
     function handleSubmit(){
-        console.log(last_day.getMonth() + 1)
-        const url = `/trainer/shift/create/year/${last_day.getFullYear()}/month/${last_day.getMonth() + 1}/`
+        console.log(last_day.getMonth() + 1,"月")
+        const url = `/trainer/shift/create/year/${last_day.getFullYear()}/month/${last_day.getMonth()}/`
+        //TODO::下に直す
+        // const url = `/trainer/shift/create/year/${last_day.getFullYear()}/month/${last_day.getMonth() + 1}/`
+        console.log({shift})
         axios.post( url, {
             trainer_shift: shift
-          }, trainer_headers)
-          .then(function (response) {
-              console.log('成功', {response})
-              history.push(`/trainer/${currentTrainer.id}`);
-          })
-          .catch(function (response) {
+        }, trainer_headers)
+        .then(function (response) {
+            console.log('成功', {response})
+            history.push(`/trainer/${currentTrainer.id}`);
+        })
+        .catch(function (response) {
             console.log('失敗',{response})
             console.log(response.data);
-          })
+        })
     }
     return(
         <>
