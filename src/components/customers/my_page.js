@@ -200,7 +200,7 @@ function CustomerMyPage(props) {
                       <AccountCircleIcon style={{fontSize: '3.2em', color: 'grey'}} onClick={handleClickAvatarOpen}/>
                     )
                     }
-                    <div style={{fontSize: '0.5em'}} onClick={handleClickAvatarOpen}>プロフィールを変更</div>
+                    {/* <div style={{fontSize: '0.5em'}} onClick={handleClickAvatarOpen}>プロフィールを変更</div> */}
                     </>
                   );
                 }
