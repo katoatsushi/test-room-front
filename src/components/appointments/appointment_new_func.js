@@ -42,14 +42,13 @@ const AppointmentNew = (props) => {
     console.log("AppointmentNew", {props})
     const classes = useStyles();
     const [appointments, setAppointments] = useState([]);
-    // eslint-disable-next-line no-unused-vars
     const [ appoDate, setAppoDate ] = useState();
     const [value, setValue] = useState('');
     const [timeValue, setTimeValue] = useState([]);
     const history = useHistory();
     const [loading, setLoading] = React.useState(false);
-    // eslint-disable-next-line no-unused-vars
     const [success, setSuccess] = React.useState(false);
+    const [ radioCheck, setRadioCheck ] = useState(false);
     const params = props.match.params
     const url = `/appointments/new/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
 
@@ -72,6 +71,7 @@ const AppointmentNew = (props) => {
 
     function handleTimeSelect(e){
         setTimeValue(e);
+        setRadioCheck(true)
     }
     const radio_buttons = appointments.map((time,index) =>
         <React.Fragment key={index}>
@@ -136,7 +136,13 @@ const AppointmentNew = (props) => {
                   variant="outlined"
                 /><br/><br/>
                 <Button variant="contained" size='large' style={{marginRight: 10}} color="primary" href="/">キャンセル</Button>
-                <Button variant="contained" size='large' color="secondary" onClick={handleClick} >予約する</Button>
+                {radioCheck? (<>
+                    <Button variant="contained" size='large' color="secondary" onClick={handleClick} >予約する</Button>                
+                </>) : (<>
+                    <Button variant="contained" size='large' color="secondary" disabled >予約する</Button>
+                </>)
+
+                }
             </div>
             {/* </form> */}
         </>

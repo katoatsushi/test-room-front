@@ -22,6 +22,8 @@ const SelectStoreFitness = (props) => {
     const [selectCustomerMenu, setSelectCustomerMenu] = useState();
     const [selectStore, setSelectStore] = useState();
     const history = useHistory();
+    const [storeCheck, setStoreCheck] = useState(false);
+    const [fitnessCheck, setFitnessCheck] = useState(false);
 
     useEffect(()=>{
         const url = `/calendar`
@@ -33,7 +35,6 @@ const SelectStoreFitness = (props) => {
         }
         axios.get(url, header)
         .then(function(res) {
-            console.log("返り値チェック",{res})
             setCustomerMenu(res.data.fitnesses);
             setStore(res.data.store);
         })
@@ -42,8 +43,16 @@ const SelectStoreFitness = (props) => {
         });
     },[])
 
-    function handleCustomerMenuChange(e) { setSelectCustomerMenu(e.target.value) }
-    function handleStoreChange(e) {  setSelectStore(e.target.value) }
+    function handleCustomerMenuChange(e) { 
+        setSelectCustomerMenu(e.target.value)
+        setFitnessCheck(true)
+        // console.log({check})
+    }
+    function handleStoreChange(e) {  
+        setSelectStore(e.target.value)
+        setStoreCheck(true)
+        // console.log({check})
+    }
 
     const onSubmit = (data) => console.log(data);
     const { handleSubmit } = useForm();
@@ -91,20 +100,30 @@ const SelectStoreFitness = (props) => {
                     {  customer_menu_box }
                 </Select>
             </FormControl>
-            <div className="calendar_page_button">
+            {storeCheck&&fitnessCheck? (<>
                 <Button 
                     variant="contained" 
                     size='large' 
                     color="secondary"
-                    style={{width: '100%'}} 
+                    style={{width: '100%', marginTop: 100}} 
                     onClick = {() => 
                         history.push({
                             pathname: [`/customer/${props.match.params.customer_id}/calendar_new/customer_menu/${selectCustomerMenu.id}/store/${selectStore.id}`],
                             state: { store: selectStore.store_name, customer_menu: selectCustomerMenu.name}
-                        })}>
+                        })}
+                >
                     時間を選ぶ
                 </Button>
-            </div>
+            </>):(<>
+                <Button 
+                    variant="contained" 
+                    size='large' 
+                    style={{width: '100%', marginTop: 100}} 
+                    disabled
+                >
+                    時間を選ぶ
+                </Button>
+            </>)}
         </Grid>   
         </Grid>
         </form>

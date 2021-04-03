@@ -276,7 +276,7 @@ export default function CreateAdminSchedule(){
             </Grid>{/* <Grid item xs={12} sm={4}> */}
             <Grid item xs={12} sm={7}>
                 <Paper style={{textAlign: 'center', padding: 20, backgroundColor: '#DDDDDD'}}>
-                {selectedDate.getFullYear()}/{selectedDate.getMonth() + 1}/{selectedDate.getDate()}のスケジュールを確認してください
+                    {selectedDate.getFullYear()}/{selectedDate.getMonth() + 1}/{selectedDate.getDate()}のスケジュールを確認してください
                 </Paper>
                 <ScheduleCheck company_id={company_id} day={dayInfo} scroll={true}/>
             </Grid>

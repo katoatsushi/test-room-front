@@ -46,15 +46,15 @@ export default function AdminMenues(){
                 </Paper>
                 </Grid>
 
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <Paper className={classes.paper}>
                     <Link href="/trainer/sign_up" style={{textAlign: 'center'}}>
                       セッションメニューを追加する
                     </Link><br/>
                     セッションメニューを新しく追加できます
                   </Paper>
-                </Grid>
-
+                </Grid> */}
+{/* 
                 <Grid item xs={12}>
                   <Paper className={classes.paper}>
                     <Link href="/trainer/sign_up" style={{textAlign: 'center'}}>
@@ -62,7 +62,7 @@ export default function AdminMenues(){
                     </Link><br/>
                     既存の店舗の部屋数もこちらから変更できます
                   </Paper>
-                </Grid>
+                </Grid> */}
 
                 <Grid item xs={12}>
                   <Paper className={classes.paper}>

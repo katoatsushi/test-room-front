@@ -47,17 +47,13 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonSuccess: {
     backgroundColor: '#4DA7F0',
-    // backgroundColor: 'silver',
     '&:hover': {
       backgroundColor: '#4DA7F0',
-      // backgroundColor: 'silver',
     },
   },
   submitButtonSuccess: {
-    // backgroundColor: '#4DA7F0',
     backgroundColor: 'silver',
     '&:hover': {
-      // backgroundColor: '#4DA7F0',
       backgroundColor: 'silver',
     },
   },
@@ -109,6 +105,8 @@ function SignUp() {
     const timer = React.useRef();
     const [open, setOpen] = React.useState(false);
     const [name, setName] = useState({first_name_kanji: "", last_name_kanji: "", first_name_kana: "",last_name_kana: ""});
+    // const [check, setCheck] = useState({first_kanji: false, last_kanji: false, first_kana: false,last_kana: false});
+
     const handleClose = () => {
       setOpen(false);
     };
@@ -127,7 +125,6 @@ function SignUp() {
     }, []);
 
     function onSubmit() {
-      console.log({companyId})
       const url = `/companies/${ companyId }/v1/customer_auth`
       if (!loading) {
         setSuccess(false);
@@ -180,12 +177,15 @@ function SignUp() {
         <Typography component="h1" variant="h5">
           新規登録
         </Typography>
+        {password && password_confirmation && password != password_confirmation?(
+            <span style={{color: 'red'}}>※パスワードと確認用のパスワードが異なります</span>
+          ):<></>
+        }
         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={6} sm={6}>
               <TextField
                 autoComplete="fname"
-                // name="firstName"
                 variant="outlined"
                 fullWidth
                 id="firstnamekanji"
@@ -200,7 +200,6 @@ function SignUp() {
                 fullWidth
                 id="lastNamekanji"
                 label="名"
-                // name="lastName"
                 onChange={(e) => setName((prev) => ({...prev, last_name_kanji: e.target.value}))}
                 autoComplete="lname"
               />
@@ -208,7 +207,6 @@ function SignUp() {
             <Grid item xs={6} sm={6}>
               <TextField
                 autoComplete="fname"
-                // name="firstName"
                 variant="outlined"
                 fullWidth
                 id="firstnamekana"
@@ -222,7 +220,6 @@ function SignUp() {
                 fullWidth
                 id="lastName"
                 label="めい(かな)"
-                // name="lastNamekana"
                 onChange={(e) => setName((prev) => ({...prev, last_name_kana: e.target.value}))}
                 autoComplete="lname"
               />
@@ -266,19 +263,36 @@ function SignUp() {
               />
             </Grid>
           </Grid>
+          {name.first_name_kanji && name.last_name_kanji  && name.first_name_kana  && name.last_name_kana && 
+            email && password && password_confirmation &&
+            password == password_confirmation? (<>
+            <div className={classes.wrapper}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                className={buttonClassname}
+                disabled={loading || success}
+              >
+                新規登録する
+              </Button>
+              {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+            </div>
+          </>):(<>
           <div className={classes.wrapper}>
             <Button
               type="submit"
               variant="contained"
-              color="primary"
               fullWidth
               className={buttonClassname}
-              disabled={loading || success}
+              disabled
             >
               新規登録する
             </Button>
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
+          </>)}
 
           <Grid container justify="flex-end">
             <Grid item>
