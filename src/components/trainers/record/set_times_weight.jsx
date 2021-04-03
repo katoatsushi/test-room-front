@@ -135,7 +135,7 @@ export default function SetTimesWeight(props) {
                 variant="outlined"
             />
             <div style={{textAlign: 'right', marginLeft: 'auto', marginRight: 'auto',}}>
-                <Button style={{margin: 5, backgroundColor: '#4DA7F0', color: 'white', fontWeight: '500', width: 200}}
+                <Button style={{marginTop: 10, backgroundColor: '#4DA7F0', color: 'white', fontWeight: '500', width: '100%'}}
                     onClick = {() => 
                         history.push({
                             pathname: [`/trainers/record/confirm`],

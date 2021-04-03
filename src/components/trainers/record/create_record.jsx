@@ -16,10 +16,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
+import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    // display: 'flex',
+    // alignItems: 'center',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -27,6 +31,26 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(1),
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    display: 'block',
+    top: '50%',
+    left: '50%',
+    marginTop: 32,
+    textAlign: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
 }));
 
@@ -36,14 +60,12 @@ function CheckBoxChip({data, setSelectMenues, selectMenues}){
         if(e.target.checked){
             //追加
             selectMenues.push(data);
-            // eslint-disable-next-line no-unused-vars
             setSelectMenues((prev)=> selectMenues)
         }else{
             //削除
             const deletedDatas = selectMenues.filter((menu) => {
                 return menu.id != data.id;
             });
-            // eslint-disable-next-line no-unused-vars
             setSelectMenues((prev) =>  deletedDatas)
         }
     }
@@ -62,14 +84,26 @@ export default function TrainerCreateRecord(props) {
     const [selectMenues, setSelectMenues] = React.useState([]);
     const classes = useStyles();
     const history = useHistory();
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
     const url = `/get/res_second/fitness/${props.match.params.fitness_id}`
-    useEffect(()=>{
 
+    useEffect(()=>{
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+        }
         axios.get(url, trainerHeaders)
         .then(function(res) {
+            setSuccess(true);
+            setLoading(false);
             setFitnessData(res.data.data)
         })
         .catch(function(error) {
+            setLoading(false);
             console.log({error})
         });
 
@@ -84,6 +118,7 @@ export default function TrainerCreateRecord(props) {
             </Paper>
            <Paper variant="outlined"style={{padding: 20, margin: 10}}>
             <span className="karute_text">内容を選んでください</span>
+             {loading && <CircularProgress size={40} className={classes.buttonProgress} />}
             {fitnessData.map((data, index) => (
                 <Accordion key={index} style={{marginTop: 5}}>
                     <AccordionSummary
@@ -110,7 +145,8 @@ export default function TrainerCreateRecord(props) {
                 </Accordion>
             ))}
             <div style={{textAlign: 'right', marginLeft: 'auto'}}>
-                <Button variant="contained" color="primary" style={{margin: 10 , color: 'white', fontWeight: '500', paddingLeft: 30, paddingRight: 30}}
+                <Button variant="contained" color="primary" 
+                    style={{marginTop: 20 , color: 'white', fontWeight: '500', width: '100%',marginLeft: 'auto', marginRight: 'auto'}}
                     onClick = {() => 
                         history.push({
                             pathname: [`/trainers/set/details`],

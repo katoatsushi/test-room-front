@@ -11,6 +11,41 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  // ロード
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+}));
 
 export default function RecordConfirm(props) {
     console.log({props})
@@ -18,7 +53,13 @@ export default function RecordConfirm(props) {
     const record = props.location.record
     const data = props.location.data
     const message = props.location.message
+    const classes = useStyles();
     const trainerHeaders = useSelector(selectTrainerHeaders);
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
 
     function showDate(time){
         const date = new Date(`${time}`);
@@ -38,19 +79,26 @@ export default function RecordConfirm(props) {
     };
 
     function handleSubmit(){
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+        }
        const url = `/create/record/session_menues/appointment/${record.id}`
         axios.post( url, 
-        {customer_record_session_menu: {
-            apo: record,
-            data: data,
-            message: message,
-        }
+            {customer_record_session_menu: {
+                apo: record,
+                data: data,
+                message: message,
+            }
         }, trainerHeaders)
         .then(function (response) {
+            setSuccess(true);
+            setLoading(false);
             console.log({response})
             history.push(`/`);
         })
         .catch(function (response) {
+            setLoading(false);
             console.log("error", {response})
         })
     }
@@ -170,9 +218,23 @@ export default function RecordConfirm(props) {
                     </div>
                 </Grid>
                 <Grid item xs={6}>
-                    <div className="button_submit" onClick={handleSubmit}>
-                        発行する
-                    </div>
+                {loading || success? (
+                        <div 
+                            className="button_submit"
+                            onClick={handleSubmit}
+                            style={{backgroundColor: 'silver'}}
+                        >
+                            発行する
+                        </div>
+                    ):(
+                        <div 
+                            className="button_submit"
+                            onClick={handleSubmit}
+                        >
+                            発行する
+                        </div>
+                    )}
+                    {loading && <CircularProgress size={50} className={classes.buttonProgress} />}
                 </Grid>
             </Grid>
             </DialogContent>
