@@ -10,13 +10,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { setCustomerRecords, customerRecordRemove, getCustomerRecords } from '../../slices/customer_record';
-import { useSelector } from 'react-redux';
+import { selectCurrentCustomer, selectCustomerHeaders, customerRemove } from '../../slices/customer';
+import { useSelector, useDispatch } from 'react-redux';
 import Rating from '@material-ui/lab/Rating';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { IErrorResponse } from '../../interfaces';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '80%',
@@ -33,19 +34,22 @@ const useStyles = makeStyles((theme) => ({
 
 function RecordDialog({session}) {
     const [open, setOpen] = useState(true);
-    // const [value, setValue] = React.useState(0);
     const [value, setValue] = React.useState(0);
     const [food, setFood] = React.useState(0);
+    const dispatch = useDispatch();
+    const customerHeader = useSelector(selectCustomerHeaders);
     const handleClose = () => {
         setOpen(false);
     };
+    console.log({session})
     const menues = session.menues
     const classes = useStyles();
     const show_menues = menues.map((menu,index) =>
-        <div key={index}>・{menu.fitness_name}/{menu.fitness_third_name}:{menu.time}回×{menu.set_num}セット</div>
+        <div key={index}>・{menu.fitness_name}/{menu.fitness_third_name}:{menu.weight}Kg×{menu.time}回</div>
     );
 
     function handleSubmit(e) {
+        console.log({e})
         const url = `/evaluations`
         axios.post( url, {
             trainer_id:  e.trainer_id,
@@ -53,19 +57,27 @@ function RecordDialog({session}) {
             customer_record_id: e.id,
             food_score: food,
             trainer_score: value
-          })
-          .then(function (response) {
+        },customerHeader )
+        .then(function (response) {
+            console.log({response})
             setOpen(false);
-          })
-          .catch(function (response) {
+            if(response.data.evaluations.length){
+                dispatch(setCustomerRecords(response.data.evaluations));
+            }else{
+                dispatch(customerRecordRemove());
+            }
+        })
+        .catch(function (response) {
+            dispatch(customerRemove());
+            dispatch(customerRecordRemove());
             console.log(response.data);
-          })
+        })
     }
     return(
         <>
             <Dialog
                 open={open}
-                onClose={handleClose}
+                // onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -78,6 +90,7 @@ function RecordDialog({session}) {
                     </div>
                 </Typography>
                 <Typography color="textSecondary" gutterBottom >
+
                 <Accordion>
                     <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
@@ -89,13 +102,13 @@ function RecordDialog({session}) {
                     <AccordionDetails>
                     <Typography style={{textAlign: 'left', fontSize: '0.8em'}}>
                         { show_menues }
-                        { show_menues }
                     </Typography>
                     </AccordionDetails>
                 </Accordion>
+
                 </Typography>
-                <Typography variant="h6" component="h4">
-                セッションはいかがでしたか？
+                <Typography  style={{fontSize: 15}}>
+                    セッションはいかがでしたか？
                 </Typography>
                 <Typography  color="textSecondary">
                     <Rating
@@ -107,7 +120,7 @@ function RecordDialog({session}) {
                         }}
                     />
                 </Typography>
-                <Typography variant="h6" component="h4">
+                <Typography style={{fontSize: 15}}>
                 食事はいかがでしたか？
                 </Typography>
                 <Typography  color="textSecondary">
@@ -127,13 +140,18 @@ function RecordDialog({session}) {
             <CardActions>
                 {
                     value==0||food==0?
-                    (<Button variant="contained" disabled>
+                    (<Button variant="contained" style={{width: '90%', marginRight: 'auto', marginLeft: 'auto'}} disabled>
                         送信
                         </Button>)
                     :
-                    (<Button size="large" color="secondary" onClick={() => handleSubmit(session)} variant="contained">
+                    (
+                    <Button size="large" color="secondary" 
+                        style={{width: '90%', marginRight: 'auto', marginLeft: 'auto'}} 
+                        onClick={() => handleSubmit(session)} variant="contained"
+                    >
                         送信
-                    </Button>)
+                    </Button>
+                    )
                 }
             </CardActions>
             </Card>

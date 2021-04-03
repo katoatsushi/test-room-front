@@ -3,7 +3,7 @@ import { ICustomerRecord } from '../interfaces';
 import { RootState } from '../store';
 
 interface ICustomerRecords {
-  customerRecords: ICustomerRecord[] | null;
+  customerRecords:  null | ICustomerRecord[];
 }
 
 const initialState: ICustomerRecords = { customerRecords: null};
@@ -18,8 +18,8 @@ const customerRecordsSlice = createSlice({
     },
     customerRecordRemove: (state) => {
       console.log('TODO::ここに削除機能をつける',{state})
-    //   state.currentCustomer = null;
-    //   state.headers = null;
+      state.customerRecords = null;
+      // state.headers = null;
     },
   },
 });

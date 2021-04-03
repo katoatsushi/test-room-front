@@ -29,7 +29,6 @@ function BarChart({avaTrainer}) {
     datasets: [
       // 表示するデータセット
       {
-        // data: [3.2, 4, 4.2, 3.5, 2.5, 3.2, 3.1, 2.8, 1.7, 2.9, 2.9, 4.0],
         data: avaTrainer.score,
         backgroundColor: 'rgba(30, 144, 255, 0.5)',
         borderColor: 'rgba(54, 162, 235, 1)',

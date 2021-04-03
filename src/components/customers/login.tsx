@@ -114,6 +114,7 @@ export default function LogIn() {
           if(response.data.evaluations.length){
             dispatch(setCustomerRecords(response.data.evaluations));
             history.push('/');
+            // history.push(`/customer_evaluation_data/${res.data.data.id}`);
           }else{
             console.log("現在返すべきトレーナーの評価はありません")
             history.push('/');
