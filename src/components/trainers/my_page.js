@@ -94,7 +94,8 @@ export default function TrainerMyPage(props) {
                     {currentTrainerInfo?.avatar_url ? (
                       <Avatar style={{width: '3.0em',height: '3.0em', marginLeft: 'auto', marginRight: 'auto'}} alt="Remy Sharp" src={currentTrainerInfo.avatar_url || ""} />
                     ) : (
-                      <AccountCircleIcon style={{fontSize: '3.2em', color: 'grey'}} onClick={handleClickAvatarOpen}/>
+                      <AccountCircleIcon style={{fontSize: '3.2em', color: 'grey'}} />
+                      // <AccountCircleIcon style={{fontSize: '3.2em', color: 'grey'}} onClick={handleClickAvatarOpen}/>
                     )
                     }
                     {/* <AccountCircleIcon style={{fontSize: '3.2em', color: 'grey'}} onClick={handleClickAvatarOpen}/> */}
