@@ -195,7 +195,7 @@ export default function SessionRecordList() {
                                 </div>
                             </Grid>
                         ) : (
-                            <Grid item xs={3} style={{paddingLeft: 0, marginTop: 'auto',marginBottom: 'auto'}}>
+                            <Grid item xs={3} style={{paddingLeft: 0, marginTop: 'auto',marginBottom: 'auto', width: '100%'}}>
                                 <div className="box_2" 
                                     onClick = {() => 
                                     history.push({

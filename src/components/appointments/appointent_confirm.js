@@ -42,8 +42,15 @@ const AppointmentConfirm = (props) => {
     function handleCheckOk() {
         const params = props.match.params
         const create_url = `/customer/${props.match.params.customer_id}/appointments/new/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
+        console.log({time_strings})
+        const submitTime = new Date(time_strings)
+        const hour = submitTime.getHours()
+        const min = submitTime.getMinutes()
+        console.log({hour},{min})
         axios.post( create_url, {
-            appointment_time: time_strings,
+            // appointment_time: time_strings,
+            hour: hour,
+            min: min,
             free_box: props.location.state.free_box,
           })
           .then(function (response) {

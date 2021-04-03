@@ -72,7 +72,7 @@ export default function TrainerCreateRecord(props) {
         .catch(function(error) {
             console.log({error})
         });
-        // console.log("確認",{selectMenues})
+
     },[])
 
     
