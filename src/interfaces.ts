@@ -144,7 +144,7 @@ export interface ICustomerRecord {
 
 export interface ICustomerRecordMenu {
   time: number;
-  set_num: number;
+  weight: number;
   fitness_name: string;
   fitness_third_name: string;
   detail: string;
