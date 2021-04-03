@@ -31,7 +31,7 @@ export default function Root() {
         </>
       ):(<></>)}
 
-      <h1>This is Root Page</h1>
+
          {currentAdmin?.id ? (
               <div>企業ID:{currentAdmin.company_id}</div>
             ) : (

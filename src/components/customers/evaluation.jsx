@@ -17,6 +17,8 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,10 +27,30 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     borderColor: '#4DA7F0',
     textAlign: 'center',
+    // display: 'flex',
+    // alignItems: 'center',
   },
   checked: {
     marginRight: theme.spacing(1),
     backgroundColor: 'silver',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   },
 }));
 
@@ -41,15 +63,22 @@ function RecordDialog({session}) {
     const handleClose = () => {
         setOpen(false);
     };
-    console.log({session})
     const menues = session.menues
     const classes = useStyles();
     const show_menues = menues.map((menu,index) =>
         <div key={index}>・{menu.fitness_name}/{menu.fitness_third_name}:{menu.weight}Kg×{menu.time}回</div>
     );
-
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
     function handleSubmit(e) {
         console.log({e})
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+        }
         const url = `/evaluations`
         axios.post( url, {
             trainer_id:  e.trainer_id,
@@ -60,6 +89,8 @@ function RecordDialog({session}) {
         },customerHeader )
         .then(function (response) {
             console.log({response})
+            setSuccess(true);
+            setLoading(false);
             setOpen(false);
             if(response.data.evaluations.length){
                 dispatch(setCustomerRecords(response.data.evaluations));
@@ -70,6 +101,7 @@ function RecordDialog({session}) {
         .catch(function (response) {
             dispatch(customerRemove());
             dispatch(customerRecordRemove());
+            setLoading(false);
             console.log(response.data);
         })
     }
@@ -144,14 +176,18 @@ function RecordDialog({session}) {
                         送信
                         </Button>)
                     :
-                    (
-                    <Button size="large" color="secondary" 
-                        style={{width: '90%', marginRight: 'auto', marginLeft: 'auto'}} 
-                        onClick={() => handleSubmit(session)} variant="contained"
-                    >
-                        送信
-                    </Button>
-                    )
+                    (<>
+                        {/* <div className={classes.wrapper}> */}
+                            <Button size="large" color="secondary" 
+                                style={{width: '90%', marginRight: 'auto', marginLeft: 'auto'}} 
+                                onClick={() => handleSubmit(session)} variant="contained"
+                                disabled={loading || success}
+                            >
+                                送信
+                            </Button>
+                            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                        {/* </div> */}
+                    </>)
                 }
             </CardActions>
             </Card>

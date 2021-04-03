@@ -32,6 +32,7 @@ import { setCustomerRecords, customerRecordRemove, getCustomerRecords } from '..
 import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../constants/errorMessages.json';
 import { useSelector } from 'react-redux';
+import CustomizedSnackbars from './login_snackbar'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -78,7 +79,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LogIn() {
     const url = `/v1/customer_auth/sign_in`
-    // const get_records_url = `/customer_feedback`
     const get_customer_datas_url = `/customer/after/sign_in`
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -91,8 +91,10 @@ export default function LogIn() {
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
+      setSnackbarOpen(false)
       if (!loading) {
         setSuccess(false);
         setLoading(true);
@@ -127,6 +129,12 @@ export default function LogIn() {
       })
       .catch((err: AxiosError<IErrorResponse>) => {
         console.log({err})
+        if(err.response){
+          if(err.response.status){
+            console.log(err.response.status)
+            setSnackbarOpen(true)
+          }
+        }
         setLoading(false);
         setServerMessages({
           severity: 'error',
@@ -137,6 +145,9 @@ export default function LogIn() {
 
   return (
     <>
+    {snackbarOpen?(
+      <CustomizedSnackbars/>
+    ):(<></>)}
     <Box my={5}>
       <Container maxWidth="xs">
         <Paper>

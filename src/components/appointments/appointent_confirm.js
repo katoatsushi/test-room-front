@@ -7,8 +7,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '90%',
     marginLeft: 'auto',
@@ -28,7 +30,25 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-});
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+}));
 
 const AppointmentConfirm = (props) => {
     console.log("AppointmentConfirm", {props})
@@ -37,7 +57,11 @@ const AppointmentConfirm = (props) => {
     const time_array_start = props.location.state.time_array[0]
     const time_array_finish = props.location.state.time_array[1]
     const [check, setCheck] = useState(false);
-    // const [customerMenu, setCustomerMenu] = useState();
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
 
     function handleCheckOk() {
         const params = props.match.params
@@ -47,6 +71,10 @@ const AppointmentConfirm = (props) => {
         const hour = submitTime.getHours()
         const min = submitTime.getMinutes()
         console.log({hour},{min})
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+        }
         axios.post( create_url, {
             // appointment_time: time_strings,
             hour: hour,
@@ -55,8 +83,13 @@ const AppointmentConfirm = (props) => {
           })
           .then(function (response) {
             console.log({response})
+            setSuccess(true);
+            setLoading(false);
             setCheck(true);
-          })
+          }).catch(function (response) {
+            setLoading(false);
+            console.log(response);
+        })
     }
 
     // useEffect(async()=>{
@@ -134,9 +167,13 @@ const AppointmentConfirm = (props) => {
                         <Button size="large" style={{width: '40%',margin: 10,backgroundColor: '#F1F1F1', color: '#959393', fontWeight: '700'}}>
                             キャンセル
                         </Button>
-                        <Button size="large" onClick={handleCheckOk} style={{width: '40%' ,margin: 10,backgroundColor: '#4DA7F0', color: 'white', fontWeight: '700'}}>
+                        <Button size="large" onClick={handleCheckOk} 
+                            style={{width: '40%' ,margin: 10,backgroundColor: '#4DA7F0', color: 'white', fontWeight: '700'}}
+                            disabled={loading || success}
+                        >
                             確定する
                         </Button>
+                        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                     </div>
                     </Card>
                 )}

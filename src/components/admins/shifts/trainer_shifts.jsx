@@ -112,7 +112,6 @@ export default function ManageTrainerShift(){
 
     useEffect(()=>{
         console.log("シフトが変更されました")
-        // console.log({submitData})
         console.log({trainerShifts})
     },[submitData, trainerShifts])
 
@@ -149,8 +148,6 @@ export default function ManageTrainerShift(){
         })
         .then(function (response) {
             console.log({response})
-            setEdit(false)
-            setShiftEdit(false)
             axios.get(url, {
             params: {
                 year: year,
@@ -162,6 +159,9 @@ export default function ManageTrainerShift(){
                 setDays(response.data.date_infos)
                 setSubmitData(response.data.submit_data)
                 setStores(response.data.stores)
+                // ダイアログ、ボタンを元に戻す
+                setEdit(false)
+                setShiftEdit(false)
             })
             .catch(function (response) {
                 console.log("error", {response})

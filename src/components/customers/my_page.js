@@ -122,9 +122,6 @@ function CustomerMyPage(props) {
     });
     console.log("親で確認",{updateInterestsIDs})
   },[updateInterestsIDs])
-  
-
-  // console.log({updateInterestsIDs})
 
   const [avatarOpen, setAvatarOpen] = React.useState(false);
   const handleClickAvatarOpen = () => {
@@ -339,12 +336,13 @@ function CustomerMyPage(props) {
           <Grid container >
             <Grid item xs={1}/>
             <Grid item xs={10}>
-            
-                <span className="customer_my_page_tag2">興味・関心</span>
-                {currentCustomer?
+
+                {currentCustomer? (<>
+                  <span className="customer_my_page_tag2">興味・関心</span>
                   <div style={{textAlign: 'right'}}>
                     <EditIcon style={{fontSize: '1.2em'}} onClick={handleClickOpen}/>
                   </div>
+                </>)
                   :
                   <></>
                 }
@@ -397,16 +395,16 @@ function CustomerMyPage(props) {
           <Grid container >
             <Grid item xs={1}/>
             <Grid item xs={10}>
-                <span className="customer_my_page_tag2">体重変化</span>
                 {
                   (() => {
                     if (currentCustomer) {
                       if (currentCustomer.id == props.match.params.id){
-                        return(
-                        <div style={{textAlign: 'right'}}>
-                          <EditIcon onClick={() => history.push(`/customer/weight/new`)} style={{fontSize: '1.2em'}}/>
-                        </div>
-                        );
+                        return(<>
+                          <span className="customer_my_page_tag2">体重変化</span>
+                          <div style={{textAlign: 'right'}}>
+                            <EditIcon onClick={() => history.push(`/customer/weight/new`)} style={{fontSize: '1.2em'}}/>
+                          </div>
+                        </>);
                       }
                     } else {
                       return (<></>);

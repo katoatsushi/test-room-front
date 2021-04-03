@@ -150,7 +150,6 @@ export default function RoomPlusBox(){
     const today = new Date
     const [vacancy, setVacancy] = useState([]);
     const [allStores, setAllStores] = useState([]);
-    // eslint-disable-next-line no-unused-vars
     const [selectStore, setSelectStore] = useState({});
     const [selectVacancy, setSelectVacancy] = useState({});
     const [selectTime, setSelectTime] = useState([]);
@@ -164,6 +163,7 @@ export default function RoomPlusBox(){
         .then(function(res) {
             setVacancy(res.data.data);
             setAllStores(res.data.stores);
+            console.log(res.data.data)
         })
         .catch(function(error) {
             console.log({error})
@@ -183,19 +183,20 @@ export default function RoomPlusBox(){
             </>
         ):(
             <>        
-            <span>本日の空き状況です</span>
-            <div style={{overflow: 'scroll', height: 120, backgroundColor: 'white', padding: 20}}>
-                <ShowAllSchedules vacancy={vacancy}/>
-            </div>
-            {vacancy? (
+            {vacancy? (<>
+                <div style={{fontSize: 20, textAlign: 'center'}}>本日の空き状況です</div>
+                <div style={{overflow: 'scroll', height: 120, backgroundColor: 'white', padding: 20}}>
+                    <ShowAllSchedules vacancy={vacancy}/>
+                </div>
                 <Button variant="contained" color="primary" onClick={handleOpen} style={{marginLeft: '0 0 0 auto',  float: 'right'}}>
                     Roomプラスを予約する
                 </Button>
-            ):(
+            </>):(<>
+                <div style={{fontSize: 20, textAlign: 'center'}}>本日の空きはありませんです</div>
                 <Button variant="contained" color="primary" disabled onClick={handleOpen} style={{marginLeft: '0 0 0 auto',  float: 'right'}}>
                     Roomプラスを予約する
                 </Button>
-            )}
+            </>)}
             </>
             )
         }

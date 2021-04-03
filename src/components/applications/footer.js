@@ -53,22 +53,17 @@ function Footer() {
               <AppBar position="static" style={{backgroundColor: 'white'}}>
                 <Toolbar>
                 <Grid container spacing={6} style={{textAlign: 'center'}}>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <Link href="/">
                             <HomeIcon style={{color: 'black', fontSize: '2.5em'}}/>
                         </Link>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <Link href={`/customer/${currentCustomer.id}/calendar_new`}>
                             <CalendarTodayIcon  style={{color: 'black', fontSize: '2.5em'}} />
                         </Link>
                     </Grid>
-                    <Grid item xs={3}>
-                        <Link href="/">
-                            <NotificationsIcon style={{color: 'black', fontSize: '2.5em'}} />
-                        </Link>
-                    </Grid>
-                    <Grid item xs={3} >
+                    <Grid item xs={4} >
                         <Link href={`/customer/my_page/${currentCustomer.id}`}>
                             <PermIdentityIcon  style={{color: 'black', fontSize: '2.5em'}} />
                         </Link>
@@ -77,7 +72,6 @@ function Footer() {
                 </Toolbar>
               </AppBar>
             </>
-        // ) : (
         ) : currentTrainer?.id ? (
             <>
               <AppBar position="static" style={{backgroundColor: 'white'}}>
