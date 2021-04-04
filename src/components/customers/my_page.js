@@ -23,7 +23,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import axios from 'axios';
 import InputFile from '../inputFile'
 import Avatar from '@material-ui/core/Avatar';
-import { setCurrentCustomerInfo, setCurrentCustomerInterests} from '../../slices/customer';
+import { setCurrentCustomerInfo, setCurrentCustomerInterests, selectCurrentCustomerStatus} from '../../slices/customer';
 import InterestChips from './my_page_interests_chips'
 import CustomerInterestsEdit from './customer_interests_edit'
 import EvaluationData from './customer_evaluation_data'
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CustomerMyPage(props) {
+export default function CustomerMyPage(props) {
   const classes = useStyles();
   const currentCustomer = useSelector(selectCurrentCustomer);
   const customerHeaders = useSelector(selectCustomerHeaders);
@@ -76,14 +76,16 @@ function CustomerMyPage(props) {
     });
   }
   const [interestIDs, setInterestIDs] = React.useState(interests_array)
-
   const history = useHistory();
   const dispatch = useDispatch();
   const [thisCustomer, setThisCustomer] = useState({});
+  const [recordNum, setRecordNum] = useState(0);
+  const [apoNum, setApoNum] = useState(0);
   const [open, setOpen] = React.useState(false);
   const [updateInterestsIDs, setUpdateInterestsIDs] = useState([]);
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
+  const customerStatus = useSelector(selectCurrentCustomerStatus);
   const buttonClassname = clsx({
     [classes.buttonSuccess]: success,
   });
@@ -97,7 +99,6 @@ function CustomerMyPage(props) {
   function handleInterestsUpdate(){
     const submit_url = `/customer_update_interests`
     setOpen(false);
-    console.log({interestIDs})
     axios.put(submit_url, {ids: interestIDs} , customerHeaders)
     .then(res => {
       console.log({res})
@@ -111,17 +112,20 @@ function CustomerMyPage(props) {
   }
 
   useEffect(()=>{
-    // eslint-disable-next-line react/prop-types
     const url = `/return_customer_all_info/${props.match.params.id}`
+    console.log({props},"aaaaa")
+    console.log({url})
     axios.get(url)
     .then(function(res) {
+      console.log({res})
+      setRecordNum(res.data.customer_record_len)
       setThisCustomer(res.data.customer);
+      setApoNum(res.data.appo_count)
     })
     .catch(function(error) {
       console.log({error})
     });
-    console.log("親で確認",{updateInterestsIDs})
-  },[updateInterestsIDs])
+  },[])
 
   const [avatarOpen, setAvatarOpen] = React.useState(false);
   const handleClickAvatarOpen = () => {
@@ -272,7 +276,7 @@ function CustomerMyPage(props) {
           <Grid item xs={2}/>
           <Grid item xs={4} style={{textAlign: 'center'}}>
               <span className="customer_my_page_tag">過去のカルテ数</span><br/>
-              <span style={{fontSize: '2em'}}>20</span><br/>
+              <span style={{fontSize: '2em'}}>{recordNum}</span><br/>
             {
                 (() => {
                     // eslint-disable-next-line react/prop-types
@@ -300,9 +304,15 @@ function CustomerMyPage(props) {
             }
           </Grid>
           <Grid item xs={4} style={{textAlign: 'center'}}>
+          {currentCustomer? (<>
               <span className="customer_my_page_tag">予約残り</span><br/>
-              <span style={{fontSize: '2em'}}>3</span>
-              <span style={{fontSize: '1.2em'}}>/4</span><br/>
+              <span style={{fontSize: '2em'}}>{apoNum}</span>
+              <span style={{fontSize: '1.2em'}}>/
+                {customerStatus? (<>
+                  { customerStatus.numbers_of_contractnt }
+                 </>):<></>}
+            </span><br/>
+          </>):<></>}
             {
                 (() => {
                     if (currentCustomer && currentCustomer.id == props.match.params.id) {
@@ -433,6 +443,3 @@ function CustomerMyPage(props) {
     </>
   );
 }
-
-export default CustomerMyPage;
-
