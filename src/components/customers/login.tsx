@@ -106,6 +106,7 @@ export default function LogIn() {
         setLoading(false);
         dispatch(setCurrentCustomer(res.data.data));
         dispatch(setHeaders(res.headers));
+        // お客様の詳細情報を入手
         axios.get(get_customer_datas_url, {headers: res.headers} )
         .then(function(response) {
           // TODO::トレーナーを評価するものを取得

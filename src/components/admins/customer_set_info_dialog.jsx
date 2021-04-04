@@ -81,6 +81,7 @@ export default function CustomerSetInfoDialog({customer, setAllCustomers}) {
         axios.put(url, {paid: paid,room_plus: roomPlus, dozen_sessions: false, numbers_of_contractnt: currency}, adminHeaders)
         .then(res => {
             handleClose();
+            console.log({res})
             setAllCustomers((prev) => prev.map((p) => {
                 if(p.id == res.data.id) {
                     p = res.data

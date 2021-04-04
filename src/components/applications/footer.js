@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
-import {selectCurrentCustomer} from '../../slices/customer'
+import {selectCurrentCustomer, selectCustomerHeaders, customerRemove, selectCurrentCustomerStatus} from '../../slices/customer'
 import {selectCurrentAdmin} from '../../slices/admin'
 import {selectCurrentTrainer} from '../../slices/trainer'
 import {selectCurrentMasterAdmin} from '../../slices/master_admin'
@@ -43,6 +43,7 @@ function Footer() {
   const currentAdmin = useSelector(selectCurrentAdmin);
   const currentTrainer = useSelector(selectCurrentTrainer);
   const currentMasterAdmin = useSelector(selectCurrentMasterAdmin);
+  const customerStatus = useSelector(selectCurrentCustomerStatus);
   const today = new Date
   console.log({currentCustomer})
 
@@ -58,11 +59,17 @@ function Footer() {
                             <HomeIcon style={{color: 'black', fontSize: '2.5em'}}/>
                         </Link>
                     </Grid>
-                    <Grid item xs={4}>
-                        <Link href={`/customer/${currentCustomer.id}/calendar_new`}>
-                            <CalendarTodayIcon  style={{color: 'black', fontSize: '2.5em'}} />
-                        </Link>
-                    </Grid>
+                    {customerStatus?.paid? (
+                        <Grid item xs={4}>
+                            <Link href={`/customer/${currentCustomer.id}/calendar_new`}>
+                                <CalendarTodayIcon  style={{color: 'black', fontSize: '2.5em'}} />
+                            </Link>
+                        </Grid>
+                    ):(
+                        <Grid item xs={4}>
+                            <CalendarTodayIcon  style={{color: 'grey', fontSize: '2.5em'}} />
+                        </Grid>
+                    )}
                     <Grid item xs={4} >
                         <Link href={`/customer/my_page/${currentCustomer.id}`}>
                             <PermIdentityIcon  style={{color: 'black', fontSize: '2.5em'}} />

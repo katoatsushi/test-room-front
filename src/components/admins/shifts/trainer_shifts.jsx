@@ -113,12 +113,6 @@ export default function ManageTrainerShift(){
         setEdit(false);
     }
 
-    // useEffect(()=>{
-    //     console.log("シフトが変更されました")
-    //     // console.log({trainerShifts})
-    //     console.log({deleteData})
-    // },[submitData, trainerShifts, deleteData])
-
     useEffect(()=>{
         axios.get(url, {
         params: {
