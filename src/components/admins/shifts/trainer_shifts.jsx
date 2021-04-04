@@ -89,6 +89,7 @@ export default function ManageTrainerShift(){
     const url = `/get_trainer_shifts`
     const [trainerShifts, setTrainerShifts] = useState([]);
     const [submitData, setSubmitData] = useState([]);
+    const [deleteData, setDeleteData] = useState([]);
     const [stores, setStores] = useState([]);
     const [days, setDays] = useState([]);
     // eslint-disable-next-line no-unused-vars
@@ -112,10 +113,11 @@ export default function ManageTrainerShift(){
         setEdit(false);
     }
 
-    useEffect(()=>{
-        console.log("シフトが変更されました")
-        console.log({trainerShifts})
-    },[submitData, trainerShifts])
+    // useEffect(()=>{
+    //     console.log("シフトが変更されました")
+    //     // console.log({trainerShifts})
+    //     console.log({deleteData})
+    // },[submitData, trainerShifts, deleteData])
 
     useEffect(()=>{
         axios.get(url, {
@@ -146,7 +148,8 @@ export default function ManageTrainerShift(){
         const submit_url = `/update_trainer_shift`
         console.log({submitData})
         axios.put(submit_url, {
-            data: submitData
+            data: submitData,
+            delete: deleteData
         })
         .then(function (response) {
             console.log({response})
@@ -218,7 +221,7 @@ export default function ManageTrainerShift(){
                                     {/* 編集用 */}
                                     <ShiftTableCellEdit data={r} stores={stores} setSubmitData={setSubmitData} submitData={submitData} 
                                         setTrainerShifts={setTrainerShifts} trainerShifts={trainerShifts}
-                                        setShiftEdit={setShiftEdit}
+                                        setShiftEdit={setShiftEdit} setDeleteData={setDeleteData}
                                     />
                                 </>) : (<>
                                     {/* 閲覧用 */}
