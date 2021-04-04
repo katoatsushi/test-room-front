@@ -105,7 +105,7 @@ function SignUp() {
     const timer = React.useRef();
     const [open, setOpen] = React.useState(false);
     const [name, setName] = useState({first_name_kanji: "", last_name_kanji: "", first_name_kana: "",last_name_kana: ""});
-    // const [check, setCheck] = useState({first_kanji: false, last_kanji: false, first_kana: false,last_kana: false});
+
 
     const handleClose = () => {
       setOpen(false);
@@ -182,6 +182,7 @@ function SignUp() {
           ):<></>
         }
         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+        
           <Grid container spacing={2}>
             <Grid item xs={6} sm={6}>
               <TextField

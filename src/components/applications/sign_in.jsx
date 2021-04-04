@@ -20,18 +20,20 @@ export default function SignIn(setSubmitData){
     return(
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{textAlign: 'center'}}>
             <TextField 
                 id="outlined-basic" 
                 label="メールアドレス" 
                 variant="outlined"
-                onChange={(e) => setSubmitData((prev) => ({...prev, email: e.target.value}))}
+                onChange={(e) => setSubmitData((prev) => ({password: prev.password, email: e.target.value}))}
             />
+          </Grid>
+          <Grid item xs={12} style={{textAlign: 'center'}}>
             <TextField 
                 id="outlined-basic" 
                 label="パスワード" 
                 variant="outlined"
-                onChange={(e) => setSubmitData((prev) => ({...prev, password: e.target.value}))}
+                onChange={(e) => setSubmitData((prev) => ({email: prev.email, password: e.target.value}))}
             />
         </Grid>
       </Grid>

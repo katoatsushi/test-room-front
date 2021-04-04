@@ -16,7 +16,14 @@ import Typography from '@material-ui/core/Typography';
 import { useSelector} from 'react-redux';
 import { selectCurrentAdmin, selectAdminHeaders } from '../../slices/admin';
 import CheckTrainerMenues from './check_trainer_menues'
+import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -34,6 +41,37 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  submitButtonSuccess: {
+    backgroundColor: 'silver',
+    '&:hover': {
+      backgroundColor: 'silver',
+    },
+  },
+  fabProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: -6,
+    left: -6,
+    zIndex: 1,
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
 function CreateTrainer() {
@@ -48,7 +86,13 @@ function CreateTrainer() {
     const { handleSubmit } = useForm();
     const getFitnesses = `/fitnesses`
     const [allFitnesses, setAllFitnesses] = useState([]);
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const [name, setName] = useState({first_name_kanji: "", last_name_kanji: "", first_name_kana: "",last_name_kana: ""});
 
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
     useEffect(()=>{
        axios.get(getFitnesses, admin_headers)
         .then(function(res) {
@@ -62,10 +106,18 @@ function CreateTrainer() {
     },[])
 
     function onSubmit() {
+        if (!loading) {
+          setSuccess(false);
+          setLoading(true);
+        }
         const url = `/companies/${ currentAdmin.company_id }/v1/trainer_auth`
         axios.post( url,
             // トレーナーの登録
             {
+              first_name_kana: name.first_name_kana,
+              last_name_kana: name.last_name_kana,
+              first_name_kanji: name.first_name_kanji,
+              last_name_kanji: name.last_name_kanji,
               email: email,
               password: password,
               password_confirmation: password_confirmation,
@@ -85,9 +137,17 @@ function CreateTrainer() {
                 admin_headers
             )
             .then(function (response) {
+                setSuccess(true);
+                setLoading(false);
                 console.log({response})
                 history.push(`/`)
+            }).catch(function (response) {
+              setLoading(false);
+              console.log({response})
             })
+        }).catch(function (response) {
+            setLoading(false);
+            console.log({response})
         })
     }
     const handleEMailChange = (e) => {
@@ -116,6 +176,49 @@ function CreateTrainer() {
             <Grid item xs={12}>
               <CheckTrainerMenues setTrainerMenues={setTrainerMenues} trainerMenues={trainerMenues} allFitnesses={allFitnesses}/>
             </Grid>
+
+            <Grid item xs={6} sm={6}>
+              <TextField
+                autoComplete="fname"
+                variant="outlined"
+                fullWidth
+                id="firstnamekanji"
+                onChange={(e) => setName((prev) => ({...prev, first_name_kanji: e.target.value}))}
+                label="姓"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="lastNamekanji"
+                label="名"
+                onChange={(e) => setName((prev) => ({...prev, last_name_kanji: e.target.value}))}
+                autoComplete="lname"
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <TextField
+                autoComplete="fname"
+                variant="outlined"
+                fullWidth
+                id="firstnamekana"
+                onChange={(e) => setName((prev) => ({...prev, first_name_kana: e.target.value}))}
+                label="せい(かな)"
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="lastName"
+                label="めい(かな)"
+                onChange={(e) => setName((prev) => ({...prev, last_name_kana: e.target.value}))}
+                autoComplete="lname"
+              />
+            </Grid>
+
             <InputLabel id="demo-store-select-outlined-label" >メールアドレス・パスワードを入力してください</InputLabel>
             <Grid item xs={12}>
               <TextField
@@ -157,15 +260,19 @@ function CreateTrainer() {
             </Grid>
 
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            トレーナーを登録する
-          </Button>
+          <div className={classes.wrapper}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              disabled={loading || success}
+            >
+              トレーナーを登録する
+            </Button>
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+          </div>
         </form>
       </div>
     </Container>

@@ -77,7 +77,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-function AdminLogIn() {
+export default function AdminLogIn() {
     const url = `/v1/admin_auth/sign_in`
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -234,5 +234,3 @@ function AdminLogIn() {
     </>
   );
 }
-
-export default AdminLogIn;

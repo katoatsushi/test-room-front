@@ -7,14 +7,52 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-// import TokenHeaders from '../../actions/token_headers';
+import { selectCurrentMasterAdmin, selectMasterAdminHeaders, masterAdminRemove, } from '../../slices/master_admin';
+import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  submitButtonSuccess: {
+    backgroundColor: 'silver',
+    '&:hover': {
+      backgroundColor: 'silver',
+    },
+  },
+  fabProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: -6,
+    left: -6,
+    zIndex: 1,
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -43,8 +81,18 @@ function CreateAdmin(props) {
     const [password_confirmation, setPasswordConfirmation] = useState("");
     const history = useHistory();
     const { handleSubmit } = useForm();
+    const master_admin_headers = useSelector(selectMasterAdminHeaders);
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
+
     function onSubmit() {
-        // var header_tokens = TokenHeaders()
+        if (!loading) {
+          setSuccess(false);
+          setLoading(true);
+        }
         var header_tokens = {}
         axios.post( url, 
             {
@@ -52,18 +100,22 @@ function CreateAdmin(props) {
               password: password,
               password_confirmation: password_confirmation
             },
-            header_tokens
+            master_admin_headers
         )
         .then(function (response) {
-            console.log(response);
-            if (response.status==200) {
-                console.log(response.data);
-                history.push(`/master_admin`)
-            } else {
-               console.log(response);
-            }
-
-        })
+          setSuccess(true);
+          setLoading(false);
+          console.log(response);
+          if (response.status==200) {
+              console.log(response.data);
+              history.push(`/master_admin`)
+          } else {
+              console.log(response);
+          }
+        }).catch(function (response) {
+          setLoading(false);
+          console.log({response})
+      })
     }
     const handleEMailChange = (e) => {
         setEmail(e.target.value);
@@ -90,7 +142,6 @@ function CreateAdmin(props) {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                // required
                 fullWidth
                 id="email"
                 label="メールアドレスを入力してください"
@@ -102,7 +153,6 @@ function CreateAdmin(props) {
             <Grid item xs={10}>
               <TextField
                 variant="outlined"
-                // required
                 fullWidth
                 name="password"
                 label="パスワードを入力してください"
@@ -115,7 +165,6 @@ function CreateAdmin(props) {
             <Grid item xs={10}>
               <TextField
                 variant="outlined"
-                // required
                 fullWidth
                 name="password"
                 label="(確認)再度パスワードを入力してください"
@@ -127,15 +176,21 @@ function CreateAdmin(props) {
             </Grid>
 
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            新規登録する
-          </Button>
+
+          <div className={classes.wrapper}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              className={buttonClassname}
+              disabled={loading || success}
+            >
+              新規登録する
+            </Button>
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+          </div>
+
         </form>
       </div>
     </Container>

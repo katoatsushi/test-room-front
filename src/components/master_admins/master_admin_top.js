@@ -56,9 +56,10 @@ const MasterAdminTop = () => {
             <StyledTableRow key={ index } >
                 {/* <StyledTableCell align="center">{company[0].id}</StyledTableCell> */}
                 <StyledTableCell align="center">
-                    <Link to={`/company/${company[0].id}`}> 
+                    {/* 会社名をクリックすると会社詳細ページに飛ぶ */}
+                    {/* <Link to={`/company/${company[0].id}`}>  */}
                             { company[0].name }
-                    </Link>
+                    {/* </Link> */}
                 </StyledTableCell>
                 <StyledTableCell align="center"> { company[0].address }</StyledTableCell>
                 <StyledTableCell align="center"> { company[0].tel }</StyledTableCell>
@@ -73,7 +74,8 @@ const MasterAdminTop = () => {
                     variant="contained" 
                     size='large' 
                     color="secondary" 
-                    onClick={() => history.push(`/${ company[0].id }/admin/sign_up`)}>
+                    onClick={() => history.push(`/${ company[0].id }/admin/sign_up`)}
+                >
                    { company[0].name }の管理者を追加
                 </Button>
 
