@@ -52,7 +52,8 @@ export default function ShiftNew(props){
     }
     return(
         <>
-        <div style={{textAlign: 'center', fontSize: '1.7em'}}>{last_day.getMonth() + 1}月シフト希望提出</div>
+        {/* <div style={{textAlign: 'center', fontSize: '1.7em'}}>{last_day.getMonth() + 1}月シフト希望提出</div> */}
+        <div style={{textAlign: 'center', fontSize: '1.7em'}}>{last_day.getMonth()}月シフト希望提出</div>
         <div style={{overflow: 'scroll', height: 400,backgroundColor: 'white', marginTop: 15}}>
         {/* <div style={{margin: 50}}></div> */}
         <Grid container spacing={3}>
@@ -67,12 +68,12 @@ export default function ShiftNew(props){
 
         {button? (
             <>
-            <Button variant="contained" color="secondary" onClick={handleSubmit}>
+            <Button variant="contained" style={{width: '100%'}} color="secondary" onClick={handleSubmit}>
                 シフトを送信
             </Button>
             </>
         ):(
-            <Button variant="contained" disabled>
+            <Button variant="contained" style={{width: '100%'}} disabled>
                 シフトを送信
             </Button>
         )}

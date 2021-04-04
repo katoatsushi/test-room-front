@@ -258,6 +258,7 @@ label input:checked + span {
 .cell_box {
   border: solid 1px silver;
   width: auto;
+  /* width: 200px; */
 }
 
 .width_auto {

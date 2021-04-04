@@ -14,6 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 const useStyles = makeStyles(() => ({
   table: {
@@ -24,7 +25,9 @@ const useStyles = makeStyles(() => ({
     flexWrap: 'wrap',
   },
   textField: {
-    width: 200,
+    // width: 200,
+    marginLeft: 10,
+    marginRight: 10
   },
 }));
 
@@ -74,8 +77,16 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
         setStart(setDate(data.shifts.start))
         setFinish(setDate(data.shifts.finish))
         setInputCheck({start: true, finish: true, store: inputCheck.store})
-    },[]) 
-
+        //data.shifts.store
+        if(data){
+            if(data.shifts){
+                if(data.shifts.store){
+                    setSelectStore(data.shifts.store)
+                }
+            }
+        }
+    },[])
+    
     const handleChange = (event) => {
         console.log({data})
         if(event.target.checked){
@@ -108,9 +119,18 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
     }
     const select_store = stores.length?
     stores.map((s, index) =>
-        <MenuItem value={s} key={index} onChange={handleStoreChange}>{ s.store_name }</MenuItem>
+        // <MenuItem value={s} key={index} onChange={handleStoreChange}>
+        <MenuItem value={s} key={index}>
+            { s.store_name }
+        </MenuItem>
     ): 
         <MenuItem />
+
+    // const option_select_store = stores.length?
+    // stores.map((s, index) =>
+    //     <option key={index} value={s}>{ s.store_name }</option>
+    // ): 
+    //     <option/>
 
     function handleSubmitDataChange(){
         // 存在するかさがす
@@ -157,6 +177,7 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
     }
 
     function handleEditChange(){
+        console.log({data})
         setOpen(true);
     }
     function setDate(obj){
@@ -169,8 +190,44 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
         const newDate = `${hour}:` + `${min}`
         return newDate
     }
+
     return(<>
         {checked? (<>
+        {open? (
+            <TableCell onClick={handleEditChange} className="cell_box" style={{backgroundColor: '#64e8e8', marginTop: 'auto', marginBottom: 'auto', paddingLeft: 0, paddingRight: 0}}>
+                <Checkbox
+                    checked={checked}
+                    onChange={handleChange}
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                    style={{margin: 0, padding: 0}}
+                />
+                {data.shifts?(<>
+                    {data.shifts.store?(<>
+                        <span style={{color: 'grey', fontSize: 10}}>{data.shifts.store.store_name}店</span>
+                    </>):(<>
+                        <span style={{color: 'red', fontSize: 8}}>店舗未選択</span>
+                    </>)}
+                </>):(<></>)}
+                <div style={{marginLeft: 15, marginRight: 15, paddingTop: 10, width: 80}}>
+                    <InputBase
+                        id="time"
+                        value={start}
+                        className={classes.textField}
+                        InputLabelProps={{ shrink: true, }}
+                        inputProps={{ step: 300, }}
+                        style={{display: 'inline-block'}}
+                    /><hr/>
+                    <InputBase
+                        id="time"
+                        value={finish}
+                        className={classes.textField}
+                        InputLabelProps={{ shrink: true, }}
+                        inputProps={{ step: 300, }}
+                        style={{display: 'inline-block'}}
+                    />
+                </div>
+            </TableCell>   
+        ):(
             <TableCell onClick={handleEditChange} className="cell_box" style={{backgroundColor: '#CCFFFF', marginTop: 'auto', marginBottom: 'auto', paddingLeft: 0, paddingRight: 0}}>
                 <Checkbox
                     checked={checked}
@@ -188,26 +245,23 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
                 <div style={{marginLeft: 15, marginRight: 15, paddingTop: 10, width: 80}}>
                     <InputBase
                         id="time"
-                        // type="time"
                         value={start}
                         className={classes.textField}
-                        // onChange={handleStartChange}
                         InputLabelProps={{ shrink: true, }}
                         inputProps={{ step: 300, }}
                         style={{display: 'inline-block'}}
                     /><hr/>
                     <InputBase
                         id="time"
-                        // type="time"
                         value={finish}
                         className={classes.textField}
-                        // onChange={handleFinishChange}
                         InputLabelProps={{ shrink: true, }}
                         inputProps={{ step: 300, }}
                         style={{display: 'inline-block'}}
                     />
                 </div>
             </TableCell>
+        )}
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">シフト詳細情報を入力してください</DialogTitle>
                 <DialogContent>
@@ -216,15 +270,27 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
                     <FormControl variant="outlined" style={{ width: '90%',textAlign: 'left',backgroundColor: 'white'}} className="select_style">
                     <InputLabel id="demo-store-select-outlined-label" >店舗を選んでください。</InputLabel>
                         <Select
-                        labelId="demo-store-select-outlined-label"
-                        id="demo-store-select-outlined"
-                        label="store"
-                        onChange={ handleStoreChange }
-                        defaultValue={ selectStore }
+                            labelId="demo-store-select-outlined-label"
+                            id="demo-store-select-outlined"
+                            label="store"
+                            onChange={ handleStoreChange }
+                            defaultValue={ data.shifts.store }
                         >
-                        { select_store }
+                            { select_store }
                         </Select>
                     </FormControl><br/>
+
+                    {/* <FormControl variant="outlined" style={{ width: '90%',textAlign: 'left',backgroundColor: 'white', marginBottom: 20}} className="select_style">
+                        <InputLabel id="demo-store-select-outlined-label" >店舗を選んでください。</InputLabel>
+                        <NativeSelect
+                            onChange={ handleStoreChange }
+                            defaultValue={ data.shifts.store }
+                        >
+                            { option_select_store }
+                        </NativeSelect>
+                    </FormControl><br/> */}
+
+
                     <br/>
                     <TextField
                         id="time"

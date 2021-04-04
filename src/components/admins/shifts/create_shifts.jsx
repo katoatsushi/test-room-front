@@ -24,7 +24,9 @@ const useStyles = makeStyles(() => ({
     flexWrap: 'wrap',
   },
   textField: {
-    width: 200,
+    // width: 200,
+    marginLeft: 10,
+    marginRight: 10
   },
 }));
 

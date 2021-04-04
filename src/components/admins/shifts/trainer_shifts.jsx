@@ -30,7 +30,9 @@ const useStyles = makeStyles(() => ({
     flexWrap: 'wrap',
   },
   textField: {
-    width: 200,
+    // width: 200,
+    marginLeft: 10,
+    marginRight: 10
   },
 }));
 
@@ -227,10 +229,6 @@ export default function ManageTrainerShift(){
                             {edit? (
                                 <>
                                     {/* 新規作成用 */}
-                                    {/* <CreateTableCellEdit data={r} stores={stores} setSubmitData={setSubmitData} submitData={submitData} 
-                                        setTrainerShifts={setTrainerShifts} trainerShifts={trainerShifts}
-                                        setShiftEdit={setShiftEdit}
-                                    /> */}
                                     <CreateTableCellEdit data={r} stores={stores}  submitData={submitData} 
                                         setShiftEdit={setShiftEdit}
                                     />
