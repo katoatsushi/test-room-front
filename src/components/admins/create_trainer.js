@@ -260,19 +260,36 @@ function CreateTrainer() {
             </Grid>
 
           </Grid>
-          <div className={classes.wrapper}>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disabled={loading || success}
-            >
-              トレーナーを登録する
-            </Button>
-            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-          </div>
+          {name.first_name_kanji && name.last_name_kanji  && name.first_name_kana  && name.last_name_kana && 
+            email && password && password_confirmation &&
+            password == password_confirmation? (<>
+              <div className={classes.wrapper}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  className={buttonClassname}
+                  disabled={loading || success}
+                >
+                  新規登録する
+                </Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              </div>
+            </>) : (<>
+            <div className={classes.wrapper}>
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                className={buttonClassname}
+                disabled
+              >
+                新規登録する
+              </Button>
+              {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+            </div>
+            </>)}
         </form>
       </div>
     </Container>

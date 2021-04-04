@@ -87,7 +87,7 @@ const MasterAdminTop = () => {
     function readAdmins(admins){
         return admins.map((admin) =>
             <>
-                { admin.email }
+                【{ admin.email }】
             </>
         );
     }
