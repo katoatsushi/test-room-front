@@ -78,7 +78,9 @@ export default function SessionRecordList() {
 
         axios.get(url, trainerHeaders)
         .then(function(res) {
+            console.log({res})
             setRecords(res.data.data);
+            setCurrentRecords(res.data.intial_data)
         })
         .catch(function(error) {
             console.log({error})
