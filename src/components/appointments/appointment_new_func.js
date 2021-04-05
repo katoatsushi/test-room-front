@@ -62,6 +62,7 @@ const AppointmentNew = (props) => {
             setSuccess(true);
             setLoading(false);
             setAppointments(res.data);
+            console.log({res})
         })
         .catch(function(error) {
             setLoading(false);

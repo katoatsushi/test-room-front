@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import BlockIcon from '@material-ui/icons/Block';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,6 +60,7 @@ const AppointmentConfirm = (props) => {
     const [check, setCheck] = useState(false);
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
+    const [message, setMessage] = React.useState("");
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
@@ -82,9 +84,13 @@ const AppointmentConfirm = (props) => {
             free_box: props.location.state.free_box,
           })
           .then(function (response) {
-            console.log({response})
-            setSuccess(true);
-            setLoading(false);
+            console.log({response},"だよ")
+            if(response.data.error){
+                setMessage(response.data.message)
+            }else{
+                setSuccess(true);
+                setLoading(false);
+            }
             setCheck(true);
           }).catch(function (response) {
             setLoading(false);
@@ -92,45 +98,19 @@ const AppointmentConfirm = (props) => {
         })
     }
 
-    // useEffect(async()=>{
-    //   const url = `/customer_menu_serch/${props.match.params.customer_menu_id}`
-    //    axios.get(url)
-    //     .then(function(res) {
-    //         setCustomerMenu(res.data.customer_menu);
-    //     })
-    //     .catch(function(error) {
-    //       console.log({error})
-    //     });
-    // },[])
-
     return (
         <>
             <div>
             <br/>
-                {check && (
-                    <Card className="apo_success" >
+                {check && (<>
+                    {message?(<>
+                    <Card className="apo_error" >
                     <div style={{textAlign: 'center', marginTop: 10 }}>
-                        <CheckCircleIcon style={{color: '#005FFF', fontSize: 30}}/>
+                        <BlockIcon style={{color: 'red', fontSize: 30}}/>
                     </div>
                     <CardContent>
-                        <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            <span style={{fontSize: '1.2em',color: '#959393',fontWeight: '900'}}>予約が確定しました!</span>
-                        </Typography>
-                        <Typography className={classes.title}>
-                            <span style={{fontSize: '1.0em',color: '#959393',fontWeight: '900'}}>内容</span>
-                            <div style={{fontSize: '1.3em',color: '#959393',fontWeight: '500'}}>
-                               &nbsp; 【{props.location.state.store}店】  {props.location.state.customer_menu}
-                            </div>
-                            <hr/>
-                        </Typography>
-                        <Typography className={classes.title} color="textSecondary">
-                            <span style={{fontSize: '1.0em',color: '#959393',fontWeight: '900'}}>日時</span>
-                            <div style={{fontSize: '1.3em',color: '#959393',fontWeight: '500'}}>
-                                &nbsp;{props.match.params.month}月{props.match.params.day}日&nbsp;
-                                {time_array_start[0] + ":" + time_array_start[1]}
-                                〜
-                                {time_array_finish[0] + ":" + time_array_finish[1]}
-                            </div><hr/>
+                        <Typography style={{fontSize: 18}} className={classes.title} color="textSecondary" gutterBottom>
+                            {message}
                         </Typography>
                     </CardContent>
                     <div style={{ textAlign: 'center', marginBottom: 20}}>
@@ -139,7 +119,41 @@ const AppointmentConfirm = (props) => {
                         </Button>
                     </div>
                     </Card>
-                )}
+                   </> ):(<>
+                        <Card className="apo_success" >
+                        <div style={{textAlign: 'center', marginTop: 10 }}>
+                            <CheckCircleIcon style={{color: '#005FFF', fontSize: 30}}/>
+                        </div>
+                        <CardContent>
+                            <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                <span style={{fontSize: '1.2em',color: '#959393',fontWeight: '900'}}>予約が確定しました!</span>
+                            </Typography>
+                            <Typography className={classes.title}>
+                                <span style={{fontSize: '1.0em',color: '#959393',fontWeight: '900'}}>内容</span>
+                                <div style={{fontSize: '1.3em',color: '#959393',fontWeight: '500'}}>
+                                &nbsp; 【{props.location.state.store}店】  {props.location.state.customer_menu}
+                                </div>
+                                <hr/>
+                            </Typography>
+                            <Typography className={classes.title} color="textSecondary">
+                                <span style={{fontSize: '1.0em',color: '#959393',fontWeight: '900'}}>日時</span>
+                                <div style={{fontSize: '1.3em',color: '#959393',fontWeight: '500'}}>
+                                    &nbsp;{props.match.params.month}月{props.match.params.day}日&nbsp;
+                                    {time_array_start[0] + ":" + time_array_start[1]}
+                                    〜
+                                    {time_array_finish[0] + ":" + time_array_finish[1]}
+                                </div><hr/>
+                            </Typography>
+                        </CardContent>
+                        <div style={{ textAlign: 'center', marginBottom: 20}}>
+                            <Button size="large" href='/' style={{backgroundColor: '#4DA7F0', color: 'white', fontWeight: '700', width: '80%'}}>
+                                ホームに戻る
+                            </Button>
+                        </div>
+                        </Card>
+                    </>)}
+
+                </>)}
                 {!check && (
                     <Card className={classes.root} variant="outlined">
                     <CardContent>
