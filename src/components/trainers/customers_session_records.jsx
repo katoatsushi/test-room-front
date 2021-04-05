@@ -70,6 +70,7 @@ export default function SessionRecordList() {
     const [records, setRecords] = React.useState([]);
     const [radioStatus, setRadioStatus] = React.useState("");
     const [currentRecords, setCurrentRecords] = React.useState();
+    const [change, setChange] = React.useState(false);
     const history = useHistory();
 
     const url = `/trainer/get/customer_records`
@@ -79,6 +80,7 @@ export default function SessionRecordList() {
         axios.get(url, trainerHeaders)
         .then(function(res) {
             console.log({res})
+            console.log("res.data.intial_data", res.data.intial_data)
             setRecords(res.data.data);
             setCurrentRecords(res.data.intial_data)
         })
@@ -91,6 +93,7 @@ export default function SessionRecordList() {
     function handleStoreChange(e) {
         console.log({e})
         // setCurrentRecords(e.target.value.data)
+        setChange(true)
         setThisStoreRecord(e.target.value)
         if (radioStatus){
             console.log("中身あり！")
@@ -115,6 +118,7 @@ export default function SessionRecordList() {
         </>)
     }
     function handleRadioChange(e){
+        setChange(true)
         if(e.target.value == "not_finish"){
             setCurrentRecords(thisStoreRecord.not_finish_data)
         }else if(e.target.value == "finish"){
@@ -188,7 +192,12 @@ export default function SessionRecordList() {
                             <span style={{fontSize: 12}}>{ showDate(record.appointment_time) }</span>
                         </Grid>
                         <Grid item xs={3} style={{marginTop: 'auto',marginBottom: 'auto'}}>
-                             <span style={{fontSize: 12}}>{record.fitness_name}</span>
+                             <span style={{fontSize: 12}}>
+                             {!change? (<>
+                                {record.store_name}/
+                             </>):<></>}
+                                {record.fitness_name}
+                             </span>
                         </Grid>
                         {record.finish==1?(
                             <Grid item xs={3} style={{paddingLeft: 0, marginTop: 'auto',marginBottom: 'auto'}}>
