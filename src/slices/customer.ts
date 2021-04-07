@@ -32,16 +32,19 @@ const currentCustomerSlice = createSlice({
       state.currentCustomerInterests = action.payload;
     },
     setHeaders: (state, action: PayloadAction<ITokenHeaders>) => {
+      // access-tokenが空の時は過去のaccess-tokenをprevAccessTokenに代入
+      const prevAccessToken = state.headers?.headers["access-token"] || "";
       const {
         'content-type': contentType,
         'access-token': accessToken,
         client,
         uid,
       } = action.payload;
+      
       state.headers = {
         headers: {
           'content-type': contentType,
-          'access-token': accessToken,
+          'access-token': accessToken || prevAccessToken,
           client,
           uid,
         },

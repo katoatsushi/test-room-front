@@ -15,6 +15,9 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { selectCurrentCustomer, selectCustomerHeaders, customerRemove, } from '../../slices/customer';
+import { useSelector } from 'react-redux';
+import PasswordResetBar from '../snackBars/password_reset'
 
 const useStyles = makeStyles({
   root: {
@@ -38,30 +41,47 @@ const useStyles = makeStyles({
   },
 });
 
-
-
 function ShowApo({apo, apos, setApos}) {
+  const customerHeader = useSelector(selectCustomerHeaders);
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
   };
-  async function handleCancelClose(e) {
+  const [barOpen, setBarOpen] = useState(false);
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState(false);
+
+  function handleCancelClose(e) {
+      setBarOpen(false)
       const url = `/appointment/${e.id}`
-      try {
-          await axios.delete(url);
+      axios.delete(url, customerHeader)
+      .then((res) => {
+        setBarOpen(true)
+        if(res.data.error){
+          setError(true)
+          setMessage(res.data.message)
+        }else{
+          setError(false)
+          setMessage(res.data.message)
+          console.log({res})
           const newApos = apos.filter((apo) => {
               return apo !== e;
           });
           setApos(newApos)
-          setOpen(false);
-      } catch (err) {
-          console.log("error:", err.response.data.errors)
-      }
+        }
+      })
+      .catch((err) => {
+        console.log({err})
+        console.log("error:", err.response.data.errors)
+      });
   }
   const handleClickOpen = () => {
     setOpen(true);
   };
   return(<>
+        {barOpen? (
+          <PasswordResetBar  error={error} message={message} />
+        ):<></>}
       <Paper className="border_light apos_paper">
       <Grid container spacing={2} style={{height: '80%'}}>
         <Grid item xs={10}>

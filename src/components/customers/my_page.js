@@ -79,6 +79,7 @@ export default function CustomerMyPage(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [thisCustomer, setThisCustomer] = useState({});
+  const [thisCustomerInfo, setThisCustomerInfo] = useState({});
   const [recordNum, setRecordNum] = useState(0);
   const [apoNum, setApoNum] = useState(0);
   const [open, setOpen] = React.useState(false);
@@ -120,6 +121,7 @@ export default function CustomerMyPage(props) {
       console.log({res})
       setRecordNum(res.data.customer_record_len)
       setThisCustomer(res.data.customer);
+      setThisCustomerInfo(res.data.customer_info)
       setApoNum(res.data.appo_count)
     })
     .catch(function(error) {
@@ -255,12 +257,22 @@ export default function CustomerMyPage(props) {
         </Grid>
         <Grid item xs={1}/>
         <Grid item xs={7} style={{paddingTop: 10}}>
-          <div style={{fontSize: '1.3em', fontWeight: '700'}}>
-            { thisCustomer.first_name }{ thisCustomer.last_name }
+          <div style={{fontSize: '1.2em', fontWeight: '700', color: 'grey'}}>
+            { thisCustomer.first_name_kanji}{ thisCustomer.last_name_kanji }
           </div>
           <div style={{fontSize: '1.0em', color: '#959393', fontWeight: 600}}>
-
-          男性/20歳<br/>
+          {thisCustomerInfo? (<>
+            {thisCustomerInfo.gender? 
+              (<>
+                {thisCustomerInfo.gender}/
+              </>):(<></>)
+            }
+            {thisCustomerInfo.age? 
+              (<>
+                {thisCustomerInfo.age}歳
+              </>):(<></>)
+            }
+          </>):<></>}<br/>
           2020年２月13日 入会<br/>
           </div>
         </Grid>

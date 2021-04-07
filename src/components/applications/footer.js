@@ -100,7 +100,7 @@ function Footer() {
                         </Link>
                     </Grid>
                     <Grid item xs={3} >
-                        <Link href={`/trainer/${currentTrainer.id}`}>
+                        <Link href={`/trainer_page/${currentTrainer.id}`}>
                             <PermIdentityIcon  style={{color: 'black', fontSize: '2.5em'}} />
                         </Link>
                     </Grid>

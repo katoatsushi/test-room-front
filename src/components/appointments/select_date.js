@@ -61,19 +61,6 @@ const SelectDate = (props) => {
                             )
                     })()
                 }
-                {/* <Button 
-                    variant="contained" 
-                    size='large' 
-                    color="secondary"
-                    style={{width: '95%', marginTop: 30, marginRight: 'auto', marginLeft: 'auto'}} 
-                    onClick = {() => 
-                        history.push({
-                            pathname: [`/customer/${props.match.params.customer_id}/appointments/new/${store_id}/${customer_menu_id}/${value.getFullYear()}/${value.getMonth() + 1}/${value.getDate()}`],
-                            // state: { store: props.location.state.store, customer_menu: props.location.state.customer_menu}
-                            state: props.location.state
-                    })}>
-                    時間を選ぶ
-                </Button> */}
             </div>
 
         </form>

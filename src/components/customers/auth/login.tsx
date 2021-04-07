@@ -2,11 +2,8 @@
 import React , { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -16,16 +13,21 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { BrowserRouter as Router, Route, Switch, useParams, useHistory, useLocation, } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import clsx from 'clsx';
+import { useHistory } from 'react-router-dom';
 import {
   ISignInFormValues,
-  ISignInSuccessTrainerResponse,
+  ISignInSuccessResponse,
   IErrorResponse,
   IServerMessages,
-} from '../../interfaces';
-import { setHeaders, setCurrentTrainer } from '../../slices/trainer';
+} from '../../../interfaces';
+import {setCurrentCustomer, setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders} from  '../../../slices/customer';
+import { setCustomerRecords, customerRecordRemove, getCustomerRecords } from '../../../slices/customer_record';
 import Paper from '@material-ui/core/Paper';
-import errorMessages from '../../constants/errorMessages.json';
+import errorMessages from '../../../constants/errorMessages.json';
+import { useSelector } from 'react-redux';
+import CustomizedSnackbars from './login_snackbar'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,29 +47,92 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  // ロード
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
-function TrainerLogIn() {
-    const url = `/v1/trainer_auth/sign_in`
+export default function LogIn() {
+    const url = `/v1/customer_auth/sign_in`
+    const get_customer_datas_url = `/customer/after/sign_in`
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
     const [serverMessages, setServerMessages] = useState<IServerMessages>();
+    const customerRecords = useSelector(getCustomerRecords);
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
 
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
-      // setLoading(true);
-      console.log({data})
+      setSnackbarOpen(false)
+      if (!loading) {
+        setSuccess(false);
+        setLoading(true);
+      }
       axios
-      .post<ISignInSuccessTrainerResponse>(url, data)
+      .post<ISignInSuccessResponse>(url, data)
       .then((res) => {
-        console.log("trainer", {res})
-        dispatch(setCurrentTrainer(res.data.data));
+        setSuccess(true);
+        setLoading(false);
+        console.log({res})
+        dispatch(setCurrentCustomer(res.data.data));
         dispatch(setHeaders(res.headers));
-        history.push('/');
+        // お客様の詳細情報を入手
+        axios.get(get_customer_datas_url, {headers: res.headers} )
+        .then(function(response) {
+          // TODO::トレーナーを評価するものを取得
+          console.log("成功",{response})
+          dispatch(setCurrentCustomerInfo(response.data.customer_info));
+          dispatch(setCurrentCustomerStatus(response.data.customer_status));
+          dispatch(setCurrentCustomerInterests(response.data.customer_interests));
+          if(response.data.evaluations.length){
+            dispatch(setCustomerRecords(response.data.evaluations));
+            history.push('/');
+            // history.push(`/customer_evaluation_data/${res.data.data.id}`);
+          }else{
+            console.log("現在返すべきトレーナーの評価はありません")
+            history.push('/');
+          }
+        })
+        .catch(function(error) {
+          console.log({error})
+        });
+        // history.push('/');
       })
       .catch((err: AxiosError<IErrorResponse>) => {
-        console.log("トレーナーログインエラー")
+        console.log({err})
+        if(err.response){
+          if(err.response.status){
+            console.log(err.response.status)
+            setSnackbarOpen(true)
+          }
+        }
+        setLoading(false);
         setServerMessages({
           severity: 'error',
           alerts: err.response?.data.errors || [],
@@ -77,6 +142,9 @@ function TrainerLogIn() {
 
   return (
     <>
+    {snackbarOpen?(
+      <CustomizedSnackbars/>
+    ):(<></>)}
     <Box my={5}>
       <Container maxWidth="xs">
         <Paper>
@@ -86,9 +154,8 @@ function TrainerLogIn() {
         </Avatar>
           <Box p={2}>
             <Typography variant="h5" align="center" gutterBottom>
-              トレーナーログイン
+              ログイン
             </Typography>
-            {/* <ServerAlert serverMessages={serverMessages} /> */}
             <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
               <Box mb={2}>
                 <Controller
@@ -158,24 +225,30 @@ function TrainerLogIn() {
                     />
                   )}
                 />
-                {/* <ErrorMessage
-                  errors={errors}
-                  name="password"
-                  render={({ message }) => (
-                    <Alert severity="error">{message}</Alert>
-                  )}
-                /> */}
               </Box>
-              {/* <LoadingButton loading={loading} primary="SignIn" /> */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                ログインする
-              </Button>
+              <Link href={`/customer/password/reset`}>
+                  パスワードをお忘れの方はこちら
+              </Link>
+              <div className={classes.wrapper}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    className={buttonClassname}
+                    disabled={loading || success}
+                >
+                  ログインする
+                </Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              </div>
+              <Grid container justify="flex-end">
+                <Grid item>
+                  <Link href="/customer/sign_up" variant="body2">
+                    {/* まだアカウントをお持ちでない方はこちらへ */}
+                  </Link>
+                </Grid>
+              </Grid>
             </form>
           </Box>
         </div>
@@ -185,5 +258,3 @@ function TrainerLogIn() {
     </>
   );
 }
-
-export default TrainerLogIn;

@@ -57,6 +57,12 @@ export interface IMyInterests {
   name: string;
   interest_family_id: number;
 }
+
+export interface ISnackBarInfo{
+  message: string;
+  error: boolean;
+}
+
 export interface ITrainer {
   ['allow_password_change']?: false;
   email: string;

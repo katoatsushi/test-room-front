@@ -141,7 +141,7 @@ function Header() {
 
   function MoveToTrainerPage(){
     setAnchorEl(null);
-    history.push(`/trainer/${currentTrainer.id}`)
+    history.push(`/trainer_page/${currentTrainer.id}`)
     window.location.reload()
   }
   function MoveToCheckTodaySchedule(){

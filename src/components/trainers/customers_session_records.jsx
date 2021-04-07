@@ -87,9 +87,11 @@ export default function SessionRecordList() {
         .catch(function(error) {
             console.log({error})
         });
+        console.log({currentRecords})
         
     },[])
 
+    console.log({currentRecords})
     function handleStoreChange(e) {
         console.log({e})
         // setCurrentRecords(e.target.value.data)
@@ -179,7 +181,7 @@ export default function SessionRecordList() {
                 </Grid>
             </Grid>
         </Paper>
-        {currentRecords? (<>
+        {currentRecords.length? (<>
             {currentRecords.map((record, index) => (
                 <Paper variant="outlined" key={index} style={{ marginTop: 10, marginBottom: 10}}>
                     <Grid container spacing={3} style={{fontWeight: 500,overflowWrap: 'break-word'}}>
@@ -223,7 +225,8 @@ export default function SessionRecordList() {
             ))}
         </>) : (<>
             <div className="info_box">
-                ※ 店舗を選択してください
+                {/* ※ 店舗を選択してください */}
+                ※ 予約情報がありません
             </div>
         </>)}
         </div>

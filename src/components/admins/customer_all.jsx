@@ -21,6 +21,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Avatar from '@material-ui/core/Avatar';
+import { trainerRemove } from '../../slices/trainer'
+import { adminRemove } from '../../slices/admin'
+import { setSnackBar, snackBarRemove } from '../../slices/snack_bar'
+import { useDispatch } from 'react-redux';
+import { ForceCustomerSignOut, ForceTrainerSignOut, ForceAdminSignOut, ForceMasterAdminSignOut } from '../applications/forced_sign_out';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -152,8 +157,13 @@ function CustomerCell({customer, index, setAllCustomers}){
 }
 
 export default function AllCustomers(){
+    const dispatch = useDispatch();
+    const history = useHistory();
     const classes = useStyles();
     const url = `/get/all_customers`
+    const admin_url = `/admin/get/all_customers`
+    const trainer_url = `/trainer/get/all_customers`
+
     const [allCustomers, setAllCustomers] = useState([]);
     const adminHeaders = useSelector(selectAdminHeaders);
     const trainerHeaders = useSelector(selectTrainerHeaders);
@@ -161,21 +171,46 @@ export default function AllCustomers(){
     useEffect(()=>{
 
       if(adminHeaders){
-       axios.get(url, adminHeaders)
+       axios.get(admin_url, adminHeaders)
         .then(function(res) {
-            setAllCustomers(res.data.all_customers);
+            if(res.data.error){
+              ForceAdminSignOut()
+            }else{
+              setAllCustomers(res.data.all_customers);
+            }
         })
         .catch(function(error) {
           console.log({error})
+          var message = error.response.data.errors
+          if(message[0]){
+            message = message[0]
+          }else{
+            message = "エラーが起きました。最初からやり直してください"
+          }
+          dispatch(setSnackBar({message: error.response.data.errors[0], error: true}))
+          dispatch(adminRemove());
+          history.push("/admin/log_in")
         });
       }else if(trainerHeaders){
-       axios.get(url, trainerHeaders)
+
+      axios.get(trainer_url, trainerHeaders)
         .then(function(res) {
-            setAllCustomers(res.data.all_customers);
+          console.log({res})
+          setAllCustomers(res.data.all_customers);
         })
         .catch(function(error) {
           console.log({error})
+          var message = error.response.data.errors
+          if(message[0]){
+            message = message[0]
+          }else{
+            message = "エラーが起きました。最初からやり直してください"
+          }
+          dispatch(setSnackBar({message: error.response.data.errors[0], error: true}))
+          dispatch(trainerRemove());
+          history.push("/trainer/log_in")
         });
+
       }
     },[])
   console.log({allCustomers})
