@@ -15,6 +15,9 @@ import Footer from './components/applications/footer';
 import { store, persistor } from './store';
 import 'fontsource-roboto';
 import axios from 'axios';
+import { SnackbarProvider } from 'notistack';
+import Fade from '@material-ui/core/Fade';
+
 const enhancer = process.env.NODE_ENV === 'development' ? composeWithDevTools(applyMiddleware(thunk)) : applyMiddleware(thunk)
 
 switch (process.env.NODE_ENV) {
@@ -38,6 +41,12 @@ switch (process.env.NODE_ENV) {
 ReactDOM.render(
   <>
     <Provider store={store}>
+      <SnackbarProvider
+          anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+          }}
+      >
       <PersistGate loading={null} persistor={persistor}>
         {/* <ThemeProvider theme={theme}> */}
           <Router>
@@ -48,6 +57,7 @@ ReactDOM.render(
           </Router>
         {/* </ThemeProvider> */}
       </PersistGate>
+      </SnackbarProvider>
     </Provider>
   </>,
   document.getElementById('root')

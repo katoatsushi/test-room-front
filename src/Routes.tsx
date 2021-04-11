@@ -36,12 +36,13 @@ import CustomerInterests from './components/customers/customer_individual_info/c
 import CustomerConditions from './components/customers/customer_individual_info/customer_condition'
 import CreateCustomerIndividualInfo from  './components/customers/customer_individual_info/customer_individual_info'
 import { selectCurrentCustomer, selectCustomerHeaders, customerRemove, } from './slices/customer';
-import WeightNew from './components/customers/weight_new';
+import CustomerWeightNew from './components/customers/weight_new';
 import RecordsHistory from './components/customers/records_history'
 import AllCustomers from './components/admins/customer_all'
 import AdminMenues from './components/admins/admin_menues'
 import CreateAdminSchedule from './components/admins/create_admin_schedule'
 import ManageTrainerShift from './components/admins/shifts/trainer_shifts'
+import ThisMonthTrainerShift from './components/admins/shifts/this_month_trainer_shift'
 import EvaluationData from './components/customers/customer_evaluation_data';
 import TrainerMyPage from './components/trainers/my_page'
 import SessionRecordList from './components/trainers/customers_session_records'
@@ -50,8 +51,7 @@ import SetTimesWeight from './components/trainers/record/set_times_weight'
 import RecordConfirm from './components/trainers/record/record_confirm'
 import ShowRecord from './components/trainers/record/record_show'
 import EditMyProfile from './components/trainers/edit_profile/edit_my_profile'
-
-
+import AdminEditStore from './components/admins/edit_store'
 
 const Routes: React.FC = () => {
   const currentCustomer = useSelector(selectCurrentCustomer);
@@ -71,7 +71,7 @@ const Routes: React.FC = () => {
         <Route exact path="/customer_info_indivi/new" component={ CreateCustomerIndividualInfo } />
         <Route exact path="/customer_page/:id" component={ CustomerHome } />
         <Route exact path="/customer/my_page/:id" component={ CustomerMyPage } />
-        <Route exact path="/customer/weight/new" component={ WeightNew } />
+        <Route exact path="/customer/weight/new" component={ CustomerWeightNew } />
         {/* appointment */}
         <Route exact path="/customer/:customer_id/calendar_new" component={ SelectStoreFitness } />
         <Route exact path="/customer/:customer_id/calendar_new/customer_menu/:customer_menu_id/store/:store_id" component={ SelectDate } />
@@ -108,6 +108,8 @@ const Routes: React.FC = () => {
         <Route exact path="/admin_menues" component={ AdminMenues } />
         <Route exact path="/admin_schedule" component={ CreateAdminSchedule } />
         <Route exact path="/admin/trainer_shifts" component={ ManageTrainerShift } />
+        <Route exact path="/admin/this_month/trainer_shift" component={ ThisMonthTrainerShift } />
+        <Route exact path="/admin/store/all" component={ AdminEditStore } />
         {/* master admin auth */}
         <Route exact path="/master_admin/log_in" component={ MasterAdminLogIn } />
         {/* master admin */}

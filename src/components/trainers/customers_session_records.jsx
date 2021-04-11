@@ -181,7 +181,7 @@ export default function SessionRecordList() {
                 </Grid>
             </Grid>
         </Paper>
-        {currentRecords.length? (<>
+        {currentRecords? (<>
             {currentRecords.map((record, index) => (
                 <Paper variant="outlined" key={index} style={{ marginTop: 10, marginBottom: 10}}>
                     <Grid container spacing={3} style={{fontWeight: 500,overflowWrap: 'break-word'}}>

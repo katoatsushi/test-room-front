@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React , { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
+// import axios, { AxiosError } from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -18,8 +19,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FormattedInputs(props) {
+    // console.log({props})
     const classes = useStyles();
     const [checked, setChecked] = React.useState(false);
+
     const handleChange = (event) => {
         setChecked(event.target.checked);
         props.setButton((prev)=> (prev, true))
@@ -83,8 +86,7 @@ export default function FormattedInputs(props) {
                 inputProps={{
                     step: 300, // 5 min
                 }}
-                // style={{display: 'inline-block'}}
-                style={{display: 'inline-block'}}
+                style={{display: 'inline'}}
             />
             <TextField
                 id="time"
@@ -98,8 +100,7 @@ export default function FormattedInputs(props) {
                 inputProps={{
                     step: 300, // 5 min
                 }}
-                // style={{display: 'inline-block'}}
-                style={{display: 'inline-block'}}
+                style={{display: 'inline'}}
             />
       </>
     ):(
@@ -117,7 +118,7 @@ export default function FormattedInputs(props) {
                 inputProps={{
                     step: 300, // 5 min
                 }}
-                style={{display: 'inline-block'}}
+                style={{display: 'inline'}}
             />
             <TextField
                 id="time"
@@ -132,7 +133,7 @@ export default function FormattedInputs(props) {
                 inputProps={{
                     step: 300, // 5 min
                 }}
-                style={{display: 'inline-block'}}
+                style={{display: 'inline'}}
             />
         </>
     )}

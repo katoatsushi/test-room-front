@@ -27,7 +27,7 @@ import { setCustomerRecords, customerRecordRemove, getCustomerRecords } from '..
 import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../../constants/errorMessages.json';
 import { useSelector } from 'react-redux';
-import CustomizedSnackbars from './login_snackbar'
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -81,15 +81,14 @@ export default function LogIn() {
     const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
     const [serverMessages, setServerMessages] = useState<IServerMessages>();
     const customerRecords = useSelector(getCustomerRecords);
-    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
-      setSnackbarOpen(false)
       if (!loading) {
         setSuccess(false);
         setLoading(true);
@@ -118,6 +117,10 @@ export default function LogIn() {
             console.log("現在返すべきトレーナーの評価はありません")
             history.push('/');
           }
+          const message = "ログインに成功しました！"
+          enqueueSnackbar(message, { 
+              variant: 'success',
+          });
         })
         .catch(function(error) {
           console.log({error})
@@ -126,12 +129,10 @@ export default function LogIn() {
       })
       .catch((err: AxiosError<IErrorResponse>) => {
         console.log({err})
-        if(err.response){
-          if(err.response.status){
-            console.log(err.response.status)
-            setSnackbarOpen(true)
-          }
-        }
+        const message = err.response?.data.errors[0];
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
         setLoading(false);
         setServerMessages({
           severity: 'error',
@@ -142,9 +143,6 @@ export default function LogIn() {
 
   return (
     <>
-    {snackbarOpen?(
-      <CustomizedSnackbars/>
-    ):(<></>)}
     <Box my={5}>
       <Container maxWidth="xs">
         <Paper>

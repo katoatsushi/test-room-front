@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {  useState } from 'react';
+import React , { useEffect, useState } from 'react';
 import axios from 'axios'
 import FormattedInputs from './text_field'
 import Grid from '@material-ui/core/Grid';
@@ -18,6 +18,17 @@ export default function ShiftNew(props){
     const the_last_day = last_day.getDate()
     const stateInit = {}
 
+    const url = `/trainer/shifts/my_requested_shift/year/${last_day.getFullYear()}/month/${last_day.getMonth() + 1}`
+    useEffect(()=>{
+        axios.get(url, trainer_headers)
+        .then(function(res) {
+            console.log({res})
+        })
+        .catch(function(error) {
+          console.log({error})
+        });
+    },[])
+
     function DateInit(){
         for (let i=1; i<the_last_day+1 ; i++) {
             items.push(i);
@@ -34,9 +45,7 @@ export default function ShiftNew(props){
 
     function handleSubmit(){
         console.log(last_day.getMonth() + 1,"月")
-        const url = `/trainer/shift/create/year/${last_day.getFullYear()}/month/${last_day.getMonth()}/`
-        //TODO::下に直す
-        // const url = `/trainer/shift/create/year/${last_day.getFullYear()}/month/${last_day.getMonth() + 1}/`
+        const url = `/trainer/shift/create/year/${last_day.getFullYear()}/month/${last_day.getMonth() + 1}/`
         console.log({shift})
         axios.post( url, {
             trainer_shift: shift
@@ -52,10 +61,8 @@ export default function ShiftNew(props){
     }
     return(
         <>
-        {/* <div style={{textAlign: 'center', fontSize: '1.7em'}}>{last_day.getMonth() + 1}月シフト希望提出</div> */}
-        <div style={{textAlign: 'center', fontSize: '1.7em'}}>{last_day.getMonth()}月シフト希望提出</div>
+        <div style={{textAlign: 'center', fontSize: '1.7em'}}>{last_day.getMonth() + 1}月シフト希望提出</div>
         <div style={{overflow: 'scroll', height: 400,backgroundColor: 'white', marginTop: 15}}>
-        {/* <div style={{margin: 50}}></div> */}
         <Grid container spacing={3}>
            {dateInits.items.map((date, index) => (
                 <>

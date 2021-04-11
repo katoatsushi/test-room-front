@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import Paper from '@material-ui/core/Paper';
 import {selectCurrentAdmin, selectAdminHeaders} from '../../slices/admin'
@@ -23,7 +23,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Avatar from '@material-ui/core/Avatar';
 import { trainerRemove } from '../../slices/trainer'
 import { adminRemove } from '../../slices/admin'
-import { setSnackBar, snackBarRemove } from '../../slices/snack_bar'
 import { useDispatch } from 'react-redux';
 import { ForceCustomerSignOut, ForceTrainerSignOut, ForceAdminSignOut, ForceMasterAdminSignOut } from '../applications/forced_sign_out';
 
@@ -181,13 +180,6 @@ export default function AllCustomers(){
         })
         .catch(function(error) {
           console.log({error})
-          var message = error.response.data.errors
-          if(message[0]){
-            message = message[0]
-          }else{
-            message = "エラーが起きました。最初からやり直してください"
-          }
-          dispatch(setSnackBar({message: error.response.data.errors[0], error: true}))
           dispatch(adminRemove());
           history.push("/admin/log_in")
         });
@@ -200,13 +192,6 @@ export default function AllCustomers(){
         })
         .catch(function(error) {
           console.log({error})
-          var message = error.response.data.errors
-          if(message[0]){
-            message = message[0]
-          }else{
-            message = "エラーが起きました。最初からやり直してください"
-          }
-          dispatch(setSnackBar({message: error.response.data.errors[0], error: true}))
           dispatch(trainerRemove());
           history.push("/trainer/log_in")
         });

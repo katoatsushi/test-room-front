@@ -12,10 +12,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
-import PasswordResetBar from '../../snackBars/password_reset'
-import PasswordResetSnackBar from './password_reset_snack_bar'
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TrainerPasswordReset() {
     let redirect_url = ''
-    // eslint-disable-next-line no-undef
     switch (process.env.NODE_ENV) {
     case 'development':
         redirect_url = 'http://localhost:3001/trainer/password/'
@@ -78,11 +76,9 @@ export default function TrainerPasswordReset() {
     const dispatch = useDispatch();
     const history = useHistory();
     const [ submitData, setSubmitData ] = useState({email: "", redirect_url: redirect_url});
-    const [ message, setMessage ] = useState("");
-    const [ error, setError ] = useState(false);
-    const [ barOpen, setBarOpen ] = useState(false);
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
@@ -93,31 +89,23 @@ export default function TrainerPasswordReset() {
         setSuccess(false);
         setLoading(true);
       }
-      setBarOpen(false)
       axios.post(url, submitData)
       .then((res) => {
         setSuccess(true);
         setLoading(false);
-        setError(false)
-        setBarOpen(true)
-        setMessage(res.data.message)
+        console.log({res})
+        const message = res.data.message
+        enqueueSnackbar(message, { 
+            variant: 'success',
+        });
       })
       .catch((err) => {
         console.log({err})
         setLoading(false);
-        setBarOpen(true)
-        setError(true)
-        if(err){
-          if(err.response){
-            if(err.response.data){
-              if(err.response.data.errors.length){
-                console.log(err.response.data.errors[0])
-                const error = err.response.data.errors[0]
-                setMessage(error)
-              }
-            }
-          }
-        }
+        const message = err.response?.data.errors[0]
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
       });
     }
 
@@ -165,10 +153,6 @@ export default function TrainerPasswordReset() {
           </Box>
         </div>
         </Paper>
-        {barOpen? (
-          // <PasswordResetSnackBar barOpen={barOpen} error={error} message={message} />
-          <PasswordResetBar error={error} message={message}/>
-        ):<></>}
       </Container>
     </Box>
 

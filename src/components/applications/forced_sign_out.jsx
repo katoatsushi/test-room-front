@@ -11,7 +11,7 @@ export default function ForceCustomerSignOut(){
     dispatch(customerRemove());
     // history.push(`/`)
     history.push(`/customer/sign_up`)
-    window.location.reload()
+    // window.location.reload()
 }
 export function ForceTrainerSignOut(){
     console.log("ログアウトする")
@@ -19,7 +19,7 @@ export function ForceTrainerSignOut(){
     dispatch(trainerRemove());
     // history.push(`/`)
     // history.push(`/trainer/log_in`)
-    // window.location.reload()
+    // // window.location.reload()
 }
 
 export function ForceAdminSignOut(){
@@ -28,7 +28,7 @@ export function ForceAdminSignOut(){
     dispatch(trainerRemove());
     // history.push(`/`)
     history.push(`/admin/log_in`)
-    window.location.reload()
+    // window.location.reload()
 }
 export function ForceMasterAdminSignOut(){
     const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export function ForceMasterAdminSignOut(){
     dispatch(trainerRemove());
     // history.push(`/`)
     history.push(`/master_admin/log_in`)
-    window.location.reload()
+    // window.location.reload()
 }
 
 // export default ForceCustomerSignOut()

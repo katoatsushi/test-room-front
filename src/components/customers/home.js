@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios'
+import { useDispatch } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -17,7 +18,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { selectCurrentCustomer, selectCustomerHeaders, customerRemove, } from '../../slices/customer';
 import { useSelector } from 'react-redux';
-import PasswordResetBar from '../snackBars/password_reset'
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles({
   root: {
@@ -44,44 +45,44 @@ const useStyles = makeStyles({
 function ShowApo({apo, apos, setApos}) {
   const customerHeader = useSelector(selectCustomerHeaders);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
   const handleClose = () => {
     setOpen(false);
   };
-  const [barOpen, setBarOpen] = useState(false);
-  const [error, setError] = useState(false);
-  const [message, setMessage] = useState(false);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   function handleCancelClose(e) {
-      setBarOpen(false)
       const url = `/appointment/${e.id}`
       axios.delete(url, customerHeader)
+      // axios.delete(url)
       .then((res) => {
-        setBarOpen(true)
-        if(res.data.error){
-          setError(true)
-          setMessage(res.data.message)
-        }else{
-          setError(false)
-          setMessage(res.data.message)
-          console.log({res})
-          const newApos = apos.filter((apo) => {
-              return apo !== e;
-          });
-          setApos(newApos)
-        }
+        const message = "予約をキャンセルしました！"
+        enqueueSnackbar(message, { 
+            variant: 'success',
+        });
+        const newApos = apos.filter((apo) => {
+            return apo !== e;
+        });
+        setApos(newApos)
+        setOpen(false);
       })
       .catch((err) => {
+        dispatch(customerRemove());
+        const message = err.response?.data.errors[0]
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
         console.log({err})
         console.log("error:", err.response.data.errors)
+        setOpen(false);
+        // TODO::ログイン画面に戻りたい
+        // const history = useHistory();
       });
   }
   const handleClickOpen = () => {
     setOpen(true);
   };
   return(<>
-        {barOpen? (
-          <PasswordResetBar  error={error} message={message} />
-        ):<></>}
       <Paper className="border_light apos_paper">
       <Grid container spacing={2} style={{height: '80%'}}>
         <Grid item xs={10}>

@@ -46,23 +46,14 @@ export default function AdminMenues(){
                 </Paper>
                 </Grid>
 
-                {/* <Grid item xs={12}>
-                  <Paper className={classes.paper}>
-                    <Link href="/trainer/sign_up" style={{textAlign: 'center'}}>
-                      セッションメニューを追加する
-                    </Link><br/>
-                    セッションメニューを新しく追加できます
-                  </Paper>
-                </Grid> */}
-{/* 
                 <Grid item xs={12}>
                   <Paper className={classes.paper}>
-                    <Link href="/trainer/sign_up" style={{textAlign: 'center'}}>
+                    <Link href="/admin/store/all" style={{textAlign: 'center'}}>
                       店舗を追加する
                     </Link><br/>
                     既存の店舗の部屋数もこちらから変更できます
                   </Paper>
-                </Grid> */}
+                </Grid>
 
                 <Grid item xs={12}>
                   <Paper className={classes.paper}>
@@ -78,6 +69,15 @@ export default function AdminMenues(){
                   <Paper className={classes.paper}>
                     <Link href="/admin/trainer_shifts" style={{textAlign: 'center'}}>
                       トレーナーシフト管理
+                    </Link><br/>
+                      来月のトレーナーのシフトを管理する
+                  </Paper>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Paper className={classes.paper}>
+                    <Link href="/admin/this_month/trainer_shift" style={{textAlign: 'center'}}>
+                      【当月】トレーナーシフト確認
                     </Link><br/>
                       今月のトレーナーのシフトを管理する
                   </Paper>

@@ -83,7 +83,8 @@ function ShiftTableCellShow({data}){
     </>)
 }
 
-export default function ManageTrainerShift(){
+// ManageTrainerShiftのnext_monthをthis_monthに変えただけ
+export default function ThisMonthTrainerShift(){
     const classes = useStyles();
     const currentAdmin = useSelector(selectCurrentAdmin);
     const url = `/get_trainer_shifts`
@@ -98,7 +99,8 @@ export default function ManageTrainerShift(){
     const [shiftEdit, setShiftEdit] = React.useState(false);
     const [edit, setEdit] = React.useState(false);
     const today = new Date()
-    const next_month = today.getMonth() + 2
+    // const next_month = today.getMonth() + 2
+    const this_month = today.getMonth() + 1
     const year = today.getFullYear();
     const history = useHistory();
 
@@ -117,11 +119,11 @@ export default function ManageTrainerShift(){
         axios.get(url, {
         params: {
             year: year,
-            month: next_month,
+            month: this_month,
             company_id: currentAdmin.company_id
         }})
         .then(function (response) {
-            console.log({next_month})
+            console.log({this_month})
             console.log({response})
             setTrainerShifts(response.data.data)
             setDays(response.data.date_infos)
@@ -151,7 +153,7 @@ export default function ManageTrainerShift(){
             axios.get(url, {
             params: {
                 year: year,
-                month: next_month,
+                month: this_month,
                 company_id: currentAdmin.company_id
             }})
             .then(function (response) {
@@ -181,7 +183,7 @@ export default function ManageTrainerShift(){
             <TableHead>
                     <TableRow>
                         <TableCell style={{textAlign: 'center'}}>
-                            {next_month}<br/>
+                            {this_month}<br/>
                             月
                         </TableCell>
                         {days.map((row, index) => (

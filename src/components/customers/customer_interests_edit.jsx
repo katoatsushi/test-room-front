@@ -41,7 +41,6 @@ function SetChipEdit({thisInterest, setInterestIDs, interestIDs}) {
         }else{
             // console.log("AAAAAAAAAAAAAAAA")
             setInterestIDs((prev) => [...prev, thisInterest.id])
-            // setUpdateInterestsIDs(interestIDs)
         }
         setValue(!value);
     }
@@ -72,7 +71,7 @@ function SetChipEdit({thisInterest, setInterestIDs, interestIDs}) {
 }
 
 
-export default function CustomerInterestsEdit({interestIDs, setInterestIDs, setUpdateInterestsIDs}) {
+export default function CustomerInterestsEdit({interestIDs, setInterestIDs}) {
     const url = '/customer_info/intarests_new'
     const [allInterests, setAllInterests] = React.useState([])
     const classes = useStyles();

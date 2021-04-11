@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function BarChart({avaTrainer}) {
+  console.log({avaTrainer})
   const graphData= {
     // labels: [['2019年', '1月'],['2019年', '2月'],],
     labels: avaTrainer.name,
@@ -85,7 +86,7 @@ export default function EvaluationData(props) {
     useEffect(()=>{
         axios.get(url)
         .then(function(res) {
-            console.log({res})
+            // console.log({res})
             setAvaTrainer({details: res.data.average.trainer[0], name: res.data.average.trainer[1], score: res.data.average.trainer[2]})
             setFitnessTrainerData(res.data.average.all)
             setPieChartData(res.data.count.all)
@@ -109,7 +110,7 @@ export default function EvaluationData(props) {
     ):
         <MenuItem />
 
-    console.log({pieChartData})
+    // console.log({pieChartData})
     return (
     <div>
         {/* <div style={{width: '70%', backgroundColor: 'white'}}> */} 

@@ -12,10 +12,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
-// import PasswordResetSnackBar from './password_reset_snack_bar'
-import PasswordResetBar from '../../snackBars/password_reset'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {setCurrentTrainer,  setHeaders} from  '../../../slices/trainer';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -61,15 +60,12 @@ export default function TrainerPasswordEdit(props) {
     const dispatch = useDispatch();
     const history = useHistory();
     const [ submitData, setSubmitData ] = useState({password: "", password_confirmation: ""});
-    const [ message, setMessage ] = useState("");
-    const [ error, setError ] = useState(false);
-    const [ barOpen, setBarOpen ] = useState(false);
     const [ tokenHeader, setTokenHeader ] = useState();
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     
     useEffect(()=>{
-        setBarOpen(false)
         let params = (new URL(document.location)).searchParams;
         let reset_password_token = params.get('reset_password_token'); 
         console.log({reset_password_token})
@@ -94,20 +90,21 @@ export default function TrainerPasswordEdit(props) {
               tokens[`${key}`] = value
           });
           setTokenHeader(tokens)
-            setError(false)
-            setBarOpen(true)
-            setMessage("このページはリロードしないでください")
+          const message = "新しいパスワードを設定してください"
+          enqueueSnackbar(message, { 
+              variant: 'info',
+          });
         })
         .catch(function(error) {
-            setError(true)
-            setBarOpen(true)
-            setMessage("すでにパスワードの設定が完了しました。再度設定し直す場合は「パスワードをお忘れの方」よりメールをお送りください")
+          const message = "リンクが無効です。再度設定し直す場合は「パスワードをお忘れの方」よりメールをお送りください"
+          enqueueSnackbar(message, { 
+              variant: 'error',
+          });
           console.log({error})
         });
     },[])
 
     function handlePasswordResetSubmit() {
-      setBarOpen(false)
       if (!loading) {
         setSuccess(false);
         setLoading(true);
@@ -118,35 +115,22 @@ export default function TrainerPasswordEdit(props) {
         console.log({res})
         setSuccess(true);
         setLoading(false);
-        setError(false)
-        setBarOpen(true)
-        setMessage(res.data.message)
         dispatch(setCurrentTrainer(res.data.data));
         dispatch(setHeaders(res.headers));
+        const message = res.data.message
+        enqueueSnackbar(message, { 
+            variant: 'success',
+        });
         history.push('/');
       })
       .catch((err) => {
         // すでにパスワードの設定済みや有効期限切れの場合
         console.log({err})
         setLoading(false);
-        setBarOpen(true)
-        setError(true)
-        if(err){
-          if(err.response){
-            if(err.response.data){
-              if(err.response.data.errors.length){
-                console.log(err.response.data.errors[0])
-                const error = err.response.data.errors[0]
-                setMessage(error)
-              }
-            }
-          }
-          if(err.response.status){
-              setError(true)
-              setBarOpen(true)
-              setMessage("パスワード再設定のリンクが有効期限切れであるか、すでにパスワードの設定が完了しました。再度パスワードの設定を行う場合はもう一度メールアドレス宛にリンクをお送りください")
-          }
-        }
+        const message = err.response?.data.errors[0]
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
       });
     }
 
@@ -197,7 +181,12 @@ export default function TrainerPasswordEdit(props) {
                 color="primary"
                 className={classes.submit}
                 onClick={ handlePasswordResetSubmit }
-                disabled={loading || success}
+                disabled={
+                  loading || success || !tokenHeader || 
+                  submitData.password == "" ||
+                  submitData.password_confirmation == "" ||
+                 !submitData.password === submitData.password_confirmation
+                }
               >
                 パスワードを変更する
               </Button>
@@ -206,10 +195,6 @@ export default function TrainerPasswordEdit(props) {
           </Box>
         </div>
         </Paper>
-        {barOpen? (
-          // <PasswordResetSnackBar barOpen={barOpen} error={error} message={message} />
-          <PasswordResetBar  error={error} message={message} />
-        ):<></>}
       </Container>
     </Box>
 

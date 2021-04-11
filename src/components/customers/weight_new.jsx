@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentCustomer , selectCustomerHeaders } from '../../slices/customer';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios'
+import { useSnackbar } from 'notistack';
 
 const BootstrapButton = withStyles({
   root: {
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
 }));
-export default function WeightNew(){
+export default function CustomerWeightNew(){
     const [weight, setWeight] = React.useState()
     const [weightHistory, setWeightHistory] = React.useState([])
     const currentCustomer = useSelector(selectCurrentCustomer);
@@ -58,6 +59,7 @@ export default function WeightNew(){
     const url = `/customer_weights`
     const history = useHistory();
     const data = null
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     useEffect(async()=>{
 
@@ -65,34 +67,33 @@ export default function WeightNew(){
         .then(function(res) {
             console.log({res})
             setWeightHistory(res.data)
-            // data = JSON.parse(res.data);
-            // console.log({data})
         })
         .catch(function(error) {
             console.log({error})
         });
         
     },[])
-    console.log({weightHistory})
-    // const showWeightTransition = weightHistory.map((customer_menu, index) =>
-    //     <div value={customer_menu.id} key={index} >{ customer_menu.name }</div>
-    // );
     function handleWeightChange(e){
         setWeight(e.target.value);
     }
 
     function handleSubmit(){
-        axios.post( url, 
-            {weight: weight},
-            customerHeaders
-        )
+        axios.post( url, { weight: weight },customerHeaders)
         .then(function (response) {
             setWeight();
             console.log('成功',{response})
+            const message = "更新に成功しました！"
+            enqueueSnackbar(message, { 
+                variant: 'success',
+            });
             history.push(`/customer/my_page/${currentCustomer.id}`);
         })
-        .catch(function (response) {
-            console.log("error", {response})
+        .catch(function (err) {
+            console.log("error", {err})
+            const message = err.response?.data.errors[0] + "体重の更新に失敗しました"
+            enqueueSnackbar(message, { 
+                variant: 'error',
+            });
         })
     }
 

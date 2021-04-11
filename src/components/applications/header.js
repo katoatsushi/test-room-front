@@ -20,7 +20,7 @@ import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from '../../slic
 import { selectCurrentMasterAdmin, selectMasterAdminHeaders, masterAdminRemove, } from '../../slices/master_admin';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import FaceIcon from '@material-ui/icons/Face';
-
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +45,8 @@ function Header() {
   const open = Boolean(anchorEl);
   const history = useHistory();
   const dispatch = useDispatch();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const currentCustomer = useSelector(selectCurrentCustomer);
   const customer_headers = useSelector(selectCustomerHeaders);
 
@@ -71,12 +73,21 @@ function Header() {
       .then(() => {
         dispatch(customerRemove());
         handleClose()
-        console.log("ログアウトしました")
-        history.push('/');
-        window.location.reload()
+        // console.log("ログアウトしました")
+        const message = "ログアウトしました"
+        enqueueSnackbar(message, { 
+            variant: 'success',
+        });
         setAnchorEl(null);
+        history.push('/');
+        // window.location.reload()
+        
       })
       .catch((err) => {
+        const message = 'ログアウトに失敗しました';
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
         dispatch(customerRemove());
         console.log({err})
       });
@@ -87,11 +98,19 @@ function Header() {
       .delete('/v1/admin_auth/sign_out', admin_headers)
       .then(() => {
         dispatch(adminRemove());
-         handleClose()
-         history.push('/');
-         setAnchorEl(null);
+        handleClose()
+        setAnchorEl(null);
+        history.push('/');
+        const message = "ログアウトしました"
+        enqueueSnackbar(message, { 
+            variant: 'success',
+        });
       })
       .catch((err) => {
+        const message = 'ログアウトに失敗しました';
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
         dispatch(adminRemove());
       });
   }
@@ -104,11 +123,19 @@ function Header() {
         console.log({res})
         dispatch(trainerRemove());
         handleClose()
-        history.push('/');
+        const message = "ログアウトしました"
+        enqueueSnackbar(message, { 
+            variant: 'success',
+        });
         setAnchorEl(null);
+        history.push('/');
       })
       .catch((err) => {
         dispatch(trainerRemove());
+        const message = 'ログアウトに失敗しました';
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
         console.log({err})
       });
   }
@@ -120,10 +147,18 @@ function Header() {
         dispatch(masterAdminRemove());
         handleClose()
         history.push('/');
+        const message = "ログアウトしました"
+        enqueueSnackbar(message, { 
+            variant: 'success',
+        });
         setAnchorEl(null);
       })
       .catch((err) => {
         dispatch(masterAdminRemove());
+        const message = 'ログアウトに失敗しました';
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
         console.log({err})
       });
   }
@@ -131,18 +166,18 @@ function Header() {
   function MoveToMyPage(){
     setAnchorEl(null);
     history.push(`/customer/my_page/${currentCustomer.id}`)
-    window.location.reload()
+    // window.location.reload()
   }
   function MoveToHome(){
     setAnchorEl(null);
     history.push(`/`)
-    window.location.reload()
+    // window.location.reload()
   }
 
   function MoveToTrainerPage(){
     setAnchorEl(null);
     history.push(`/trainer_page/${currentTrainer.id}`)
-    window.location.reload()
+    // window.location.reload()
   }
   function MoveToCheckTodaySchedule(){
     setAnchorEl(null);
@@ -154,7 +189,7 @@ function Header() {
       company_id = currentAdmin.company_id
     }
     history.push(`/admin/company_id/${company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`)
-    window.location.reload()
+    // window.location.reload()
   }
 
 

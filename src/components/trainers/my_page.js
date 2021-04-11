@@ -14,6 +14,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import axios from 'axios';
 import InputFile from '../inputFile'
 import Avatar from '@material-ui/core/Avatar';
+import MyEvaluation from './my_evaluation'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -143,6 +144,7 @@ export default function TrainerMyPage(props) {
           </div>
         </Grid>
       </Grid>
+      <MyEvaluation props={props}/>
     </Paper>
     </div>
 

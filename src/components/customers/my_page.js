@@ -27,12 +27,9 @@ import { setCurrentCustomerInfo, setCurrentCustomerInterests, selectCurrentCusto
 import InterestChips from './my_page_interests_chips'
 import CustomerInterestsEdit from './customer_interests_edit'
 import EvaluationData from './customer_evaluation_data'
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   display: 'flex',
-  //   alignItems: 'center',
-  // },
   root: {
     flexGrow: 1,
   },
@@ -68,6 +65,8 @@ export default function CustomerMyPage(props) {
   const currentAdmin = useSelector(selectCurrentAdmin);
   const currentCustomerInfos = useSelector(selectCurrentCustomerInfos);
   var currentCustomerInterests = useSelector(selectCurrentCustomerInterests);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   // 既存の興味のある分野のIDだけそ作成
   let interests_array = []
   if (currentCustomerInterests){
@@ -83,7 +82,6 @@ export default function CustomerMyPage(props) {
   const [recordNum, setRecordNum] = useState(0);
   const [apoNum, setApoNum] = useState(0);
   const [open, setOpen] = React.useState(false);
-  const [updateInterestsIDs, setUpdateInterestsIDs] = useState([]);
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const customerStatus = useSelector(selectCurrentCustomerStatus);
@@ -104,11 +102,18 @@ export default function CustomerMyPage(props) {
     .then(res => {
       console.log({res})
       dispatch(setCurrentCustomerInterests(res.data.interests));
-      // history.push(`/customer/my_page/${currentCustomer.id}`);
+      const message = "興味・関心を更新しました！！"
+      enqueueSnackbar(message, { 
+          variant: 'success',
+      });
       history.push(`/`);
     })
     .catch(error => {
-        console.log({error})
+      const message = "予期せぬエラーが発生しました"
+      enqueueSnackbar(message, { 
+          variant: 'error',
+      });
+      console.log({error})
     });
   }
 
@@ -388,7 +393,7 @@ export default function CustomerMyPage(props) {
                                 >
                                   <DialogContent>
                                       {/* 興味がある分野の選択 */}
-                                      <CustomerInterestsEdit interestIDs={interestIDs} setInterestIDs={setInterestIDs} setUpdateInterestsIDs={setUpdateInterestsIDs}/>
+                                      <CustomerInterestsEdit interestIDs={interestIDs} setInterestIDs={setInterestIDs}/>
                                   </DialogContent>
                                   <DialogActions>
                                     <Button onClick={handleClose} color="primary">

@@ -22,11 +22,8 @@ import {
 import { setHeaders, setCurrentTrainer } from '../../../slices/trainer';
 import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../../constants/errorMessages.json';
-import TrainerCustomizedSnackbars from './login_snackbar'
-import { selectSnackBar } from '../../../slices/snack_bar';
-import DefaultBar from '../../snackBars/default'
-import { useSelector } from 'react-redux';
-import { setSnackBar, snackBarRemove } from '../../../slices/snack_bar'
+import { useSnackbar } from 'notistack';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,33 +47,37 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TrainerLogIn() {
     const url = `/v1/trainer_auth/sign_in`
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
     const [serverMessages, setServerMessages] = useState<IServerMessages>();
-    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-    const getSnackBar = useSelector(selectSnackBar);
-    // const currentCustomer = useSelector(selectCurrentCustomer);
 
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
       // setLoading(true);
-      setSnackbarOpen(false)
       console.log({data})
       axios
       .post<ISignInSuccessTrainerResponse>(url, data)
       .then((res) => {
         console.log("trainer", {res})
+        const message = "ログインに成功しました！"
+        enqueueSnackbar(message, { 
+            variant: 'success',
+        });
         dispatch(setCurrentTrainer(res.data.data));
         dispatch(setHeaders(res.headers));
         history.push('/');
       })
       .catch((err: AxiosError<IErrorResponse>) => {
         console.log({err},"トレーナーログインエラー")
+        const message = err.response?.data.errors[0];
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
         if(err.response){
           if(err.response.status){
             console.log(err.response.status)
-            setSnackbarOpen(true)
           }
         }
         setServerMessages({
@@ -88,12 +89,6 @@ export default function TrainerLogIn() {
 
   return (
     <>
-    {getSnackBar? (
-      <DefaultBar error={getSnackBar.error} message={getSnackBar.message} />
-    ):<></>}
-    {snackbarOpen?(
-      <TrainerCustomizedSnackbars/>
-    ):(<></>)}
     <Box my={5}>
       <Container maxWidth="xs">
         <Paper>
