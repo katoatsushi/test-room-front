@@ -95,9 +95,9 @@ const useStyles = makeStyles((theme) => ({
 function SignUp() {
     const [companyId, setCompanyId] = React.useState();
     const classes = useStyles();
-    const [email, setEmail] = useState("ka.baseball1997@gmail.com");
-    const [password, setPassword] = useState("gonza1026");
-    const [password_confirmation, setPasswordConfirmation] = useState("gonza1026");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [password_confirmation, setPasswordConfirmation] = useState("");
     const history = useHistory();
     const { handleSubmit } = useForm();
     const [loading, setLoading] = React.useState(false);
