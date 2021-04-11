@@ -25,12 +25,13 @@ export default function Root() {
         <ShiftNew year={today.getFullYear()} month={today.getMonth()} />
       ):(<></>)}
       {/* ルームプラスに入っているお客様 */}
-      {customerStatus?.room_plus? (
+      {/* {customerStatus?.room_plus? (
         <RoomPlusBox/>
-      ):(<></>)}
+      ):(<></>)} */}
 
       {currentCustomer? (
         <>
+        <RoomPlusBox/>
         {customerRecords? (
           <Evaluation/>
         ):(<></>)}
