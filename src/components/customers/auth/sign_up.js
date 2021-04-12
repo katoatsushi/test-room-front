@@ -22,6 +22,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { useSnackbar } from 'notistack';
 
 function Copyright() {
   return (
@@ -92,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function SignUp() {
+export default function SignUp() {
     const [companyId, setCompanyId] = React.useState();
     const classes = useStyles();
     const [email, setEmail] = useState("");
@@ -105,6 +106,7 @@ function SignUp() {
     const timer = React.useRef();
     const [open, setOpen] = React.useState(false);
     const [name, setName] = useState({first_name_kanji: "", last_name_kanji: "", first_name_kana: "",last_name_kana: ""});
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 
     const handleClose = () => {
@@ -144,9 +146,18 @@ function SignUp() {
           setLoading(false);
           setOpen(true);
           console.log(response.data.data)
-          history.push(`/`)
+          var message = "登録しました、登録されたメールアドレス宛に認証メールをお送りしました"
+          enqueueSnackbar(message, { 
+              variant: 'success',
+          });
+          // history.push(`/`)
       }).catch(function (response) {
           setLoading(false);
+          // var message = response.response?.data.errors[0];
+          var message = "新規登録に失敗しました"
+          enqueueSnackbar(message, { 
+              variant: 'error',
+          });
           console.log({response})
       })
     }
@@ -340,5 +351,3 @@ function SignUp() {
     </Container>
   );
 }
-
-export default SignUp;
