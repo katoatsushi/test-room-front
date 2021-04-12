@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomerSetInfoDialog({customer, setAllCustomers}) {
+export default function CustomerSetInfoDialog({customer, setAllCustomers,setTheChange}) {
     const classes = useStyles();
     const adminHeaders = useSelector(selectAdminHeaders);
     const [change, setChange] = React.useState(false);
@@ -56,8 +56,10 @@ export default function CustomerSetInfoDialog({customer, setAllCustomers}) {
         setRoomPlus(event.target.value);
         setChange(true);
     };
-    const [currency, setCurrency] = React.useState();
+    const [currency, setCurrency] = React.useState(0);
     const handleCurrencyChange = (event) => {
+        console.log({event})
+        console.log(event.target.value)
         setCurrency(event.target.value);
         setChange(true);
     };
@@ -82,13 +84,14 @@ export default function CustomerSetInfoDialog({customer, setAllCustomers}) {
         .then(res => {
             handleClose();
             console.log({res})
-            setAllCustomers((prev) => prev.map((p) => {
-                if(p.id == res.data.id) {
-                    p = res.data
-                }
-                return p
-                })
-            );
+            setTheChange((prev) => (!prev))
+            // setAllCustomers((prev) => prev.map((p) => {
+            //     if(p.id == res.data.id) {
+            //         p = res.data
+            //     }
+            //     return p
+            //     })
+            // );
         })
         .catch(error => {
             console.log({error})

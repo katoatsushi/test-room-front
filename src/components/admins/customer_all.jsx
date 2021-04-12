@@ -113,7 +113,7 @@ function TrainerBooking({customer}){
   );
 }
 
-function CustomerCell({customer, index, setAllCustomers}){
+function CustomerCell({customer, index, setAllCustomers, setTheChange}){
   const classes = useStyles();
   const currentAdmin = useSelector(selectCurrentAdmin);
   const currentTrainer = useSelector(selectCurrentTrainer);
@@ -143,7 +143,7 @@ function CustomerCell({customer, index, setAllCustomers}){
                {
                   (() => {
                     if (currentAdmin) {
-                        return(<CustomerSetInfoDialog customer={customer} setAllCustomers={setAllCustomers}/>);
+                        return(<CustomerSetInfoDialog customer={customer} setAllCustomers={setAllCustomers} setTheChange={setTheChange}/>);
                     } else if(currentTrainer) {
                       return (<TrainerBooking customer={customer}/>);
                     }
@@ -166,6 +166,7 @@ export default function AllCustomers(){
     const [allCustomers, setAllCustomers] = useState([]);
     const adminHeaders = useSelector(selectAdminHeaders);
     const trainerHeaders = useSelector(selectTrainerHeaders);
+    const [theChange, setTheChange] = useState(false);
 
     useEffect(()=>{
 
@@ -197,7 +198,7 @@ export default function AllCustomers(){
         });
 
       }
-    },[])
+    },[theChange])
   console.log({allCustomers})
     return(
         <>
@@ -214,7 +215,7 @@ export default function AllCustomers(){
                 </TableRow>
               </TableHead>
               <TableBody>
-                { allCustomers.map((customer, index) => <CustomerCell key={index} customer={customer} setAllCustomers={setAllCustomers}/>) }
+                { allCustomers.map((customer, index) => <CustomerCell key={index} customer={customer} setAllCustomers={setAllCustomers} setTheChange={setTheChange} />) }
               </TableBody>
             </Table>
           </TableContainer>
