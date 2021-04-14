@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import axios, { AxiosError } from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,6 +21,7 @@ import {
   IErrorResponse,
   IServerMessages,
 } from '../../interfaces';
+import clsx from 'clsx';
 import { setHeaders, setCurrentCustomer } from '../../slices/customer';
 import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../constants/errorMessages.json';
@@ -42,6 +44,29 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  // ロード
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
 function Confirmation(props) {
@@ -50,6 +75,11 @@ function Confirmation(props) {
     const history = useHistory();
     const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
     const [serverMessages, setServerMessages] = useState<IServerMessages>();
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
 
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
         const confirmation_response = props.location.search
@@ -58,16 +88,22 @@ function Confirmation(props) {
         const confirmation_token_values = confirmation_token[1]
         const confirm_url = `/customer_confirm_ok`
         const sign_in_url = `/v1/customer_auth/sign_in`
+        if (!loading) {
+          setSuccess(false);
+          setLoading(true);
+        }
         axios.post(confirm_url, {token: confirmation_token_values})
         .then((res) => {
             axios.post<ISignInSuccessResponse>(sign_in_url, data)
             .then((res) => {
-                console.log({res})
+                setSuccess(true);
+                setLoading(false);
                 dispatch(setCurrentCustomer(res.data.data));
                 dispatch(setHeaders(res.headers));
                 history.push('/customer_info/new');
             })
             .catch((err: AxiosError<IErrorResponse>) => {
+                setLoading(false);
                 setServerMessages({
                 severity: 'error',
                 alerts: err.response?.data.errors || [],
@@ -75,7 +111,7 @@ function Confirmation(props) {
             });
         })
         .catch((err: AxiosError<IErrorResponse>) => {
-            console.log({err})
+            setLoading(false);
             setServerMessages({
             severity: 'error',
             alerts: err.response?.data.errors || [],
@@ -164,15 +200,19 @@ function Confirmation(props) {
                   )}
                 />
               </Box>
+              <div className={classes.wrapper}>
                 <Button
                     type="submit"
-                    fullWidth
                     variant="contained"
+                    fullWidth
                     color="secondary"
-                    // onClick={onSubmit}
-                    >
-                    認証を完了する
+                    className={buttonClassname}
+                    disabled={loading || success}
+                >
+                   認証を完了する
                 </Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              </div>
               <Grid container justify="flex-end">
                 <Grid item>
                   <Link href="/customer/sign_up" variant="body2">

@@ -23,7 +23,8 @@ import { setHeaders, setCurrentTrainer } from '../../../slices/trainer';
 import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../../constants/errorMessages.json';
 import { useSnackbar } from 'notistack';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,6 +44,29 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  // ロード
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
 export default function TrainerLogIn() {
@@ -53,33 +77,36 @@ export default function TrainerLogIn() {
     const history = useHistory();
     const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
     const [serverMessages, setServerMessages] = useState<IServerMessages>();
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const buttonClassname = clsx({
+      [classes.buttonSuccess]: success,
+    });
 
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
-      // setLoading(true);
-      console.log({data})
+      if (!loading) {
+        setSuccess(false);
+        setLoading(true);
+      }
       axios
       .post<ISignInSuccessTrainerResponse>(url, data)
       .then((res) => {
-        console.log("trainer", {res})
+        setSuccess(true);
+        setLoading(false);
+        dispatch(setCurrentTrainer(res.data.data));
+        dispatch(setHeaders(res.headers));
         const message = "ログインに成功しました！"
         enqueueSnackbar(message, { 
             variant: 'success',
         });
-        dispatch(setCurrentTrainer(res.data.data));
-        dispatch(setHeaders(res.headers));
         history.push('/');
       })
       .catch((err: AxiosError<IErrorResponse>) => {
-        console.log({err},"トレーナーログインエラー")
+        setLoading(false);
         const message = err.response?.data.errors[0];
         enqueueSnackbar(message, { 
             variant: 'error',
         });
-        if(err.response){
-          if(err.response.status){
-            console.log(err.response.status)
-          }
-        }
         setServerMessages({
           severity: 'error',
           alerts: err.response?.data.errors || [],
@@ -100,7 +127,6 @@ export default function TrainerLogIn() {
             <Typography variant="h5" align="center" gutterBottom>
               トレーナーログイン
             </Typography>
-            {/* <ServerAlert serverMessages={serverMessages} /> */}
             <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
               <Box mb={2}>
                 <Controller
@@ -127,7 +153,6 @@ export default function TrainerLogIn() {
                       variant="outlined"
                       label="メールアドレス"
                       error={invalid}
-                      // disabled={loading}
                       fullWidth
                       inputRef={ref}
                       value={value as string}
@@ -170,27 +195,23 @@ export default function TrainerLogIn() {
                     />
                   )}
                 />
-                {/* <ErrorMessage
-                  errors={errors}
-                  name="password"
-                  render={({ message }) => (
-                    <Alert severity="error">{message}</Alert>
-                  )}
-                /> */}
               <Link href={`/trainer/password/reset`}>
                   パスワードをお忘れの方はこちら
               </Link>
               </Box>
-              {/* <LoadingButton loading={loading} primary="SignIn" /> */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                ログインする
-              </Button>
+              <div className={classes.wrapper}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    className={buttonClassname}
+                    disabled={loading || success}
+                >
+                  ログインする
+                </Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              </div>
             </form>
           </Box>
         </div>
