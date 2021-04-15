@@ -119,8 +119,6 @@ export default function CustomerMyPage(props) {
 
   useEffect(()=>{
     const url = `/return_customer_all_info/${props.match.params.id}`
-    console.log({props},"aaaaa")
-    console.log({url})
     axios.get(url)
     .then(function(res) {
       console.log({res})
@@ -333,15 +331,24 @@ export default function CustomerMyPage(props) {
             {
                 (() => {
                     if (currentCustomer && currentCustomer.id == props.match.params.id) {
-                        return(
-                          <Chip
-                            size="small"
-                            label="予約する"
-                            clickable
-                            onClick={() => history.push(`/customer/${currentCustomer.id}/calendar_new`)}
-                            style={{backgroundColor: '#4DA7F0', fontWeight: 700, color: 'white', paddingLeft: 10,paddingRight: 10}}
-                          />
-                        );
+                        return(<>
+                          {customerStatus?.paid? (
+                              <Chip
+                                  size="small"
+                                  label="予約する"
+                                  clickable
+                                  onClick={() => history.push(`/customer/${currentCustomer.id}/calendar_new`)}
+                                  style={{backgroundColor: '#4DA7F0', fontWeight: 700, color: 'white', paddingLeft: 10,paddingRight: 10}}
+                                />
+                          ):(
+                              <Chip
+                                  size="small"
+                                  label="予約する"
+                                  clickable
+                                  style={{backgroundColor: 'grey', fontWeight: 700, color: 'white', paddingLeft: 10,paddingRight: 10}}
+                                />
+                          )}
+                        </>);
                     } else {
                         return (
                             <></>
