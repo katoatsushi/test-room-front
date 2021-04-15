@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { useHistory } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,8 +74,18 @@ export default function SetTimesWeight(props) {
     const [ message, setMessage ] = React.useState("");
     const allData = props.location.data
     const history = useHistory();
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
     console.log({props})
     useEffect(()=>{
+        if (!props.location.data) {
+            // トレーナーのカルテ一覧画面に以降
+            const message = "セッションが切れましたため,もう一度カルテを選んでください。"
+            enqueueSnackbar(message, { 
+                variant: 'error',
+            });
+            history.push(`/trainers/customer_session_records`)
+        }
         if (allData){
             var DataInit = allData.map(function(d){
                 return {data: d, time: null, weight: null}

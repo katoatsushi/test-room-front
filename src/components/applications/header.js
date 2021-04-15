@@ -100,11 +100,11 @@ function Header() {
         dispatch(adminRemove());
         handleClose()
         setAnchorEl(null);
-        history.push('/');
         const message = "ログアウトしました"
         enqueueSnackbar(message, { 
             variant: 'success',
         });
+        history.push('/');
       })
       .catch((err) => {
         const message = 'ログアウトに失敗しました';
@@ -146,12 +146,12 @@ function Header() {
       .then(() => {
         dispatch(masterAdminRemove());
         handleClose()
-        history.push('/');
         const message = "ログアウトしました"
         enqueueSnackbar(message, { 
             variant: 'success',
         });
         setAnchorEl(null);
+        history.push('/');
       })
       .catch((err) => {
         dispatch(masterAdminRemove());
