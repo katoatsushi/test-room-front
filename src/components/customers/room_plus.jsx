@@ -184,18 +184,18 @@ export default function RoomPlusBox(){
         ):(
             <>        
             {vacancy? (<>
-                <div style={{fontSize: 20, textAlign: 'center'}}>本日の空き状況です</div>
+                {/* <div style={{fontSize: 20, textAlign: 'center'}}>本日の空き状況です</div>
                 <div style={{overflow: 'scroll', height: 120, backgroundColor: 'white', padding: 20}}>
                     <ShowAllSchedules vacancy={vacancy}/>
-                </div>
-                <Button variant="contained" color="primary" onClick={handleOpen} style={{marginLeft: '0 0 0 auto',  float: 'right'}}>
+                </div> */}
+                {/* <Button variant="contained" color="primary" onClick={handleOpen} style={{marginLeft: '0 0 0 auto',  float: 'right'}}>
                     Roomプラスを予約する
-                </Button>
+                </Button> */}
             </>):(<>
                 <div style={{fontSize: 20, textAlign: 'center'}}>本日の空きはありませんです</div>
-                <Button variant="contained" color="primary" disabled onClick={handleOpen} style={{marginLeft: '0 0 0 auto',  float: 'right'}}>
+                {/* <Button variant="contained" color="primary" disabled onClick={handleOpen} style={{marginLeft: '0 0 0 auto',  float: 'right'}}>
                     Roomプラスを予約する
-                </Button>
+                </Button> */}
             </>)}
             </>
             )
