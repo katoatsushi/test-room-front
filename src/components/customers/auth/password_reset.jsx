@@ -99,7 +99,6 @@ export default function CustomerPasswordReset() {
         enqueueSnackbar(message, { 
             variant: 'success',
         });
-        // history.push('/');
       })
       .catch((err) => {
         console.log({err})

@@ -22,7 +22,7 @@ import {
   IErrorResponse,
   IServerMessages,
 } from '../../../interfaces';
-import {setCurrentCustomer, setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders} from  '../../../slices/customer';
+import {setCurrentCustomer, setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders, selectCurrentCustomer} from  '../../../slices/customer';
 import { setCustomerRecords, customerRecordRemove, getCustomerRecords } from '../../../slices/customer_record';
 import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../../constants/errorMessages.json';
@@ -98,7 +98,8 @@ export default function LogIn() {
       .then((res) => {
         setSuccess(true);
         setLoading(false);
-        console.log({res})
+        console.log("ログイン",{res})
+        const customer_id = res.data.data.id
         dispatch(setCurrentCustomer(res.data.data));
         dispatch(setHeaders(res.headers));
         // お客様の詳細情報を入手
@@ -111,11 +112,10 @@ export default function LogIn() {
           dispatch(setCurrentCustomerInterests(response.data.customer_interests));
           if(response.data.evaluations.length){
             dispatch(setCustomerRecords(response.data.evaluations));
-            history.push('/');
-            // history.push(`/customer_evaluation_data/${res.data.data.id}`);
+            history.push(`/customer_evaluation_data/${res.data.data.id}`);
           }else{
             console.log("現在返すべきトレーナーの評価はありません")
-            history.push('/');
+             history.push(`/customer/my_page/${customer_id}`);
           }
           const message = "ログインに成功しました！"
           enqueueSnackbar(message, { 
@@ -125,7 +125,6 @@ export default function LogIn() {
         .catch(function(error) {
           console.log({error})
         });
-        // history.push('/');
       })
       .catch((err: AxiosError<IErrorResponse>) => {
         console.log({err})
@@ -134,10 +133,10 @@ export default function LogIn() {
             variant: 'error',
         });
         setLoading(false);
-        setServerMessages({
-          severity: 'error',
-          alerts: err.response?.data.errors || [],
-        });
+        // setServerMessages({
+        //   severity: 'error',
+        //   alerts: err.response?.data.errors || [],
+        // });
       });
   };
 

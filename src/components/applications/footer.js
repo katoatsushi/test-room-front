@@ -54,23 +54,23 @@ function Footer() {
               <AppBar position="static" style={{backgroundColor: 'white'}}>
                 <Toolbar>
                 <Grid container spacing={6} style={{textAlign: 'center'}}>
-                    <Grid item xs={4}>
+                    {/* <Grid item xs={4}>
                         <Link href="/">
                             <HomeIcon style={{color: 'black', fontSize: '2.5em'}}/>
                         </Link>
-                    </Grid>
+                    </Grid> */}
                     {customerStatus?.paid? (
-                        <Grid item xs={4}>
+                        <Grid item xs={6}>
                             <Link href={`/customer/${currentCustomer.id}/calendar_new`}>
                                 <CalendarTodayIcon  style={{color: 'black', fontSize: '2.5em'}} />
                             </Link>
                         </Grid>
                     ):(
-                        <Grid item xs={4}>
+                        <Grid item xs={6}>
                             <CalendarTodayIcon  style={{color: 'grey', fontSize: '2.5em'}} />
                         </Grid>
                     )}
-                    <Grid item xs={4} >
+                    <Grid item xs={6} >
                         <Link href={`/customer/my_page/${currentCustomer.id}`}>
                             <PermIdentityIcon  style={{color: 'black', fontSize: '2.5em'}} />
                         </Link>
@@ -113,26 +113,26 @@ function Footer() {
               <AppBar position="static" style={{backgroundColor: 'white'}}>
                 <Toolbar>
                 <Grid container spacing={6} style={{textAlign: 'center'}}>
-                    <Grid item xs={3}>
-                        <Link href={`/admin/company_id/${currentAdmin.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`}>
-                            <HomeIcon style={{color: 'black', fontSize: '2.5em'}}/>
-                        </Link>
-                    </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <Link href="/customer_all">
                             <PortraitIcon  style={{color: 'black', fontSize: '2.5em'}} />
                         </Link>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
+                        <Link href={`/admin/company_id/${currentAdmin.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`}>
+                            <HomeIcon style={{color: 'black', fontSize: '2.5em'}}/>
+                        </Link>
+                    </Grid>
+                    <Grid item xs={4}>
                         <Link href="/admin_menues">
                             <AppsIcon style={{color: 'black', fontSize: '2.5em'}} />
                         </Link>
                     </Grid>
-                    <Grid item xs={3} >
+                    {/* <Grid item xs={3} >
                         <Link href="/">
                             <PermIdentityIcon  style={{color: 'black', fontSize: '2.5em'}} />
                         </Link>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 </Toolbar>
               </AppBar>

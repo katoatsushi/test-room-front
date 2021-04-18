@@ -35,6 +35,7 @@ const SelectStoreFitness = (props) => {
         }
         axios.get(url, header)
         .then(function(res) {
+            console.log("レプポンス",{res})
             setCustomerMenu(res.data.fitnesses);
             setStore(res.data.store);
         })

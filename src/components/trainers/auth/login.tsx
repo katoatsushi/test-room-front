@@ -93,13 +93,14 @@ export default function TrainerLogIn() {
       .then((res) => {
         setSuccess(true);
         setLoading(false);
+        const trainer_id = res.data.data.id
         dispatch(setCurrentTrainer(res.data.data));
         dispatch(setHeaders(res.headers));
         const message = "ログインに成功しました！"
         enqueueSnackbar(message, { 
             variant: 'success',
         });
-        history.push('/');
+        history.push('/trainers/customer_session_records');
       })
       .catch((err: AxiosError<IErrorResponse>) => {
         setLoading(false);

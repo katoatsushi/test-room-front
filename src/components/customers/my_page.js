@@ -106,7 +106,7 @@ export default function CustomerMyPage(props) {
       enqueueSnackbar(message, { 
           variant: 'success',
       });
-      history.push(`/`);
+      history.push(`/customer/my_page/${currentCustomer.id}`);
     })
     .catch(error => {
       const message = "予期せぬエラーが発生しました"

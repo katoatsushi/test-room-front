@@ -164,16 +164,6 @@ export default function EditMyProfile() {
 
     setActiveStep(newActiveStep);
   };
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-  // const handleSkip = () => {
-  //   setOpen(false);
-  //   history.push('/');
-  // }
 
   const handleComplete = () => {
     const newCompleted = new Set(completed);

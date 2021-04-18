@@ -121,7 +121,7 @@ export default function AdminLogIn() {
         enqueueSnackbar(message, { 
             variant: 'success',
         });
-        history.push('/');
+        history.push('/customer_all');
       })
       .catch((err) => {
         const message = err.response?.data.errors[0];

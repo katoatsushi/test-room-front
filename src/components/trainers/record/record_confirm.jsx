@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios'
 import { selectTrainerHeaders } from '../../../slices/trainer';
 import { useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecordConfirm(props) {
     console.log({props})
+    console.log(props.location)
     const history = useHistory();
     const record = props.location.record
     const data = props.location.data
@@ -60,6 +62,18 @@ export default function RecordConfirm(props) {
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+    useEffect(()=>{
+        if (!props.location.data) {
+            // トレーナーのカルテ一覧画面に以降
+            const message = "セッションが切れましたため,もう一度カルテを選んでください。ページのリロードは行わないでください"
+            enqueueSnackbar(message, { 
+                variant: 'error',
+            });
+            history.push(`/trainers/customer_session_records`)
+        }
+    },[])
 
     function showDate(time){
         const date = new Date(`${time}`);
@@ -95,14 +109,15 @@ export default function RecordConfirm(props) {
             setSuccess(true);
             setLoading(false);
             console.log({response})
-            history.push(`/`);
+            history.push('/trainers/customer_session_records');
         })
         .catch(function (response) {
             setLoading(false);
             console.log("error", {response})
         })
     }
-    return(<>  
+    return(<>
+    {record? (<>
         <div>
             <Paper variant="outlined" style={{padding: 5, margin: 10, textAlign: 'center'}}>
                 内容を確認してください
@@ -240,5 +255,68 @@ export default function RecordConfirm(props) {
             </DialogContent>
         </Dialog>
         </div>
+    </>):(<>
+        <div>
+            <Paper variant="outlined" style={{padding: 5, margin: 10, textAlign: 'center'}}>
+                内容を確認してください
+            </Paper>
+           <Paper variant="outlined"style={{padding: 10, margin: 5}}>
+
+            <Paper variant="outlined" style={{padding: 5,backgroundColor: '#b2d2f8',  margin: 0, textAlign: 'left', fontSize: '0.7em'}}>
+                <Grid container style={{fontWeight: 500}}>
+                    <Grid item xs={4} >
+                        顧客名
+                    </Grid>
+                    <Grid item xs={4}>
+                        日時
+                    </Grid>
+                    <Grid item xs={4}>
+                        メニュー
+                    </Grid>
+                </Grid>
+            </Paper>
+
+
+            <Paper variant="outlined" style={{padding: 5,backgroundColor: '#b2d2f8',  margin: 0, textAlign: 'left', fontSize: '0.7em'}}>
+                <Grid container style={{fontWeight: 500}}>
+                    <Grid item xs={5} >
+                        内容
+                    </Grid>
+                    <Grid item xs={3}>
+                        カテゴリー
+                    </Grid>
+                    <Grid item xs={2}>
+                        総回数
+                    </Grid>
+                    <Grid item xs={2}>
+                        重量
+                    </Grid>
+                </Grid>
+            </Paper>
+
+
+            <Paper variant="outlined" style={{padding: 5,backgroundColor: '#b2d2f8',  margin: 0, textAlign: 'left', fontSize: '0.7em', fontWeight: 500}}>
+                コメント
+            </Paper>
+
+            <TextField
+                id="outlined-multiline-static"
+                label="コメント"
+                multiline
+                disabled
+                style={{width: '100%', color: '#4DA7F0', marginTop: 10}}
+                rows={4}
+                defaultValue={message}
+                variant="outlined"
+            />
+            <Button style={{margin: 5, backgroundColor: '#4DA7F0', color: 'white', fontWeight: '500', width: '100%'}}
+                    onClick={handleClickOpen}
+            >
+                カルテを発行する
+            </Button>
+            </Paper>
+        </div>
+    </>)
+    }
     </>)
 }

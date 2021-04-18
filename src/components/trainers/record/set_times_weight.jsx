@@ -75,16 +75,20 @@ export default function SetTimesWeight(props) {
     const allData = props.location.data
     const history = useHistory();
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const [dataCheck, setDataCheck] = React.useState(true);
 
     console.log({props})
     useEffect(()=>{
-        if (!props.location.data) {
-            // トレーナーのカルテ一覧画面に以降
-            const message = "セッションが切れましたため,もう一度カルテを選んでください。"
-            enqueueSnackbar(message, { 
-                variant: 'error',
-            });
-            history.push(`/trainers/customer_session_records`)
+        // if (!props.location.data) {
+        //     // トレーナーのカルテ一覧画面に以降
+        //     const message = "セッションが切れましたため,もう一度カルテを選んでください。"
+        //     enqueueSnackbar(message, { 
+        //         variant: 'error',
+        //     });
+        //     history.push(`/trainers/customer_session_records`)
+        // }
+        if (props.location.data.length == 0) {
+            setDataCheck(false)
         }
         if (allData){
             var DataInit = allData.map(function(d){
@@ -102,12 +106,13 @@ export default function SetTimesWeight(props) {
     console.log({submitData})
 
     return (<>
+    {dataCheck? (<>
         <div className={classes.root}>
             <Paper variant="outlined" style={{padding: 5, margin: 10, textAlign: 'center'}}>
                 カルテを発行する
             </Paper>
            <Paper variant="outlined"style={{padding: 10, margin: 5}}>
-            <span className="karute_text">内容を選んでください</span>
+            {/* <span className="karute_text">内容を選んでください</span> */}
             <Paper variant="outlined" style={{padding: 5,backgroundColor: '#CCCCCC',  margin: 0, textAlign: 'left', fontSize: '0.7em'}}>
                 <Grid container style={{fontWeight: 500}}>
                     <Grid item xs={5} >
@@ -159,5 +164,42 @@ export default function SetTimesWeight(props) {
             </div>
             </Paper>
         </div>
+        </>):(<>
+        <div className={classes.root}>
+            <Paper variant="outlined" style={{padding: 5, margin: 10, textAlign: 'center'}}>
+                カルテを発行する
+            </Paper>
+            <Paper variant="outlined"style={{padding: 10, margin: 5}}>
+            <Paper variant="outlined" style={{padding: 5,backgroundColor: '#CCCCCC',  margin: 0, textAlign: 'left', fontSize: '0.7em', fontWeight: 500}}>
+                コメント
+            </Paper>
+
+            <TextField
+                id="outlined-multiline-static"
+                label="コメント"
+                multiline
+                style={{width: '100%', color: '#4DA7F0', marginTop: 10}}
+                rows={4}
+                // defaultValue="Default Value"
+                onChange={handleMessageChange}
+                variant="outlined"
+            />
+            <div style={{textAlign: 'right', marginLeft: 'auto', marginRight: 'auto',}}>
+                <Button style={{marginTop: 10, backgroundColor: '#4DA7F0', color: 'white', fontWeight: '500', width: '100%'}}
+                    onClick = {() => 
+                        history.push({
+                            pathname: [`/trainers/record/confirm`],
+                            record: props.location.record,
+                            message: message,
+                            data: submitData })}
+                >
+                    カルテを発行する
+                </Button>
+            </div>
+            </Paper>
+        </div>  
+        </>)
+    }
+
     </>)
 }

@@ -145,20 +145,23 @@ export default function SignUp() {
           setSuccess(true);
           setLoading(false);
           setOpen(true);
-          console.log(response.data.data)
           var message = "登録しました、登録されたメールアドレス宛に認証メールをお送りしました"
           enqueueSnackbar(message, { 
               variant: 'success',
           });
-          // history.push(`/`)
       }).catch(function (response) {
           setLoading(false);
-          // var message = response.response?.data.errors[0];
-          var message = "新規登録に失敗しました"
-          enqueueSnackbar(message, { 
-              variant: 'error',
-          });
-          console.log({response})
+          if(response.response.status === 422) {
+              var message = "すでに登録されたメールアドレスか、メールアドレスが有効ではありません。"
+              enqueueSnackbar(message, { 
+                  variant: 'error',
+              });
+          } else{
+            message = "新規登録に失敗しました"
+            enqueueSnackbar(message, { 
+                variant: 'error',
+            });
+          }
       })
     }
     const handleEMailChange = (e) => {

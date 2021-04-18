@@ -14,6 +14,8 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+import Grow from '@material-ui/core/Grow';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -72,6 +74,7 @@ export default function SessionRecordList() {
     const [currentRecords, setCurrentRecords] = React.useState();
     const [change, setChange] = React.useState(false);
     const history = useHistory();
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const url = `/trainer/get/customer_records`
 
@@ -79,26 +82,38 @@ export default function SessionRecordList() {
 
         axios.get(url, trainerHeaders)
         .then(function(res) {
-            console.log({res})
-            console.log("res.data.intial_data", res.data.intial_data)
             setRecords(res.data.data);
             setCurrentRecords(res.data.intial_data)
+            if (thisStoreRecord.length == 0){
+                const message = "全ての店舗の予約状況を表示しています"
+                enqueueSnackbar(message, {
+                    variant: 'success',
+                    autoHideDuration: 1000,
+                    anchorOrigin: {
+                        vertical: 'top',
+                        horizontal: 'center',
+                    },
+                    TransitionComponent: Grow,
+                });
+            }
         })
         .catch(function(error) {
             console.log({error})
         });
-        console.log({currentRecords})
-        
+
     },[])
 
-    console.log({currentRecords})
     function handleStoreChange(e) {
-        console.log({e})
-        // setCurrentRecords(e.target.value.data)
         setChange(true)
         setThisStoreRecord(e.target.value)
+        if (radioStatus == ""){
+            const message = "ステータスを選択してください"
+            enqueueSnackbar(message, { 
+                autoHideDuration: 1500,
+                variant: 'warning',
+            });
+        }
         if (radioStatus){
-            console.log("中身あり！")
             if(radioStatus == "not_finish"){
                 setCurrentRecords(e.target.value.not_finish_data)
             }else if(radioStatus == "finish"){
@@ -107,7 +122,6 @@ export default function SessionRecordList() {
                 setCurrentRecords(e.target.value.all_data)
             }
         }else{
-            console.log("中身なし！")
             setCurrentRecords(e.target.value.all_data)
         }
     }
@@ -121,6 +135,13 @@ export default function SessionRecordList() {
     }
     function handleRadioChange(e){
         setChange(true)
+        if (thisStoreRecord.length == 0){
+            const message = "店舗を選択して下さい"
+            enqueueSnackbar(message, { 
+                autoHideDuration: 1500,
+                variant: 'warning',
+            });
+        }
         if(e.target.value == "not_finish"){
             setCurrentRecords(thisStoreRecord.not_finish_data)
         }else if(e.target.value == "finish"){
@@ -152,7 +173,6 @@ export default function SessionRecordList() {
             </RadioGroup>
             <br/>
             <FormControl className={classes.margin}>
-                {/* <InputLabel id="demo-customized-select-label">店舗</InputLabel> */}
                  店舗を選択する<br/>
                 <Select
                     labelId="demo-customized-select-label"
@@ -166,21 +186,35 @@ export default function SessionRecordList() {
         </FormControl>
 
         <div style={{margin: 5}}>
-        <Paper variant="outlined">
-            <Grid container spacing={3} style={{fontWeight: 500}}>
-                <Grid item xs={3} >
-                    <span style={{marginLeft: 5}}>顧客名</span>
+        {change? (<>
+            {/* ステータス・店舗を選択していない場合は全店舗の予約状況を表示 */}
+            <Paper variant="outlined">
+                <Grid container spacing={3} style={{fontWeight: 500}}>
+                    <Grid item xs={3} >
+                        <span style={{marginLeft: 5}}>顧客名</span>
+                    </Grid>
+                    <Grid item xs={3}>
+                        日時
+                    </Grid>
+                    <Grid item xs={3}>
+                        メニュー
+                    </Grid>
+                    <Grid item xs={3}>
+                    </Grid>
                 </Grid>
-                <Grid item xs={3}>
-                    日時
+            </Paper>
+        </>):(<>
+            <Paper variant="outlined">
+                <Grid container spacing={3} style={{fontWeight: 500}}>
+                <Grid item xs={12} >
+                    <span style={{marginLeft: 5}}>全店舗の予約状況を表示しています</span>
                 </Grid>
-                <Grid item xs={3}>
-                    メニュー
                 </Grid>
-                <Grid item xs={3}>
-                </Grid>
-            </Grid>
-        </Paper>
+            </Paper>
+        </>)
+
+        }
+
         {currentRecords? (<>
             {currentRecords.map((record, index) => (
                 <Paper variant="outlined" key={index} style={{ marginTop: 10, marginBottom: 10}}>
@@ -225,7 +259,6 @@ export default function SessionRecordList() {
             ))}
         </>) : (<>
             <div className="info_box">
-                {/* ※ 店舗を選択してください */}
                 ※ 予約情報がありません
             </div>
         </>)}

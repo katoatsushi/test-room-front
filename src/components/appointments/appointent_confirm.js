@@ -10,6 +10,8 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import BlockIcon from '@material-ui/icons/Block';
+import { selectCurrentCustomer, selectCustomerHeaders, customerRemove, } from '../../slices/customer';
+import { useSelector, useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,6 +66,7 @@ const AppointmentConfirm = (props) => {
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
+    const currentCustomer = useSelector(selectCurrentCustomer);
 
     function handleCheckOk() {
         const params = props.match.params
@@ -146,7 +149,7 @@ const AppointmentConfirm = (props) => {
                             </Typography>
                         </CardContent>
                         <div style={{ textAlign: 'center', marginBottom: 20}}>
-                            <Button size="large" href='/' style={{backgroundColor: '#4DA7F0', color: 'white', fontWeight: '700', width: '80%'}}>
+                            <Button size="large" href={`/customer/my_page/${currentCustomer.id}`} style={{backgroundColor: '#4DA7F0', color: 'white', fontWeight: '700', width: '80%'}}>
                                 ホームに戻る
                             </Button>
                         </div>

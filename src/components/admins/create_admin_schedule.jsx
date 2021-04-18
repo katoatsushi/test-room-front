@@ -140,7 +140,7 @@ export default function CreateAdminSchedule(){
         }, adminHeaders)
         .then(function (response) {
             console.log(response)
-            history.push(`/`)
+            history.push('/customer_all');
         })
     }
     useEffect(()=>{

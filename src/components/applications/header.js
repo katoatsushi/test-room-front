@@ -226,7 +226,7 @@ function Header() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/>
+                {/* <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/> */}
                 <MenuItem onClick={MoveToMyPage}>マイページ</MenuItem><hr/>
                 {/* <MenuItem onClick={handleClose}>プロフィールを編集する</MenuItem><hr/> */}
                 <MenuItem onClick={handleCustomerSignOut}>ログアウトする</MenuItem>
@@ -259,8 +259,8 @@ function Header() {
                     open={open}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/>
-                    <MenuItem onClick={MoveToCheckTodaySchedule}>本日の予約を確認する</MenuItem><hr/>
+                    {/* <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/> */}
+                    {/* <MenuItem onClick={MoveToCheckTodaySchedule}>本日の予約を確認する</MenuItem><hr/> */}
                     <MenuItem onClick={MoveToTrainerPage}>マイページへ</MenuItem><hr/>
                     <MenuItem onClick={handleTrainerSignOut}>ログアウトする</MenuItem>
                     {/* <MenuItem onClick = {() => history.push(`/trainer/edit/me`)}>プロフィールの編集</MenuItem> */}
@@ -296,8 +296,8 @@ function Header() {
                     open={open}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/>
-                    <MenuItem onClick={MoveToCheckTodaySchedule}>本日の予約を確認する</MenuItem><hr/>
+                    {/* <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/> */}
+                    {/* <MenuItem onClick={MoveToCheckTodaySchedule}>本日の予約を確認する</MenuItem><hr/> */}
                     <MenuItem onClick={handleAdminSignOut}>ログアウトする</MenuItem>
                   </Menu>
                 </div>

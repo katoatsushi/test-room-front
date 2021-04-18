@@ -25,6 +25,7 @@ import clsx from 'clsx';
 import { setHeaders, setCurrentCustomer } from '../../slices/customer';
 import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../constants/errorMessages.json';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -80,6 +81,7 @@ function Confirmation(props) {
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
         const confirmation_response = props.location.search
@@ -92,7 +94,7 @@ function Confirmation(props) {
           setSuccess(false);
           setLoading(true);
         }
-        axios.post(confirm_url, {token: confirmation_token_values})
+        axios.post(confirm_url, {token: confirmation_token_values, data: data})
         .then((res) => {
             axios.post<ISignInSuccessResponse>(sign_in_url, data)
             .then((res) => {
@@ -100,22 +102,34 @@ function Confirmation(props) {
                 setLoading(false);
                 dispatch(setCurrentCustomer(res.data.data));
                 dispatch(setHeaders(res.headers));
+                const message = "認証に成功しました";
+                enqueueSnackbar(message, { 
+                    variant: 'success',
+                });
                 history.push('/customer_info/new');
             })
             .catch((err: AxiosError<IErrorResponse>) => {
                 setLoading(false);
-                setServerMessages({
-                severity: 'error',
-                alerts: err.response?.data.errors || [],
+                const message = "認証に失敗しました";
+                enqueueSnackbar(message, { 
+                    variant: 'error',
                 });
+                // setServerMessages({
+                // severity: 'error',
+                // alerts: err.response?.data.errors || [],
+                // });
             });
         })
         .catch((err: AxiosError<IErrorResponse>) => {
             setLoading(false);
-            setServerMessages({
-            severity: 'error',
-            alerts: err.response?.data.errors || [],
+            const message = "認証に失敗しました";
+            enqueueSnackbar(message, { 
+                variant: 'error',
             });
+            // setServerMessages({
+            // severity: 'error',
+            //   alerts: err.response?.data.errors || [],
+            // });
         });
   };
 

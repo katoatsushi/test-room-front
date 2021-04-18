@@ -86,6 +86,7 @@ export default function TrainerCreateRecord(props) {
     const history = useHistory();
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
+    const [dataCheck, setDataCheck] = React.useState(true);
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
@@ -100,6 +101,11 @@ export default function TrainerCreateRecord(props) {
         .then(function(res) {
             setSuccess(true);
             setLoading(false);
+            console.log("帰ってきた値", {res})
+            if(res.data.data.length == 0) {
+                console.log("データないよ")
+                setDataCheck(false)
+            }
             setFitnessData(res.data.data)
         })
         .catch(function(error) {
@@ -109,9 +115,8 @@ export default function TrainerCreateRecord(props) {
 
     },[])
 
-    
-
     return (<>
+    {dataCheck? (<>
         <div className={classes.root}>
             <Paper variant="outlined" style={{padding: 5, margin: 10, textAlign: 'center'}}>
                 カルテを発行する
@@ -159,5 +164,30 @@ export default function TrainerCreateRecord(props) {
             </div>
             </Paper>
         </div>
+        </>):(<>
+        <div className={classes.root}>
+            <Paper variant="outlined" style={{padding: 5, margin: 10, textAlign: 'center'}}>
+                カルテを発行する
+            </Paper>
+           <Paper variant="outlined"style={{padding: 20, margin: 10}}>
+            <span className="karute_text">このまま次へをクリックしてください</span>
+            <div style={{textAlign: 'right', marginLeft: 'auto'}}>
+                <Button variant="contained" color="primary" 
+                    style={{marginTop: 20 , color: 'white', fontWeight: '500', width: '100%',marginLeft: 'auto', marginRight: 'auto'}}
+                    onClick = {() => 
+                        history.push({
+                            pathname: [`/trainers/set/details`],
+                            record: props.location.data,
+                            data: selectMenues
+                    })}
+                >
+                    次へ
+                </Button>
+            </div>
+            </Paper>
+        </div>
+        </>)
+    }
+
     </>)
 }

@@ -43,6 +43,7 @@ const useStyles = makeStyles({
 });
 
 function ShowApo({apo, apos, setApos}) {
+  console.log({apos})
   const customerHeader = useSelector(selectCustomerHeaders);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -90,9 +91,10 @@ function ShowApo({apo, apos, setApos}) {
           { apo.date[0] + '/' + apo.date[1] + '/' + apo.date[2] }
           &nbsp;&nbsp;
           { apo.start[0] + ':' + apo.start[1] } 〜 
-          { apo.finish[0] + ':' + apo.finish[1] }
+          {/* { apo.finish[0] + ':' + apo.finish[1] } */}
         </div>
-        { apo.menu }のご予約{ apo.id }
+        【{ apo.store_name}店】
+        { apo.menu }
           </Grid>
           <Grid item xs={2}>
             <IconButton aria-label="display more actions" edge="end" color="inherit">
@@ -161,7 +163,7 @@ export default function CustomerHome(props) {
               <Typography className={classes.heading}>もっと見る</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
+              <Typography >
                 { nextApos.map((apo, index) => <ShowApo key={index} apo={apo} apos={apos} setApos={setApos}/>) }
               </Typography>
             </AccordionDetails>
