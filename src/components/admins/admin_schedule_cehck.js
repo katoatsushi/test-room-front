@@ -17,7 +17,7 @@ import Select from '@material-ui/core/Select';
 import Avatar from '@material-ui/core/Avatar';
 import { deepOrange, green } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
-
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -115,8 +115,6 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
 
     function handleClickOpen(res,time) {
       const next_url = `/customer/${ res.customer_id }/appointment/${ res.id }/new_record`
-      // customer_session_record.jsxで使われている
-      // var url_use_in_customer_session_record = `/trainers/${currentTrainer.id}/fitness/${record.fitness_id}`
       history.push({ pathname: next_url, state: { response: res, time: time }});
     }
 
@@ -141,13 +139,13 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
                       <StyledTableCell key={index} align="center" style={{fontSize: '0.9em',border: '1px solid', borderColor: '#DDDDDD'}}>
                         <Grid container spacing={3}>
                           <Grid item xs={3} sm={2}>
-                          {r.avatar_url? (
+                          {/* {r.avatar_url? (
                             <Avatar variant="rounded" style={{marginLeft: 'auto'}} src={r.avatar_url} className={classes.rounded}/>
                           ):(
                             <Avatar variant="rounded" style={{marginLeft: 'auto'}} className={classes.rounded}/>
-                          )}
+                          )} */}
                           </Grid>
-                          <Grid item xs={9} sm={9} style={{textAlign: 'left'}}>
+                          <Grid item xs={9} sm={9} style={{textAlign: 'left', fontSize: 10}}>
                             {r.first_name_kana} {r.last_name_kana}<br/>
                             {r.first_name_kanji} {r.last_name_kanji}様/
                             {r.fitness_name}
@@ -159,8 +157,10 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
                     if (r.name) {
                       return (
                         <StyledTableCell key={index} align="center" style={{fontSize: '0.9em', backgroundColor: '#FF97C2',border: '1px solid', borderColor: '#DDDDDD'}}>
-                          お名前:{r.name}<br/>
-                          メールアドレス:{r.email}
+                          <Link href={`/customer/my_page/${r.customer_id}`}>
+                            お名前:{r.name}<br/>
+                            メールアドレス:{r.email}
+                          </Link>
                         </StyledTableCell>
                       )
                     } else {

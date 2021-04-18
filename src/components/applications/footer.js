@@ -84,28 +84,28 @@ function Footer() {
               <AppBar position="static" style={{backgroundColor: 'white'}}>
                 <Toolbar>
                 <Grid container spacing={6} style={{textAlign: 'center'}}>
-                    <Grid item xs={3}>
+                    <Grid item xs={3} style={{paddingLeft: 5, paddingRight: 5}}>
                         <Link href={`/admin/company_id/${currentTrainer.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`}>
                             <HomeIcon style={{color: 'black', fontSize: '2.2em'}}/>
                             <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>本日の予約</div>
                         </Link>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={3} style={{paddingLeft: 5, paddingRight: 5}}>
                         <Link href="/trainers/customer_session_records">
                             <DehazeIcon  style={{color: 'black', fontSize: '2.2em'}} />
-                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>カルテ一覧</div>
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.2em'}}>カルテ一覧</div>
                         </Link>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={3} style={{paddingLeft: 5, paddingRight: 5}}>
                         <Link href="/customer_all">
                             <PortraitIcon  style={{color: 'black', fontSize: '2.2em'}} />
-                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>お客様一覧</div>
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.2em'}}>お客様一覧</div>
                         </Link>
                     </Grid>
-                    <Grid item xs={3} >
+                    <Grid item xs={3} style={{paddingLeft: 5, paddingRight: 5}}>
                         <Link href={`/trainer_page/${currentTrainer.id}`}>
                             <PermIdentityIcon  style={{color: 'black', fontSize: '2.2em'}} />
-                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>マイページ</div>
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.2em'}}>マイページ</div>
                         </Link>
                     </Grid>
                 </Grid>

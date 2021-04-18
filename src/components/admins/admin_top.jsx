@@ -21,7 +21,7 @@ export default function AdminTop(props){
                     const company_id = currentAdmin.company_id
                     return(
                         <>
-                            <Paper style={{textAlign: 'center', padding: 20}}>本日のスケジュール</Paper>
+                            <Paper style={{textAlign: 'center', padding: 10}}>本日のスケジュール</Paper>
                             <ScheduleCheck company_id={company_id} day={day_info}/>
                         </>
                     );
@@ -29,7 +29,7 @@ export default function AdminTop(props){
                     const company_id = currentTrainer.company_id
                     return (
                         <>
-                            <Paper style={{textAlign: 'center', padding: 20}}>本日のスケジュール</Paper>
+                            <Paper style={{textAlign: 'center', padding: 10}}>本日のスケジュール</Paper>
                             <ScheduleCheck company_id={company_id} day={day_info}/>
                         </>
                     );
