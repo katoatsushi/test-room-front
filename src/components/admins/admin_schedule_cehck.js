@@ -138,13 +138,6 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
                     return(<>
                       <StyledTableCell key={index} align="center" style={{fontSize: '0.9em',border: '1px solid', borderColor: '#DDDDDD'}}>
                         <Grid container spacing={3}>
-                          {/* <Grid item xs={3} sm={2}>
-                          {r.avatar_url? (
-                            <Avatar variant="rounded" style={{marginLeft: 'auto'}} src={r.avatar_url} className={classes.rounded}/>
-                          ):(
-                            <Avatar variant="rounded" style={{marginLeft: 'auto'}} className={classes.rounded}/>
-                          )}
-                          </Grid> */}
                           <Grid item xs={12} sm={12} style={{textAlign: 'left', fontSize: 10}}>
                             <Link href={`/customer/my_page/${r.customer_id}`}>
                               {r.first_name_kana} {r.last_name_kana}<br/>
