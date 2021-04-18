@@ -97,7 +97,8 @@ export default function TrainerLogIn() {
         dispatch(setCurrentTrainer(res.data.data));
         dispatch(setHeaders(res.headers));
         const message = "ログインに成功しました！"
-        enqueueSnackbar(message, { 
+        enqueueSnackbar(message, {
+            autoHideDuration: 1000,
             variant: 'success',
         });
         history.push('/trainers/customer_session_records');

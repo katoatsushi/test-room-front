@@ -208,7 +208,14 @@ function Header() {
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
-              >
+              > 
+              <span style={{fontSize: '0.6em'}}>
+
+              {currentCustomer.first_name_kanji? (<>
+                { currentCustomer.first_name_kanji }様
+              </>):(<></>)}
+
+              </span>
                 <AccountCircle style={{fontSize: '1.3em'}}/>
               </IconButton>
               <Menu
@@ -226,9 +233,7 @@ function Header() {
                 open={open}
                 onClose={handleClose}
               >
-                {/* <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/> */}
                 <MenuItem onClick={MoveToMyPage}>マイページ</MenuItem><hr/>
-                {/* <MenuItem onClick={handleClose}>プロフィールを編集する</MenuItem><hr/> */}
                 <MenuItem onClick={handleCustomerSignOut}>ログアウトする</MenuItem>
               </Menu>
             </div>
@@ -242,6 +247,11 @@ function Header() {
                     onClick={handleMenu}
                     color="inherit"
                   >
+                  <span style={{fontSize: '0.6em'}}>
+                  {currentTrainer.first_name_kanji? (<>
+                    { currentTrainer.first_name_kanji }トレーナー
+                  </>):(<></>)}
+                  </span>
                     <AssignmentIndIcon style={{fontSize: '1.3em'}}/>
                   </IconButton>
                   <Menu
@@ -259,12 +269,8 @@ function Header() {
                     open={open}
                     onClose={handleClose}
                   >
-                    {/* <MenuItem onClick={MoveToHome}>ホームへ</MenuItem><hr/> */}
-                    {/* <MenuItem onClick={MoveToCheckTodaySchedule}>本日の予約を確認する</MenuItem><hr/> */}
                     <MenuItem onClick={MoveToTrainerPage}>マイページへ</MenuItem><hr/>
                     <MenuItem onClick={handleTrainerSignOut}>ログアウトする</MenuItem>
-                    {/* <MenuItem onClick = {() => history.push(`/trainer/edit/me`)}>プロフィールの編集</MenuItem> */}
-                    
                   </Menu>
                 </div>
               </>
@@ -312,6 +318,7 @@ function Header() {
                     onClick={handleMenu}
                     color="inherit"
                   >
+                    <span style={{fontSize: '0.7em'}}>マスタ管理者としてログイン中</span>
                     <DashboardIcon style={{fontSize: '1.3em'}}/>
                   </IconButton>
                   <Menu

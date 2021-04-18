@@ -118,7 +118,8 @@ export default function AdminLogIn() {
         dispatch(setCurrentAdmin(res.data.data));
         dispatch(setHeaders(res.headers));
         const message = "ログインに成功しました！"
-        enqueueSnackbar(message, { 
+        enqueueSnackbar(message, {
+            autoHideDuration: 1000,
             variant: 'success',
         });
         history.push('/customer_all');

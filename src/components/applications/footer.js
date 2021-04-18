@@ -54,25 +54,25 @@ function Footer() {
               <AppBar position="static" style={{backgroundColor: 'white'}}>
                 <Toolbar>
                 <Grid container spacing={6} style={{textAlign: 'center'}}>
-                    {/* <Grid item xs={4}>
-                        <Link href="/">
-                            <HomeIcon style={{color: 'black', fontSize: '2.5em'}}/>
-                        </Link>
-                    </Grid> */}
                     {customerStatus?.paid? (
                         <Grid item xs={6}>
                             <Link href={`/customer/${currentCustomer.id}/calendar_new`}>
-                                <CalendarTodayIcon  style={{color: 'black', fontSize: '2.5em'}} />
+                                <CalendarTodayIcon  style={{color: 'black', fontSize: '2.3em'}} >
+                                    予約する
+                                </CalendarTodayIcon>
+                                <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>予約する</div>
                             </Link>
                         </Grid>
                     ):(
                         <Grid item xs={6}>
-                            <CalendarTodayIcon  style={{color: 'grey', fontSize: '2.5em'}} />
+                            <CalendarTodayIcon  style={{color: 'grey', fontSize: '2.3em'}} />
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>予約する</div>
                         </Grid>
                     )}
                     <Grid item xs={6} >
                         <Link href={`/customer/my_page/${currentCustomer.id}`}>
-                            <PermIdentityIcon  style={{color: 'black', fontSize: '2.5em'}} />
+                            <PermIdentityIcon  style={{color: 'black', fontSize: '2.3em'}} />
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>マイページ</div>
                         </Link>
                     </Grid>
                 </Grid>
@@ -86,22 +86,26 @@ function Footer() {
                 <Grid container spacing={6} style={{textAlign: 'center'}}>
                     <Grid item xs={3}>
                         <Link href={`/admin/company_id/${currentTrainer.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`}>
-                            <HomeIcon style={{color: 'black', fontSize: '2.5em'}}/>
+                            <HomeIcon style={{color: 'black', fontSize: '2.2em'}}/>
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>本日の予約</div>
                         </Link>
                     </Grid>
                     <Grid item xs={3}>
                         <Link href="/trainers/customer_session_records">
-                            <DehazeIcon  style={{color: 'black', fontSize: '2.5em'}} />
+                            <DehazeIcon  style={{color: 'black', fontSize: '2.2em'}} />
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>カルテ一覧</div>
                         </Link>
                     </Grid>
                     <Grid item xs={3}>
                         <Link href="/customer_all">
-                            <PortraitIcon  style={{color: 'black', fontSize: '2.5em'}} />
+                            <PortraitIcon  style={{color: 'black', fontSize: '2.2em'}} />
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>お客様一覧</div>
                         </Link>
                     </Grid>
                     <Grid item xs={3} >
                         <Link href={`/trainer_page/${currentTrainer.id}`}>
-                            <PermIdentityIcon  style={{color: 'black', fontSize: '2.5em'}} />
+                            <PermIdentityIcon  style={{color: 'black', fontSize: '2.2em'}} />
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>マイページ</div>
                         </Link>
                     </Grid>
                 </Grid>
@@ -116,23 +120,21 @@ function Footer() {
                     <Grid item xs={4}>
                         <Link href="/customer_all">
                             <PortraitIcon  style={{color: 'black', fontSize: '2.5em'}} />
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.6em'}}>お客様一覧</div>
                         </Link>
                     </Grid>
                     <Grid item xs={4}>
                         <Link href={`/admin/company_id/${currentAdmin.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`}>
                             <HomeIcon style={{color: 'black', fontSize: '2.5em'}}/>
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>本日の予約</div>
                         </Link>
                     </Grid>
                     <Grid item xs={4}>
                         <Link href="/admin_menues">
                             <AppsIcon style={{color: 'black', fontSize: '2.5em'}} />
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>管理者メニュー</div>
                         </Link>
                     </Grid>
-                    {/* <Grid item xs={3} >
-                        <Link href="/">
-                            <PermIdentityIcon  style={{color: 'black', fontSize: '2.5em'}} />
-                        </Link>
-                    </Grid> */}
                 </Grid>
                 </Toolbar>
               </AppBar>

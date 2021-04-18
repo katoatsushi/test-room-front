@@ -121,6 +121,7 @@ export default function LogIn() {
           }
           const message = "ログインに成功しました！"
           enqueueSnackbar(message, { 
+              autoHideDuration: 1000,
               variant: 'success',
           });
         })
@@ -135,10 +136,6 @@ export default function LogIn() {
             variant: 'error',
         });
         setLoading(false);
-        // setServerMessages({
-        //   severity: 'error',
-        //   alerts: err.response?.data.errors || [],
-        // });
       });
   };
 

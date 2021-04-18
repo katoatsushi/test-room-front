@@ -30,6 +30,7 @@ import errorMessages from '../../constants/errorMessages.json';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -91,6 +92,7 @@ export default function MasterAdminLogIn() {
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const handleSnackbarClick = () => {
       setSnackOpen(true);
@@ -115,10 +117,19 @@ export default function MasterAdminLogIn() {
         console.log("マスタ　管理者",{res})
         dispatch(setCurrentMasterAdmin(res.data.data));
         dispatch(setHeaders(res.headers));
-        history.push('/');
+        history.push('/master_admin');
+        const message = "ログインに成功しました！"
+        enqueueSnackbar(message, { 
+            autoHideDuration: 1000,
+            variant: 'success',
+        });
       })
       .catch((err) => {
         setLoading(false);
+        const message = err.response?.data.errors[0];
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
         console.log({err})
       });
   };
