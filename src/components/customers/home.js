@@ -19,6 +19,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { selectCurrentCustomer, selectCustomerHeaders, customerRemove, } from '../../slices/customer';
 import { useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
+import { setCustomerRecords, customerRecordRemove, getCustomerRecords } from '../../slices/customer_record';
+import Evaluation from './evaluation'
 
 const useStyles = makeStyles({
   root: {
@@ -132,6 +134,8 @@ export default function CustomerHome(props) {
     const url = `/customer_page/${id}`
     const [apos, setApos] = useState([]);
     const classes = useStyles();
+    const currentCustomer = useSelector(selectCurrentCustomer);
+    const customerRecords = useSelector(getCustomerRecords);
 
     useEffect(()=>{
         axios.get(url)
@@ -181,6 +185,13 @@ export default function CustomerHome(props) {
   }
   return (
       <>
+      {currentCustomer? (
+        <>
+        {customerRecords? (
+          <Evaluation/>
+        ):(<></>)}
+        </>
+      ):(<></>)}
         { SliceApos() }
       </>
   );

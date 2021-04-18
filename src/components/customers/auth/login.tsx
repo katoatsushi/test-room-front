@@ -112,10 +112,12 @@ export default function LogIn() {
           dispatch(setCurrentCustomerInterests(response.data.customer_interests));
           if(response.data.evaluations.length){
             dispatch(setCustomerRecords(response.data.evaluations));
-            history.push(`/customer_evaluation_data/${res.data.data.id}`);
+            // history.push(`/customer_evaluation_data/${res.data.data.id}`);
+            history.push(`/customer/my_page/${customer_id}`);
           }else{
-            console.log("現在返すべきトレーナーの評価はありません")
-             history.push(`/customer/my_page/${customer_id}`);
+            // console.log("現在返すべきトレーナーの評価はありません")
+            history.push(`/customer/my_page/${customer_id}`);
+            // history.push(`/customer_evaluation_data/${res.data.data.id}`);
           }
           const message = "ログインに成功しました！"
           enqueueSnackbar(message, { 

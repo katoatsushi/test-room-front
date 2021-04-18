@@ -27,8 +27,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     borderColor: '#4DA7F0',
     textAlign: 'center',
-    // display: 'flex',
-    // alignItems: 'center',
   },
   checked: {
     marginRight: theme.spacing(1),
@@ -55,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RecordDialog({session}) {
+    console.log({session})
     const [open, setOpen] = useState(true);
     const [value, setValue] = React.useState(0);
     const [food, setFood] = React.useState(0);
@@ -73,6 +72,19 @@ function RecordDialog({session}) {
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
+
+    function setDate(obj){
+        const date = new Date(`${obj}`)
+        var min = null
+        var hour = null
+        const day = `${date.getFullYear()}` + "/" + `${date.getMonth() + 1}`+ "/" + `${date.getDate()} `
+        date.getMinutes()==0?  min = "00": min = String(date.getMinutes())
+        min.length == 1? min = "0" + min: min
+        String(date.getHours()).length == 1? hour = "0" + String(date.getHours()): hour = String(date.getHours())
+        const newDate = day + `${hour}:` + `${min}~`
+        return newDate
+    }
+
     function handleSubmit(e) {
         console.log({e})
         if (!loading) {
@@ -125,15 +137,18 @@ function RecordDialog({session}) {
 
                 <Accordion>
                     <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
                     >
-                    <Typography >セッション詳細</Typography>
+                        <Typography >セッション詳細</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                     <Typography style={{textAlign: 'left', fontSize: '0.8em'}}>
-                        { show_menues }
+                        {setDate(session.apo_time)}
+                        { show_menues }<br/>
+                        【コメント】<br/>
+                        { session.detail }
                     </Typography>
                     </AccordionDetails>
                 </Accordion>

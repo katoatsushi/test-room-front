@@ -31,7 +31,9 @@ const SelectDate = (props) => {
                 />
                 {
                     (() => {
-                        if (value > today)
+                        // if (value > today)
+                        // eslint-disable-next-line no-constant-condition
+                        if (true)
                             return (
                             <Button 
                                 variant="contained" 

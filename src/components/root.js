@@ -24,10 +24,6 @@ export default function Root() {
       {currentTrainer? (
         <ShiftNew year={today.getFullYear()} month={today.getMonth()} />
       ):(<></>)}
-      {/* ルームプラスに入っているお客様 */}
-      {/* {customerStatus?.room_plus? (
-        <RoomPlusBox/>
-      ):(<></>)} */}
 
       {currentCustomer? (
         <>
