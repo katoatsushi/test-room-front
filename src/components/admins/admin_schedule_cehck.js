@@ -146,9 +146,11 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
                           )}
                           </Grid> */}
                           <Grid item xs={12} sm={12} style={{textAlign: 'left', fontSize: 10}}>
-                            {r.first_name_kana} {r.last_name_kana}<br/>
-                            {r.first_name_kanji} {r.last_name_kanji}様/
-                            {r.fitness_name}
+                            <Link href={`/customer/my_page/${r.customer_id}`}>
+                              {r.first_name_kana} {r.last_name_kana}<br/>
+                              {r.first_name_kanji} {r.last_name_kanji}様<br/>
+                              {r.fitness_name}
+                            </Link>
                           </Grid>
                         </Grid>
                       </StyledTableCell>
@@ -157,10 +159,8 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
                     if (r.name) {
                       return (
                         <StyledTableCell key={index} align="center" style={{fontSize: '0.9em', backgroundColor: '#FF97C2',border: '1px solid', borderColor: '#DDDDDD'}}>
-                          <Link href={`/customer/my_page/${r.customer_id}`}>
                             お名前:{r.name}<br/>
                             メールアドレス:{r.email}
-                          </Link>
                         </StyledTableCell>
                       )
                     } else {
