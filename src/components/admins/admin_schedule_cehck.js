@@ -138,14 +138,14 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
                     return(<>
                       <StyledTableCell key={index} align="center" style={{fontSize: '0.9em',border: '1px solid', borderColor: '#DDDDDD'}}>
                         <Grid container spacing={3}>
-                          <Grid item xs={3} sm={2}>
-                          {/* {r.avatar_url? (
+                          {/* <Grid item xs={3} sm={2}>
+                          {r.avatar_url? (
                             <Avatar variant="rounded" style={{marginLeft: 'auto'}} src={r.avatar_url} className={classes.rounded}/>
                           ):(
                             <Avatar variant="rounded" style={{marginLeft: 'auto'}} className={classes.rounded}/>
-                          )} */}
-                          </Grid>
-                          <Grid item xs={9} sm={9} style={{textAlign: 'left', fontSize: 10}}>
+                          )}
+                          </Grid> */}
+                          <Grid item xs={12} sm={12} style={{textAlign: 'left', fontSize: 10}}>
                             {r.first_name_kana} {r.last_name_kana}<br/>
                             {r.first_name_kanji} {r.last_name_kanji}様/
                             {r.fitness_name}
