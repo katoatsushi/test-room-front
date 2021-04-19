@@ -30,7 +30,6 @@ function InputTimesWeight({data, setSubmitData, submitData}){
                 return sd
             }
         });
-        // eslint-disable-next-line no-unused-vars
         setSubmitData((prev) => changeTime)
     }
 
@@ -42,7 +41,6 @@ function InputTimesWeight({data, setSubmitData, submitData}){
                 return sd
             }
         });
-        // eslint-disable-next-line no-unused-vars
         setSubmitData((prev) => changeWeight)
     }
 
@@ -56,12 +54,12 @@ function InputTimesWeight({data, setSubmitData, submitData}){
             </Grid>
             <Grid item xs={2}>
             {data.data.set? (<>
-                <input type="number" autoFocus required style={{width: '60%'}} onChange={handleTimeChange}/><span style={{fontSize: 5}}>回</span>
+                <input type="number" required style={{width: '60%'}} onChange={handleTimeChange}/><span style={{fontSize: 5}}>回</span>
             </>):(<></>)}
             </Grid>
             <Grid item xs={2}>
             {data.data.weight? (<>
-                <input type="number" autoFocus required style={{width: '60%'}} onChange={handleWeightChange}/><span style={{fontSize: 5}}>kg</span>
+                <input type="number" required style={{width: '60%'}} onChange={handleWeightChange}/><span style={{fontSize: 5}}>kg</span>
             </>):(<></>)}
             </Grid>
         </Grid>
@@ -79,14 +77,6 @@ export default function SetTimesWeight(props) {
 
     console.log({props})
     useEffect(()=>{
-        // if (!props.location.data) {
-        //     // トレーナーのカルテ一覧画面に以降
-        //     const message = "セッションが切れましたため,もう一度カルテを選んでください。"
-        //     enqueueSnackbar(message, { 
-        //         variant: 'error',
-        //     });
-        //     history.push(`/trainers/customer_session_records`)
-        // }
         if (props.location.data.length == 0) {
             setDataCheck(false)
         }
@@ -146,7 +136,6 @@ export default function SetTimesWeight(props) {
                 multiline
                 style={{width: '100%', color: '#4DA7F0', marginTop: 10}}
                 rows={4}
-                // defaultValue="Default Value"
                 onChange={handleMessageChange}
                 variant="outlined"
             />

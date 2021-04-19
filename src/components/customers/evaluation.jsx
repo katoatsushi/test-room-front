@@ -128,9 +128,9 @@ function RecordDialog({session}) {
             <Card className={ classes.root } variant="outlined">
             <CardContent>
                 <Typography color="textSecondary" gutterBottom style={{textAlign: 'center'}}>
-                    トレーナーからのフィードバック<br/>
-                    <div style={{textAlign: 'left'}}>{ session.month }/{ session.day }
-                     担当: トレーナー名
+                    {/* トレーナーからのフィードバック<br/> */}
+                    <div style={{textAlign: 'left', fontSize: 14}}>
+                     {session.trainer.first_name_kanji} {session.trainer.last_name_kanji}トレーナーからのフィードバック<br/>
                     </div>
                 </Typography>
                 <Typography color="textSecondary" gutterBottom >
@@ -141,7 +141,7 @@ function RecordDialog({session}) {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
-                        <Typography >セッション詳細</Typography>
+                        <Typography >【{ session.month }/{ session.day }】のセッション詳細</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                     <Typography style={{textAlign: 'left', fontSize: '0.8em'}}>
@@ -214,6 +214,7 @@ function RecordDialog({session}) {
 export default function Evaluation(props) {
     const classes = useStyles();
     const customerRecords = useSelector(getCustomerRecords);
+    console.log("確認だよ",{customerRecords})
     function CustomerRecordsDialog() {
         if (customerRecords){
             if(customerRecords.length){

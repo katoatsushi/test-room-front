@@ -66,7 +66,7 @@ function BarChart({avaTrainer}) {
 
 
 export default function MyEvaluation(props) {
-    const url = `/trainer/get/my_evaluation`
+    const url = `/trainer/get/my_evaluation/${props.props.match.params.id}`
     const currentTrainer = useSelector(selectCurrentTrainer);
     const trainerHeaders = useSelector(selectTrainerHeaders);
     const [myEvaluation, setMyEvaluation] = React.useState();
@@ -74,8 +74,7 @@ export default function MyEvaluation(props) {
     console.log({props})
     console.log(props.props.match.params.id)
     useEffect(()=>{
-        axios.get(url, trainerHeaders)
-        // axios.get(url)
+        axios.get(url)
         .then(function(res) {
             console.log({res})
             setMyEvaluation(res.data.data)
@@ -83,7 +82,6 @@ export default function MyEvaluation(props) {
         })
         .catch(function(error) {
             console.log({error})
-            // setMyEvaluation()
         });
         
     },[])

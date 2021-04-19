@@ -49,9 +49,7 @@ export interface ICustomerStatus {
   dozen_sessions: boolean;
   numbers_of_contractnt: boolean;
 }
-// export interface ICustomerInterests {
-//   interests: IMyInterests[];
-// }
+
 export interface IMyInterests {
   id: number;
   name: string;
@@ -111,10 +109,7 @@ export interface ISignInSuccessAdminResponse {
   data: IAdmin;
   message: string;
 }
-// export interface ISignInSuccessMasterAdminResponse {
-//   data: IMasterAdmin;
-//   message: string;
-// }
+
 export interface ISignInSuccessTrainerResponse {
   data: ITrainer;
   message: string;
@@ -131,14 +126,11 @@ export interface ICustomerRecordResponse {
     data: ICustomerRecord[];
     message: string;
 }
-// export interface ICustomerRecords {
-//     data: ICustomerRecord[];
-//     message: string;
-// }
 
 export interface ICustomerRecord {
   id: number;
   trainer_id: number;
+  trainer:  ITrainer;
   apo_time: string;
   year: string;
   month: string;

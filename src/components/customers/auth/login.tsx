@@ -79,7 +79,6 @@ export default function LogIn() {
     const dispatch = useDispatch();
     const history = useHistory();
     const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
-    const [serverMessages, setServerMessages] = useState<IServerMessages>();
     const customerRecords = useSelector(getCustomerRecords);
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
@@ -112,12 +111,10 @@ export default function LogIn() {
           dispatch(setCurrentCustomerInterests(response.data.customer_interests));
           if(response.data.evaluations.length){
             dispatch(setCustomerRecords(response.data.evaluations));
-            // history.push(`/customer_evaluation_data/${res.data.data.id}`);
             history.push(`/customer/my_page/${customer_id}`);
           }else{
             // console.log("現在返すべきトレーナーの評価はありません")
             history.push(`/customer/my_page/${customer_id}`);
-            // history.push(`/customer_evaluation_data/${res.data.data.id}`);
           }
           const message = "ログインに成功しました！"
           enqueueSnackbar(message, { 
