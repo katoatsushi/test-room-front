@@ -71,6 +71,7 @@ export default function SessionRecordList() {
     const [thisStoreRecord, setThisStoreRecord] = React.useState([]);
     const [records, setRecords] = React.useState([]);
     const [radioStatus, setRadioStatus] = React.useState("");
+    const [selectTag, setSelectTag] = React.useState("");
     const [currentRecords, setCurrentRecords] = React.useState();
     const [change, setChange] = React.useState(false);
     const history = useHistory();
@@ -83,7 +84,13 @@ export default function SessionRecordList() {
         axios.get(url, trainerHeaders)
         .then(function(res) {
             setRecords(res.data.data);
-            setCurrentRecords(res.data.intial_data)
+            // 初期のデータを”全ての店舗"の"all"にする
+            const selectRecord = res.data.data.filter((record, index) => {
+                return record.store.store_name == "全ての店舗"
+            });
+            setCurrentRecords(selectRecord[0].all_data)
+            setSelectTag("全ての店舗")
+            setRadioStatus("all")
             if (thisStoreRecord.length == 0){
                 const message = "全ての店舗の予約状況を表示しています"
                 enqueueSnackbar(message, {
@@ -104,6 +111,10 @@ export default function SessionRecordList() {
     },[])
 
     function handleStoreChange(e) {
+
+        if(e.target.value){
+            setSelectTag(e.target.value)
+        }
         setChange(true)
         setThisStoreRecord(e.target.value)
         if (radioStatus == ""){
@@ -113,16 +124,28 @@ export default function SessionRecordList() {
                 variant: 'warning',
             });
         }
-        if (radioStatus){
+        const selectRecord = records.filter((record, index) => {
+            return record.store.store_name == e.target.value
+        });
+    
+        if (selectRecord.length != 0 && radioStatus){
             if(radioStatus == "not_finish"){
-                setCurrentRecords(e.target.value.not_finish_data)
+                setCurrentRecords(selectRecord[0].not_finish_data)
             }else if(radioStatus == "finish"){
-                setCurrentRecords(e.target.value.finish_data)
+                setCurrentRecords(selectRecord[0].finish_data)
             }else if(radioStatus == "all"){
-                setCurrentRecords(e.target.value.all_data)
+                setCurrentRecords(selectRecord[0].all_data)
+                console.log("オールデータが呼ばれたよ")
             }
         }else{
-            setCurrentRecords(e.target.value.all_data)
+            setThisStoreRecord(e.target.value)
+            if (radioStatus == ""){
+                const message = "ステータスを選択してください"
+                enqueueSnackbar(message, { 
+                    autoHideDuration: 1500,
+                    variant: 'warning',
+                });
+            }
         }
     }
 
@@ -135,37 +158,37 @@ export default function SessionRecordList() {
     }
     function handleRadioChange(e){
         setChange(true)
-        if (thisStoreRecord.length == 0){
-            const message = "店舗を選択して下さい"
-            enqueueSnackbar(message, { 
-                autoHideDuration: 1500,
-                variant: 'warning',
-            });
+        const selectRecord = records.filter((record, index) => {
+            return record.store.store_name == selectTag
+        });
+        if (selectRecord.length != 0 && e.target.value){
+            if(e.target.value == "not_finish"){
+                setCurrentRecords(selectRecord[0].not_finish_data)
+            }else if(e.target.value == "finish"){
+                setCurrentRecords(selectRecord[0].finish_data)
+            }else if(e.target.value == "all"){
+                setCurrentRecords(selectRecord[0].all_data)
+                console.log("オールデータが呼ばれたよ")
+            }
+        }else{
+            console.log("店舗を選択してください")
         }
-        if(e.target.value == "not_finish"){
-            setCurrentRecords(thisStoreRecord.not_finish_data)
-        }else if(e.target.value == "finish"){
-            setCurrentRecords(thisStoreRecord.finish_data)
-        }else if(e.target.value == "all"){
-            setCurrentRecords(thisStoreRecord.all_data)
-        }
+
         setRadioStatus(e.target.value)
     }
     const selectStore = records?  
        records.map((r, index) =>
-        <MenuItem key={index} value={r} onChange={handleStoreChange}>{r.store.store_name}</MenuItem>
+            <MenuItem key={index} value={r.store.store_name} onChange={handleStoreChange}>{r.store.store_name}</MenuItem>
         )
     : 
         <MenuItem />
-    
-    function SeeLog(log){
-        console.log({log})
-    }
+
+
     return(
         <>
         <FormControl component="fieldset" style={{margin: '2%',padding: 10, width: '90%' , backgroundColor: '#EEEEEE',border: 1, borderColor: '#888888'}}>
             ステータスで絞り込む<br/>
-            <RadioGroup row aria-label="position" name="position" defaultValue="top" onChange={handleRadioChange}>
+            <RadioGroup row aria-label="position" name="position" defaultValue="top" value={radioStatus} onChange={handleRadioChange}>
                     &nbsp;
                     <FormControlLabel value="not_finish" control={<Radio color="primary" style={{backgroundColor: 'white', padding: 0}} />} label="未発行" />&nbsp;
                     <FormControlLabel value="finish" control={<Radio color="primary" style={{backgroundColor: 'white', padding: 0}}/>} label="発行済み" />&nbsp;
@@ -175,6 +198,7 @@ export default function SessionRecordList() {
             <FormControl className={classes.margin}>
                  店舗を選択する<br/>
                 <Select
+                    value={selectTag}
                     labelId="demo-customized-select-label"
                     id="demo-customized-select"
                     onChange={handleStoreChange}
@@ -183,6 +207,18 @@ export default function SessionRecordList() {
                 {selectStore}
                 </Select>
             </FormControl>
+            {/* <FormControl className={classes.formControl} style={{backgroundColor: 'white', padding: 10}}>
+                <Select
+                value={selectTag}
+                onChange={handleStoreChange}
+                displayEmpty
+                className={classes.selectEmpty}
+                inputProps={{ 'aria-label': 'Without label' }}
+                >
+                {selectStore}
+                </Select>
+            </FormControl> */}
+
         </FormControl>
 
         <div style={{margin: 5}}>
@@ -229,11 +265,12 @@ export default function SessionRecordList() {
                         </Grid>
                         <Grid item xs={3} style={{marginTop: 'auto',marginBottom: 'auto'}}>
                              <span style={{fontSize: 12}}>
-                             {!change? (<>
-                                {record.store_name}/
-                             </>):<></>}
+                             {selectTag=="全ての店舗"?(<>
+                                {record.store_name}/{record.fitness_name}
+                             </>):(<>
                                 {record.fitness_name}
-                             </span>
+                             </>)}
+                              </span>
                         </Grid>
                         {record.finish==1?(
                             <Grid item xs={3} style={{paddingLeft: 0, marginTop: 'auto',marginBottom: 'auto'}}>
