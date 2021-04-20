@@ -91,18 +91,18 @@ export default function SessionRecordList() {
             setCurrentRecords(selectRecord[0].all_data)
             setSelectTag("全ての店舗")
             setRadioStatus("all")
-            if (thisStoreRecord.length == 0){
-                const message = "全ての店舗の予約状況を表示しています"
-                enqueueSnackbar(message, {
-                    variant: 'success',
-                    autoHideDuration: 1000,
-                    anchorOrigin: {
-                        vertical: 'top',
-                        horizontal: 'center',
-                    },
-                    TransitionComponent: Grow,
-                });
-            }
+            // if (thisStoreRecord.length == 0){
+            const message = "全ての店舗の予約状況を表示しています"
+            enqueueSnackbar(message, {
+                variant: 'success',
+                autoHideDuration: 1000,
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'center',
+                },
+                TransitionComponent: Grow,
+            });
+            // }
         })
         .catch(function(error) {
             console.log({error})
@@ -135,7 +135,6 @@ export default function SessionRecordList() {
                 setCurrentRecords(selectRecord[0].finish_data)
             }else if(radioStatus == "all"){
                 setCurrentRecords(selectRecord[0].all_data)
-                console.log("オールデータが呼ばれたよ")
             }
         }else{
             setThisStoreRecord(e.target.value)
@@ -168,7 +167,6 @@ export default function SessionRecordList() {
                 setCurrentRecords(selectRecord[0].finish_data)
             }else if(e.target.value == "all"){
                 setCurrentRecords(selectRecord[0].all_data)
-                console.log("オールデータが呼ばれたよ")
             }
         }else{
             console.log("店舗を選択してください")

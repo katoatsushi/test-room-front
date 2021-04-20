@@ -292,7 +292,15 @@ export default function CustomerMyPage(props) {
           <Grid item xs={4} style={{textAlign: 'center'}}>
               <span className="customer_my_page_tag">過去のカルテ数</span><br/>
               <span style={{fontSize: '2em'}}>{recordNum}</span><br/>
-            {
+              <Chip
+                size="small"
+                label="全て"
+                clickable
+                // eslint-disable-next-line react/prop-types
+                onClick={() => history.push(`/customer_records/${props.match.params.id}`)}
+                style={{backgroundColor: '#4DA7F0', fontWeight: 700, color: 'white', paddingLeft: 20,paddingRight: 20}}
+              />
+            {/* {
                 (() => {
                     // eslint-disable-next-line react/prop-types
                     if (currentCustomer && currentCustomer.id == props.match.params.id) {
@@ -316,7 +324,7 @@ export default function CustomerMyPage(props) {
                         );
                     }
                 })()
-            }
+            } */}
           </Grid>
           <Grid item xs={4} style={{textAlign: 'center'}}>
           {currentCustomer? (<>
