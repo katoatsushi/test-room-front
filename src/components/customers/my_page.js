@@ -66,7 +66,7 @@ export default function CustomerMyPage(props) {
   const currentCustomerInfos = useSelector(selectCurrentCustomerInfos);
   var currentCustomerInterests = useSelector(selectCurrentCustomerInterests);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
+  
   // 既存の興味のある分野のIDだけそ作成
   let interests_array = []
   if (currentCustomerInterests){
@@ -86,6 +86,7 @@ export default function CustomerMyPage(props) {
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const customerStatus = useSelector(selectCurrentCustomerStatus);
+  
   const buttonClassname = clsx({
     [classes.buttonSuccess]: success,
   });
@@ -293,29 +294,21 @@ export default function CustomerMyPage(props) {
         <Grid container  style={{paddingTop: 5}}>
           <Grid item xs={2}/>
           <Grid item xs={4} style={{textAlign: 'center'}}>
-              <span className="customer_my_page_tag">過去のカルテ数</span><br/>
+              <span className="customer_my_page_tag">今月の終了カルテ数</span><br/>
               <span style={{fontSize: '2em'}}>{recordNum}</span><br/>
-              <Chip
-                size="small"
-                label="全て"
-                clickable
-                // eslint-disable-next-line react/prop-types
-                onClick={() => history.push(`/customer_records/${props.match.params.id}`)}
-                style={{backgroundColor: '#4DA7F0', fontWeight: 700, color: 'white', paddingLeft: 20,paddingRight: 20}}
-              />
-            {/* {
+            {
                 (() => {
                     // eslint-disable-next-line react/prop-types
-                    if (currentCustomer && currentCustomer.id == props.match.params.id) {
+                    if ((currentCustomer && currentCustomer.id == props.match.params.id) || currentAdmin || currentTrainer) {
                         return(
-                          <Chip
-                            size="small"
-                            label="全て"
-                            clickable
-                            // eslint-disable-next-line react/prop-types
-                            onClick={() => history.push(`/customer_records/${props.match.params.id}`)}
-                            style={{backgroundColor: '#4DA7F0', fontWeight: 700, color: 'white', paddingLeft: 20,paddingRight: 20}}
-                          />
+                        <Chip
+                          size="small"
+                          label="全て"
+                          clickable
+                          // eslint-disable-next-line react/prop-types
+                          onClick={() => history.push(`/customer_records/${props.match.params.id}`)}
+                          style={{backgroundColor: '#4DA7F0', fontWeight: 700, color: 'white', paddingLeft: 20,paddingRight: 20}}
+                        />
                         );
                     } else {
                         return (
@@ -327,21 +320,25 @@ export default function CustomerMyPage(props) {
                         );
                     }
                 })()
-            } */}
+            }
           </Grid>
           <Grid item xs={4} style={{textAlign: 'center'}}>
           {currentCustomer? (<>
-              <span className="customer_my_page_tag">予約残り</span><br/>
-              <span style={{fontSize: '2em'}}>{apoNum}</span>
+              <span className="customer_my_page_tag">予約可能数</span><br/>
+              <span style={{fontSize: '2em'}}>
+                {customerStatus? (<>
+                  { customerStatus.numbers_of_contractnt - apoNum - recordNum }
+                 </>):<></>}
+              </span>
               <span style={{fontSize: '1.2em'}}>/
                 {customerStatus? (<>
-                  { customerStatus.numbers_of_contractnt - apoFinNum}
+                  { customerStatus.numbers_of_contractnt }
                  </>):<></>}
             </span><br/>
           </>):<></>}
             {
                 (() => {
-                    if (currentCustomer && currentCustomer.id == props.match.params.id) {
+                     if ((currentCustomer && currentCustomer.id == props.match.params.id) || currentAdmin || currentTrainer) {
                         return(<>
                           {customerStatus?.paid? (
                               <Chip
