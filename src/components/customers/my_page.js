@@ -81,6 +81,7 @@ export default function CustomerMyPage(props) {
   const [thisCustomerInfo, setThisCustomerInfo] = useState({});
   const [recordNum, setRecordNum] = useState(0);
   const [apoNum, setApoNum] = useState(0);
+  const [apoFinNum, setApoFinNum] = useState(0);
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -126,6 +127,8 @@ export default function CustomerMyPage(props) {
       setThisCustomer(res.data.customer);
       setThisCustomerInfo(res.data.customer_info)
       setApoNum(res.data.appo_count)
+      setApoFinNum(res.data.session_count)
+      console.log({session_count: res.data.session_count})
     })
     .catch(function(error) {
       console.log({error})
@@ -332,7 +335,7 @@ export default function CustomerMyPage(props) {
               <span style={{fontSize: '2em'}}>{apoNum}</span>
               <span style={{fontSize: '1.2em'}}>/
                 {customerStatus? (<>
-                  { customerStatus.numbers_of_contractnt }
+                  { customerStatus.numbers_of_contractnt - apoFinNum}
                  </>):<></>}
             </span><br/>
           </>):<></>}
