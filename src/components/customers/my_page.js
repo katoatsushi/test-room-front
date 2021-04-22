@@ -324,7 +324,7 @@ export default function CustomerMyPage(props) {
           </Grid>
           <Grid item xs={4} style={{textAlign: 'center'}}>
           {currentCustomer? (<>
-              <span className="customer_my_page_tag">予約可能数</span><br/>
+              <span className="customer_my_page_tag">残り予約可能数</span><br/>
               <span style={{fontSize: '2em'}}>
                 {customerStatus? (<>
                   { customerStatus.numbers_of_contractnt - apoNum - recordNum }
