@@ -67,8 +67,8 @@ function BarChart({avaTrainer}) {
 
 export default function MyEvaluation(props) {
     const url = `/trainer/get/my_evaluation/${props.props.match.params.id}`
-    const currentTrainer = useSelector(selectCurrentTrainer);
-    const trainerHeaders = useSelector(selectTrainerHeaders);
+    // const currentTrainer = useSelector(selectCurrentTrainer);
+    // const trainerHeaders = useSelector(selectTrainerHeaders);
     const [myEvaluation, setMyEvaluation] = React.useState();
 
     console.log({props})

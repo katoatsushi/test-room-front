@@ -99,8 +99,6 @@ export default function TrainerMyPage(props) {
                       // <AccountCircleIcon style={{fontSize: '3.2em', color: 'grey'}} onClick={handleClickAvatarOpen}/>
                     )
                     }
-                    {/* <AccountCircleIcon style={{fontSize: '3.2em', color: 'grey'}} onClick={handleClickAvatarOpen}/> */}
-                    {/* <div style={{fontSize: '0.5em'}} onClick={handleClickAvatarOpen}>プロフィールを変更</div> */}
                     </>
                   );
                 }
@@ -133,12 +131,8 @@ export default function TrainerMyPage(props) {
         </Grid>
         <Grid item xs={1}/>
         <Grid item xs={7} style={{paddingTop: 10}}>
-          <div style={{fontSize: '1.3em', fontWeight: '700'}}>
-            {/* {currentCustomer.first_name}{currentCustomer.last_name} */}
-            {/* { thisCustomer.first_name }{ thisCustomer.last_name } */}
-          </div>
+          <div style={{fontSize: '1.3em', fontWeight: '700'}}></div>
           <div style={{fontSize: '1.0em', color: '#959393', fontWeight: 600}}>
-
           男性/20歳<br/>
           2020年２月13日 入会<br/>
           </div>

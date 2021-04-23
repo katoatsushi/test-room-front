@@ -188,7 +188,6 @@ export default function AllCustomers(){
 
       axios.get(trainer_url, trainerHeaders)
         .then(function(res) {
-          console.log({res})
           setAllCustomers(res.data.all_customers);
         })
         .catch(function(error) {

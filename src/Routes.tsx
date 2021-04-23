@@ -19,6 +19,7 @@ import TrainerPasswordEdit from './components/trainers/auth/password_edit'
 import MasterAdminLogIn from './components/master_admins/login';
 import AdminTop from './components/admins/admin_top';
 import AdminLogIn from  './components/admins/login';
+import AllTrainers from './components/admins/trainer_all';
 import CreateTrainer from './components/admins/create_trainer';
 import MasterAdminTop from './components/master_admins/master_admin_top';
 import CreateAdmin from './components/master_admins/create_admin';
@@ -102,6 +103,7 @@ const Routes: React.FC = () => {
         <Route exact path="/admin/log_in" component={ AdminLogIn } /> 
         {/* admin */}
         <Route exact path="/record/:id" component={ ShowRecord } />
+        <Route exact path="/admin/trainers/all" component={ AllTrainers } />
         <Route exact path="/trainer/edit/me" component={ EditMyProfile } />
         <Route exact path="/admin/company_id/:company_id/year/:year/month/:month/day/:day" component={ AdminTop } />
         <Route exact path="/trainer/sign_up" component={ CreateTrainer } /> 
