@@ -110,10 +110,6 @@ export default function TrainerLogIn() {
         enqueueSnackbar(message, { 
             variant: 'error',
         });
-        // setServerMessages({
-        //   severity: 'error',
-        //   alerts: err.response?.data.errors || [],
-        // });
       });
   };
 
