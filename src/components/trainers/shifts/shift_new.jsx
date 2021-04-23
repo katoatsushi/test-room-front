@@ -55,21 +55,22 @@ export default function ShiftNew(props){
             history.push(`/trainer/${currentTrainer.id}`);
         })
         .catch(function (response) {
-            console.log('失敗',{response})
             console.log(response.data);
         })
     }
     return(
         <>
-        <div style={{textAlign: 'center', fontSize: '1.7em'}}>{last_day.getMonth() + 1}月シフト希望提出</div>
+        <div style={{textAlign: 'center', fontSize: '1.7em'}}>
+            {last_day.getMonth() + 1}月シフト希望提出
+        </div>
         <div style={{overflow: 'scroll', height: 400,backgroundColor: 'white', marginTop: 15}}>
-        <Grid container spacing={3}>
-           {dateInits.items.map((date, index) => (
-                <>
-                    <FormattedInputs key={index} setButton={setButton} date={date} shift={shift} setShift={setShift}/>
-                </>
-            ))}
-        </Grid>
+            <Grid container spacing={3}>
+            {dateInits.items.map((date, index) => (
+                    <>
+                        <FormattedInputs key={index} setButton={setButton} date={date} shift={shift} setShift={setShift}/>
+                    </>
+                ))}
+            </Grid>
         </div>
         <div style={{marginBottom: 20}}></div>
 

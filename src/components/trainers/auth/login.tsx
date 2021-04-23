@@ -105,14 +105,15 @@ export default function TrainerLogIn() {
       })
       .catch((err: AxiosError<IErrorResponse>) => {
         setLoading(false);
+        console.log({err})
         const message = err.response?.data.errors[0];
         enqueueSnackbar(message, { 
             variant: 'error',
         });
-        setServerMessages({
-          severity: 'error',
-          alerts: err.response?.data.errors || [],
-        });
+        // setServerMessages({
+        //   severity: 'error',
+        //   alerts: err.response?.data.errors || [],
+        // });
       });
   };
 

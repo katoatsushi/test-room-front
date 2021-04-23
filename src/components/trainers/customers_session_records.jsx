@@ -88,9 +88,9 @@ export default function SessionRecordList() {
             const selectRecord = res.data.data.filter((record, index) => {
                 return record.store.store_name == "全ての店舗"
             });
-            setCurrentRecords(selectRecord[0].all_data)
+            setCurrentRecords(selectRecord[0].not_finish_data)
             setSelectTag("全ての店舗")
-            setRadioStatus("all")
+            setRadioStatus("not_finish")
             // if (thisStoreRecord.length == 0){
             const message = "全ての店舗の予約状況を表示しています"
             enqueueSnackbar(message, {
