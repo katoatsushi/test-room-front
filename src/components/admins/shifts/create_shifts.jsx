@@ -116,25 +116,6 @@ export default function CreateTableCellEdit({data, setSubmitData, stores, submit
         }
         console.log({data},{submitData},{exist})
         setOpen(false);
-        // data.shifts = {start: start, finish: finish, trainer_id: data.trainer_id, store_id: selectStore.id, store: selectStore}
-        // const updateTrainerShifts = trainerShifts.filter((shifts, index) => {
-        //     if (shifts.trainer.id == data.trainer_id){
-        //         const updateShiftData = shifts.data.filter((shiftd, index) => {
-        //             if(shiftd.day == data.day){
-        //                 // ここは変更後のデータを格納
-        //                 return data
-        //             }else{
-        //                 return shiftd
-        //             }
-        //         });
-        //         return {trainer: shifts.trainer, data: updateShiftData}
-        //     }else{
-        //         return shifts
-        //     }
-        // });
-        // // 大元のステートTrainerShiftsを変更部分を更新
-        // setTrainerShifts(updateTrainerShifts)
-        // シフトの変更をここで検出
         setShiftEdit(true)
     }
 
@@ -248,8 +229,6 @@ export default function CreateTableCellEdit({data, setSubmitData, stores, submit
         </Dialog>
     </>):(<>
         <TableCell onClick={handleEditChange} className="cell_box" style={{backgroundColor: 'white', marginTop: 'auto', marginBottom: 'auto', paddingLeft: 0, paddingRight: 0}}>
-            {/* <TimeCell checked={checked} handleChange={handleChange} start={start} finish={finish} 
-                    handleStartChange={handleStartChange} handleFinishChange={handleFinishChange} /> */}
             <Checkbox
                 checked={checked}
                 onChange={handleChange}
@@ -260,26 +239,26 @@ export default function CreateTableCellEdit({data, setSubmitData, stores, submit
                 <span style={{fontSize: 8}}>{ data.shift.store.store_name}</span>
             </>):(<></>)}
             <div style={{marginLeft: 15, marginRight: 15, paddingTop: 10}}>
-            <InputBase
-                id="time"
-                type="time"
-                value={start}
-                className={classes.textField}
-                // onChange={handleStartChange}
-                InputLabelProps={{ shrink: true, }}
-                inputProps={{ step: 300, }}
-                style={{display: 'inline-block'}}
-            /><hr/>
-            <InputBase
-                id="time"
-                type="time"
-                value={finish}
-                className={classes.textField}
-                // onChange={handleFinishChange}
-                InputLabelProps={{ shrink: true, }}
-                inputProps={{ step: 300, }}
-                style={{display: 'inline-block'}}
-            />
+                <InputBase
+                    id="time"
+                    type="time"
+                    value={start}
+                    className={classes.textField}
+                    // onChange={handleStartChange}
+                    InputLabelProps={{ shrink: true, }}
+                    inputProps={{ step: 300, }}
+                    style={{display: 'inline-block'}}
+                /><hr/>
+                <InputBase
+                    id="time"
+                    type="time"
+                    value={finish}
+                    className={classes.textField}
+                    // onChange={handleFinishChange}
+                    InputLabelProps={{ shrink: true, }}
+                    inputProps={{ step: 300, }}
+                    style={{display: 'inline-block'}}
+                />
             </div>
         </TableCell>
     </>)}

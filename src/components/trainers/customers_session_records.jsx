@@ -80,7 +80,6 @@ export default function SessionRecordList() {
     const url = `/trainer/get/customer_records`
 
     useEffect(()=>{
-
         axios.get(url, trainerHeaders)
         .then(function(res) {
             setRecords(res.data.data);
@@ -111,7 +110,6 @@ export default function SessionRecordList() {
     },[])
 
     function handleStoreChange(e) {
-
         if(e.target.value){
             setSelectTag(e.target.value)
         }
@@ -205,17 +203,6 @@ export default function SessionRecordList() {
                 {selectStore}
                 </Select>
             </FormControl>
-            {/* <FormControl className={classes.formControl} style={{backgroundColor: 'white', padding: 10}}>
-                <Select
-                value={selectTag}
-                onChange={handleStoreChange}
-                displayEmpty
-                className={classes.selectEmpty}
-                inputProps={{ 'aria-label': 'Without label' }}
-                >
-                {selectStore}
-                </Select>
-            </FormControl> */}
 
         </FormControl>
 

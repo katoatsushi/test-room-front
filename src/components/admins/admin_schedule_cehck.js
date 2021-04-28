@@ -18,6 +18,8 @@ import Avatar from '@material-ui/core/Avatar';
 import { deepOrange, green } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import { useSelector } from 'react-redux';
+import { selectCurrentTrainer, selectTrainerHeaders } from '../../slices/trainer';
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -42,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ScheduleCheck({company_id,  day, scroll}) {
     const classes = useStyles();
     const history = useHistory();
+    const currentTrainer = useSelector(selectCurrentTrainer);
     const [storeAppointments, setStoreAppointments] = useState([]);
     const [thisStoreAppointments, setThisStoreAppointments] = useState();
     var url = `/admin/company_id/${company_id}/year/${day.year}/month/${day.month}/day/${day.day}`
@@ -119,7 +122,7 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
     }
 
 
-    function ScheduleDetails(res,time) {
+    function ScheduleDetails(res, time) {
       function FillBlankRepeat() {
         var items = [];
         for (var i = 0;  i < thisStoreAppointments.store_rooms_num - res.length;  i++  ) {
@@ -138,13 +141,26 @@ export default function ScheduleCheck({company_id,  day, scroll}) {
                     return(<>
                       <StyledTableCell key={index} align="center" style={{fontSize: '0.9em',border: '1px solid', borderColor: '#DDDDDD'}}>
                         <Grid container spacing={3}>
-                          <Grid item xs={12} sm={12} style={{textAlign: 'left', fontSize: 10}}>
-                            <Link href={`/customer/my_page/${r.customer_id}`}>
-                              {r.first_name_kana} {r.last_name_kana}<br/>
-                              {r.first_name_kanji} {r.last_name_kanji}様<br/>
-                              {r.fitness_name}
-                            </Link>
-                          </Grid>
+                          {currentTrainer? (<>
+                            <Grid item xs={12} sm={12} style={{textAlign: 'left', fontSize: 10}}
+                                onClick = {() => 
+                                  history.push({
+                                      pathname: [`/trainers/${currentTrainer.id}/fitness/${r.fitness_id}`],
+                                      data: r
+                                  })}
+                            >
+                                {r.first_name_kana} {r.last_name_kana}<br/>
+                                {r.first_name_kanji} {r.last_name_kanji}様<br/>
+                                {r.fitness_name}
+                            </Grid>
+                          </>):(<>
+                              <Grid item xs={12} sm={12} style={{textAlign: 'left', fontSize: 10}}>
+                                {r.first_name_kana} {r.last_name_kana}<br/>
+                                {r.first_name_kanji} {r.last_name_kanji}様<br/>
+                                {r.fitness_name}
+                              </Grid>
+                          </>)}
+                          {/* </Grid> */}
                         </Grid>
                       </StyledTableCell>
                     </>);

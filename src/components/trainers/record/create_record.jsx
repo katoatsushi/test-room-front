@@ -91,7 +91,7 @@ export default function TrainerCreateRecord(props) {
       [classes.buttonSuccess]: success,
     });
     const url = `/get/res_second/fitness/${props.match.params.fitness_id}`
-
+    console.log({props})
     useEffect(()=>{
         if (!loading) {
             setSuccess(false);
@@ -101,9 +101,7 @@ export default function TrainerCreateRecord(props) {
         .then(function(res) {
             setSuccess(true);
             setLoading(false);
-            console.log("帰ってきた値", {res})
             if(res.data.data.length == 0) {
-                console.log("データないよ")
                 setDataCheck(false)
             }
             setFitnessData(res.data.data)
