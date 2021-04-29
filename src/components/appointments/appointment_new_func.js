@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AppointmentNew = (props) => {
     console.log("AppointmentNew", {props})
+    const allIDs = props.match.params
     const classes = useStyles();
     const [appointments, setAppointments] = useState([]);
     const [ appoDate, setAppoDate ] = useState();
@@ -137,14 +138,34 @@ const AppointmentNew = (props) => {
                   rows={4}
                   variant="outlined"
                 /><br/><br/>
-                <Button variant="contained" size='large' style={{marginRight: 10}} color="primary" href="/">キャンセル</Button>
-                {radioCheck? (<>
-                    <Button variant="contained" size='large' color="secondary" onClick={handleClick} >予約する</Button>                
+                <Button variant="contained" 
+                    size='large' 
+                    style={{marginRight: 10}} color="primary" 
+                    href={`/customer/${allIDs.customer_id}/calendar_new/customer_menu/${allIDs.customer_menu_id}/store/${allIDs.store_id}`}
+                >
+                    キャンセル
+                </Button>
+                <Button variant="contained" 
+                    size='large' 
+                    color="secondary" 
+                    onClick={handleClick} 
+                    disabled={!radioCheck}
+                >
+                予約する
+                </Button>
+                {/* {radioCheck? (<>
+                    <Button variant="contained" 
+                        size='large' 
+                        color="secondary" 
+                        onClick={handleClick} 
+                        disabled={!radioCheck}
+                    >
+                    予約する
+                    </Button>                
                 </>) : (<>
                     <Button variant="contained" size='large' color="secondary" disabled >予約する</Button>
                 </>)
-
-                }
+                } */}
             </div>
             {/* </form> */}
         </>
