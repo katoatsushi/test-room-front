@@ -127,9 +127,10 @@ export default function CustomerMyPage(props) {
       setRecordNum(res.data.customer_record_len)
       setThisCustomer(res.data.customer);
       setThisCustomerInfo(res.data.customer_info)
-      setApoNum(res.data.appo_count)
+      
+      setApoNum(res.data.appointment_count)
       setApoFinNum(res.data.session_count)
-      console.log({session_count: res.data.session_count})
+      console.log({session_count: res.data.session_count, setApoNum: res.data.appointment_count})
     })
     .catch(function(error) {
       console.log({error})
@@ -295,7 +296,7 @@ export default function CustomerMyPage(props) {
           <Grid item xs={2}/>
           <Grid item xs={4} style={{textAlign: 'center'}}>
               <span className="customer_my_page_tag">今月の終了カルテ数</span><br/>
-              <span style={{fontSize: '2em'}}>{recordNum}</span><br/>
+              <span style={{fontSize: '2em'}}>{apoFinNum}</span><br/>
             {
                 (() => {
                     // eslint-disable-next-line react/prop-types
@@ -327,14 +328,15 @@ export default function CustomerMyPage(props) {
               <span className="customer_my_page_tag">残り予約可能数</span><br/>
               <span style={{fontSize: '2em'}}>
                 {customerStatus? (<>
-                  { customerStatus.numbers_of_contractnt - apoNum - recordNum }
+                  { customerStatus.numbers_of_contractnt - apoNum - apoFinNum }
                  </>):<></>}
               </span>
-              <span style={{fontSize: '1.2em'}}>/
+              {/* <span style={{fontSize: '1.2em'}}>/
                 {customerStatus? (<>
                   { customerStatus.numbers_of_contractnt }
                  </>):<></>}
-            </span><br/>
+              </span> */}
+              <br/>
           </>):<></>}
             {
                 (() => {
