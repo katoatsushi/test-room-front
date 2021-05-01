@@ -395,3 +395,10 @@ label input:checked + span {
   font-weight: 600;
   font-size: 16px; 
 }
+
+.schedule_tag {
+  background-color: #4DA7F0;
+  color: white;
+  font-weight: 600;
+  padding: 15px;
+}

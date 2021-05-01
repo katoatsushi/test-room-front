@@ -53,6 +53,9 @@ import RecordConfirm from './components/trainers/record/record_confirm'
 import ShowRecord from './components/trainers/record/record_show'
 import EditMyProfile from './components/trainers/edit_profile/edit_my_profile'
 import AdminEditStore from './components/admins/edit_store'
+import AdminSelectDate from './components/appointments/admin/select_date'
+import AdminScheduleCheck from './components/appointments/admin/check_schedule'
+import ScheduleShow from  './components/appointments/admin/schedule_show'
 
 const Routes: React.FC = () => {
   const currentCustomer = useSelector(selectCurrentCustomer);
@@ -112,6 +115,9 @@ const Routes: React.FC = () => {
         <Route exact path="/admin/trainer_shifts" component={ ManageTrainerShift } />
         <Route exact path="/admin/this_month/trainer_shift" component={ ThisMonthTrainerShift } />
         <Route exact path="/admin/store/all" component={ AdminEditStore } />
+        <Route exact path="/admin/schedule/check" component={ AdminSelectDate } />
+        <Route exact path="/admin/schedule/check/year/:year/month/:month/day/:day" component={ AdminScheduleCheck } />
+        <Route exact path="/admin/schedule/show/year/:year/month/:month/day/:day" component={ ScheduleShow } />
         {/* master admin auth */}
         <Route exact path="/master_admin/log_in" component={ MasterAdminLogIn } />
         {/* master admin */}

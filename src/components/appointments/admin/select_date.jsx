@@ -4,24 +4,26 @@ import { useHistory} from 'react-router-dom';
 import Button from '@material-ui/core/Button'
 import { useForm } from "react-hook-form";
 import Calendar from 'react-calendar';
+import { useSelector } from 'react-redux';
 import 'react-calendar/dist/Calendar.css';
+import {selectCurrentAdmin} from '../../../slices/admin'
+import {selectCurrentTrainer} from '../../../slices/trainer'
 
-const SelectDate = (props) => {
-    console.log("SelectDate", {props})
-    const today = new Date
-    const store_id = props.match.params.store_id
-    const customer_menu_id = props.match.params.customer_menu_id
+const AdminSelectDate = () => {
+    const currentAdmin = useSelector(selectCurrentAdmin);
+    const currentTrainer = useSelector(selectCurrentTrainer);
     const [value, onChange] = useState(new Date());
     const history = useHistory();
     const onSubmit = (data) => console.log(data);
     const { handleSubmit } = useForm();
-
+    console.log({value})
 
     return (
         <>
         <br />
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div style={{textAlign: 'center', marginTop: 100}}>
+            <div style={{backgroundColor: 'white',textAlign: 'center', padding: 10 }}>予約状況を確認</div>
+            <div style={{textAlign: 'center', marginTop: 80}}>
                 <Calendar
                     locale="ja-JP"
                     onChange={onChange}
@@ -33,11 +35,8 @@ const SelectDate = (props) => {
                     size='large' 
                     color="secondary"
                     style={{width: '95%', marginTop: 30, marginRight: 'auto', marginLeft: 'auto'}}
-                    disabled ={ !(value > today) }
-                    onClick = {() => 
-                        history.push({
-                            pathname: [`/customer/${props.match.params.customer_id}/appointments/new/${store_id}/${customer_menu_id}/${value.getFullYear()}/${value.getMonth() + 1}/${value.getDate()}`],
-                            state: props.location.state})}
+                    onClick = {() => history.push(`/admin/schedule/check/year/${value.getFullYear()}/month/${value.getMonth() + 1}/day/${value.getDate()}`)} 
+                    // onClick = {() => history.push(`/admin/schedule/show/year/${value.getFullYear()}/month/${value.getMonth() + 1}/day/${value.getDate()}`)}
                 >
                     時間を選ぶ
                 </Button>
@@ -49,6 +48,6 @@ const SelectDate = (props) => {
     );
   };
 
-export default SelectDate;
+export default AdminSelectDate;
 
 

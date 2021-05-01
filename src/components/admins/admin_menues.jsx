@@ -91,6 +91,15 @@ export default function AdminMenues(){
                       今月のトレーナーのシフトを管理する
                   </Paper>
                 </Grid>
+
+                <Grid item xs={12}>
+                  <Paper className={classes.paper}>
+                    <Link href="/admin/trainers/all" style={{textAlign: 'center'}}>
+                      テスト
+                    </Link><br/>
+                      テスト
+                  </Paper>
+                </Grid>
             </Grid>
         </div>
         </>

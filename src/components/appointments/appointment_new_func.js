@@ -77,21 +77,14 @@ const AppointmentNew = (props) => {
     }
     const radio_buttons = appointments.map((time,index) =>
         <React.Fragment key={index}>
-            {!(time[1] == 0) && (
                 <FormControlLabel 
                     value={time[0][0]}
+                    disabled={(time[1] == 0)}
                     onClick={() => handleTimeSelect(time)}
                     control={<Radio />}
-                    label= {time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"}
+                    label= {time[1] + "枠" + time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"}
                     // label= {time[1] + "枠" + time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"} 
                 />
-            )}
-            {(time[1] == 0) && (
-                <FormControlLabel 
-                    value="disabled" disabled control={<Radio />} 
-                    label={time[2][0][0]+ "時"+ time[2][0][1] + "分" +  " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"}  
-                />
-            )}
         </React.Fragment>
     );
 
@@ -153,19 +146,6 @@ const AppointmentNew = (props) => {
                 >
                 予約する
                 </Button>
-                {/* {radioCheck? (<>
-                    <Button variant="contained" 
-                        size='large' 
-                        color="secondary" 
-                        onClick={handleClick} 
-                        disabled={!radioCheck}
-                    >
-                    予約する
-                    </Button>                
-                </>) : (<>
-                    <Button variant="contained" size='large' color="secondary" disabled >予約する</Button>
-                </>)
-                } */}
             </div>
             {/* </form> */}
         </>

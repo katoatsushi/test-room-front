@@ -177,7 +177,7 @@ function Header() {
   function MoveToTrainerPage(){
     setAnchorEl(null);
     history.push(`/trainer_page/${currentTrainer.id}`)
-    // window.location.reload()
+    window.location.reload()
   }
   function MoveToCheckTodaySchedule(){
     setAnchorEl(null);
@@ -269,7 +269,10 @@ function Header() {
                     open={open}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={MoveToTrainerPage}>マイページへ</MenuItem><hr/>
+                    <MenuItem onClick={MoveToTrainerPage}>
+                    {/* <MenuItem onClick={ history.push(`/trainer_page/${currentTrainer.id}`)}> */}
+                      マイページへ
+                    </MenuItem><hr/>
                     <MenuItem onClick={handleTrainerSignOut}>ログアウトする</MenuItem>
                   </Menu>
                 </div>
