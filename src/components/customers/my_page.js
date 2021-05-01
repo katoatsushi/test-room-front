@@ -79,7 +79,6 @@ export default function CustomerMyPage(props) {
   const dispatch = useDispatch();
   const [thisCustomer, setThisCustomer] = useState({});
   const [thisCustomerInfo, setThisCustomerInfo] = useState({});
-  const [recordNum, setRecordNum] = useState(0);
   const [apoNum, setApoNum] = useState(0);
   const [apoFinNum, setApoFinNum] = useState(0);
   const [open, setOpen] = React.useState(false);
@@ -102,7 +101,6 @@ export default function CustomerMyPage(props) {
     setOpen(false);
     axios.put(submit_url, {ids: interestIDs} , customerHeaders)
     .then(res => {
-      console.log({res})
       dispatch(setCurrentCustomerInterests(res.data.interests));
       const message = "興味・関心を更新しました！！"
       enqueueSnackbar(message, { 
@@ -123,14 +121,10 @@ export default function CustomerMyPage(props) {
     const url = `/return_customer_all_info/${props.match.params.id}`
     axios.get(url)
     .then(function(res) {
-      console.log({res})
-      setRecordNum(res.data.customer_record_len)
       setThisCustomer(res.data.customer);
       setThisCustomerInfo(res.data.customer_info)
-      
       setApoNum(res.data.appointment_count)
       setApoFinNum(res.data.session_count)
-      console.log({session_count: res.data.session_count, setApoNum: res.data.appointment_count})
     })
     .catch(function(error) {
       console.log({error})
@@ -158,7 +152,6 @@ export default function CustomerMyPage(props) {
       axios.put(url, formData, customerHeaders)
       .then(res => {
           setAvatarOpen(false);
-          console.log({res})
           setSuccess(true);
           setLoading(false);
           dispatch(setCurrentCustomerInfo(res.data.data));

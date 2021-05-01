@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 
 function SetTime(time){
     const d = new Date(time)
-    // const newTime = String(d.getFullYear()) + "/" + String(d.getMonth() + 1) + "/" + String(d.getDate()) + ""  + String(d.getHours()) + ":"  + String(d.getMinutes())
     const newTime = String(d.getMonth() + 1) + "/" + String(d.getDate())
     return newTime
 }
