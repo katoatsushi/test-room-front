@@ -117,11 +117,19 @@ export default function CustomerMyPage(props) {
     });
   }
 
+  function timeDevide(e){
+    const date = new Date(e)
+    return (<>
+      {date.getFullYear()}年{date.getMonth() + 1}月{date.getDate()}日
+    </>)
+  }
+
   useEffect(()=>{
     const url = `/return_customer_all_info/${props.match.params.id}`
     axios.get(url)
     .then(function(res) {
       setThisCustomer(res.data.customer);
+      console.log({customer: res.data.customer})
       setThisCustomerInfo(res.data.customer_info)
       setApoNum(res.data.appointment_count)
       setApoFinNum(res.data.session_count)
@@ -274,7 +282,9 @@ export default function CustomerMyPage(props) {
               </>):(<></>)
             }
           </>):<></>}<br/>
-          2020年２月13日 入会<br/>
+          {thisCustomer? (<>
+            { timeDevide(thisCustomer.created_at) }入会
+          </>):(<></>)}<br/>
           </div>
         </Grid>
       </Grid>
