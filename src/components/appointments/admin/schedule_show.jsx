@@ -116,6 +116,11 @@ export default function ScheduleShow({company_id,  day, scroll}) {
         </>)
     }
 
+    function SearchTrialCustomer(e){
+        console.log({e})
+        return(<></>)
+    }
+
     const schedule_cells = thisStoreAppointments ?  
         thisStoreAppointments.map((apos,index) => (<>
             <TableRow key={index}>
@@ -124,7 +129,7 @@ export default function ScheduleShow({company_id,  day, scroll}) {
                     {a.length?(<>
                         <StyledTableCell component="th" scope="row"
                             align="center" style={{fontSize: '0.9em',border: '1px solid', borderColor: '#DDDDDD', width: '15%'}}
-                        >
+                        >   
                             { timeChange(a) }
                         </StyledTableCell>
                     </>):(<>
@@ -135,12 +140,23 @@ export default function ScheduleShow({company_id,  day, scroll}) {
                             {a.fitness_name}<br/>
                             {a.first_name_kanji}{a.last_name_kanji}様
                         </StyledTableCell>
+                    </>):
+                    (<>{a.customer_service?(<>
+                        <StyledTableCell component="th" scope="row"
+                            style={{fontSize: '0.6em',border: '1px solid', borderColor: '#DDDDDD', backgroundColor: '#FFDDFF'}}
+                        >
+                            体験予約のお客様<br/>
+                            {a.name}様<br/>
+                            {a.tel}/{a.email}/{a.detail}
+                            {SearchTrialCustomer(a)}
+                        </StyledTableCell>
                     </>):(<>
                         <StyledTableCell component="th" scope="row"
                             style={{fontSize: '0.6em',border: '1px solid', borderColor: '#DDDDDD', backgroundColor: '#FFDDFF'}}
                         >
-                            管理者
+                            管理者予定あり
                         </StyledTableCell>
+                    </>)}
                     </>)}
                     </>)}
                 </>) : (<>

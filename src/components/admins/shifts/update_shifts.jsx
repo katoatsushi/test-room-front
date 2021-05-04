@@ -63,7 +63,6 @@ function DisabledTimeCell({checked, handleChange}){
 }
 
 // 既存のシフト変更
-
 export default function ShiftTableCellEdit({data, stores, setSubmitData, submitData, setTrainerShifts, trainerShifts, setShiftEdit, setDeleteData}){
     const classes = useStyles();
     const [selectStore, setSelectStore] = React.useState();
@@ -93,8 +92,13 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
             console.log({data},"追加")
             setOpen(true);
         }else{
-            console.log({data},"削除")
-            if (data.shifts.id){
+            console.log({data},"削除だよん")
+            // submitDataの中にあるか確認
+            const deletedDatas = submitData.filter((submitd) => {
+                return submitd.shifts.id == data.shifts.id
+            });
+            // console.log({最初のデータか確認: deletedDatas, submitData: submitData, data: data})
+            if (data.shifts.id && deletedDatas.length){
                 setShiftEdit(true)
                 setDeleteData((prev) => ([...prev, data.shifts.id]))
             }

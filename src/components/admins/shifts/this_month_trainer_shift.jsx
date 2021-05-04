@@ -123,7 +123,7 @@ export default function ThisMonthTrainerShift(){
             company_id: currentAdmin.company_id
         }})
         .then(function (response) {
-            console.log({this_month})
+            // console.log({this_month})
             console.log({response})
             setTrainerShifts(response.data.data)
             setDays(response.data.date_infos)
@@ -144,6 +144,7 @@ export default function ThisMonthTrainerShift(){
     function handleSubmit(){
         const submit_url = `/update_trainer_shift`
         console.log({submitData})
+        console.log({削除のデータ: deleteData})
         axios.put(submit_url, {
             data: submitData,
             delete: deleteData
@@ -184,7 +185,7 @@ export default function ThisMonthTrainerShift(){
                     <TableRow>
                         <TableCell style={{textAlign: 'center'}}>
                             {this_month}<br/>
-                            月
+                            月(今月)
                         </TableCell>
                         {days.map((row, index) => (
                             <TableCell key={index} style={{textAlign: 'center'}} component="th" scope="row" className="cell_box">
