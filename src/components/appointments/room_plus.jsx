@@ -61,9 +61,9 @@ export default function RoomPlus(){
         【{datas.store_name.store_name}】空き状況<br/>
         {   
             datas.data.map((d, index) => (<>
-                {(d[1] > 0)? (<>
-                    { timeArrage(d[0]) }
-                </>):<></>
+                {(d[1] > 0)? (
+                    <span key={index}>{ timeArrage(d[0]) }</span>
+                ):<></>
                 }
             </>))
         }<br/>
@@ -75,9 +75,6 @@ export default function RoomPlus(){
 
     <div style={{width: '90%', marginLeft: 'auto', marginRight: 'auto', backgroundColor: 'white', padding: 10, marginTop: 10}}>
         <span style={{color: 'grey'}}>※ご予約の方はLINEにご連絡下さい</span><hr/>
-        {/* {message!=""? (<>
-            {message}
-            </>):<></>} */}
         { render_appoints }
         <hr/>
         <span style={{color: 'grey'}}>※ご予約の方はLINEにご連絡下さい</span>
