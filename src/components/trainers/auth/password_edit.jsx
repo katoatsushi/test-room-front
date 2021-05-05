@@ -109,10 +109,8 @@ export default function TrainerPasswordEdit(props) {
         setSuccess(false);
         setLoading(true);
       }
-      console.log({tokenHeader})
       axios.put(url, submitData, {headers: tokenHeader})
       .then((res) => {
-        console.log({res})
         setSuccess(true);
         setLoading(false);
         dispatch(setCurrentTrainer(res.data.data));

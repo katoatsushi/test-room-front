@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import PortraitIcon from '@material-ui/icons/Portrait';
 import AppsIcon from '@material-ui/icons/Apps';
 import DehazeIcon from '@material-ui/icons/Dehaze';
+import ListAltIcon from '@material-ui/icons/ListAlt';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,9 +55,15 @@ function Footer() {
               <AppBar position="static" style={{backgroundColor: 'white'}}>
                 <Toolbar>
                 <Grid container spacing={6} style={{textAlign: 'center'}}>
+                    <Grid item xs={4} >
+                        <Link href={`/appointment/room_plus/show`}>
+                            <ListAltIcon  style={{color: 'black', fontSize: '2.3em'}} />
+                            <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>ルームプラス</div>
+                        </Link>
+                    </Grid>
                     {customerStatus?.paid? (
-                        <Grid item xs={6}>
-                            <Link href={`/customer/${currentCustomer.id}/calendar_new`}>
+                        <Grid item xs={4}>
+                            <Link href={`/customer/${currentCustomer.id}/calendar_new`} >
                                 <CalendarTodayIcon  style={{color: 'black', fontSize: '2.3em'}} >
                                     予約する
                                 </CalendarTodayIcon>
@@ -64,12 +71,12 @@ function Footer() {
                             </Link>
                         </Grid>
                     ):(
-                        <Grid item xs={6}>
+                        <Grid item xs={4}>
                             <CalendarTodayIcon  style={{color: 'grey', fontSize: '2.3em'}} />
                             <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>予約する</div>
                         </Grid>
                     )}
-                    <Grid item xs={6} >
+                    <Grid item xs={4} >
                         <Link href={`/customer/my_page/${currentCustomer.id}`}>
                             <PermIdentityIcon  style={{color: 'black', fontSize: '2.3em'}} />
                             <div style={{marginRight: 'auto', marginLeft: 'auto', fontSize: '0.4em'}}>マイページ</div>

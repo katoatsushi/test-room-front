@@ -123,8 +123,6 @@ export default function ThisMonthTrainerShift(){
             company_id: currentAdmin.company_id
         }})
         .then(function (response) {
-            // console.log({this_month})
-            console.log({response})
             setTrainerShifts(response.data.data)
             setDays(response.data.date_infos)
             setSubmitData(response.data.submit_data)
@@ -143,14 +141,11 @@ export default function ThisMonthTrainerShift(){
     }
     function handleSubmit(){
         const submit_url = `/update_trainer_shift`
-        console.log({submitData})
-        console.log({削除のデータ: deleteData})
         axios.put(submit_url, {
             data: submitData,
             delete: deleteData
         })
         .then(function (response) {
-            console.log({response})
             axios.get(url, {
             params: {
                 year: year,

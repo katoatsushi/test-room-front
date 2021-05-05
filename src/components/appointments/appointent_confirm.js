@@ -71,11 +71,9 @@ const AppointmentConfirm = (props) => {
     function handleCheckOk() {
         const params = props.match.params
         const create_url = `/customer/${props.match.params.customer_id}/appointments/new/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
-        console.log({time_strings})
         const submitTime = new Date(time_strings)
         const hour = submitTime.getHours()
         const min = submitTime.getMinutes()
-        console.log({hour},{min})
         if (!loading) {
             setSuccess(false);
             setLoading(true);
@@ -87,7 +85,6 @@ const AppointmentConfirm = (props) => {
             free_box: props.location.state.free_box,
           })
           .then(function (response) {
-            console.log({response},"だよ")
             if(response.data.error){
                 setMessage(response.data.message)
             }else{
@@ -117,7 +114,7 @@ const AppointmentConfirm = (props) => {
                         </Typography>
                     </CardContent>
                     <div style={{ textAlign: 'center', marginBottom: 20}}>
-                        <Button size="large" href='/' style={{backgroundColor: '#4DA7F0', color: 'white', fontWeight: '700', width: '80%'}}>
+                        <Button size="large" href={`/customer_page/${props.match.params.customer_id}`} style={{backgroundColor: '#4DA7F0', color: 'white', fontWeight: '700', width: '80%'}}>
                             ホームに戻る
                         </Button>
                     </div>

@@ -56,6 +56,7 @@ import AdminEditStore from './components/admins/edit_store'
 import AdminSelectDate from './components/appointments/admin/select_date'
 import AdminScheduleCheck from './components/appointments/admin/check_schedule'
 import ScheduleShow from  './components/appointments/admin/schedule_show'
+import RoomPlus from './components/appointments/room_plus'
 
 const Routes: React.FC = () => {
   const currentCustomer = useSelector(selectCurrentCustomer);
@@ -82,6 +83,7 @@ const Routes: React.FC = () => {
         <Route exact path="/customer/:customer_id/appointments/new/:store_id/:customer_menu_id/:year/:month/:day" component={AppointmentNew} />
         <Route exact path="/customer/:customer_id/appointments/confirm/:store_id/:customer_menu_id/:year/:month/:day" component={AppointmentConfirm} />
         <Route exact path="/customer_evaluation_data/:customer_id" component={ EvaluationData } />
+        <Route exact path="/appointment/room_plus/show" component={ RoomPlus } />
         {/* customer auth */}
         <Route exact path="/customer/sign_up" component={ SignUp } />
         <Route exact path="/customer/log_in" component={ LogIn } />
