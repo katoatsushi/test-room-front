@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,7 +22,11 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import FaceIcon from '@material-ui/icons/Face';
 import { useSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -187,7 +191,62 @@ function Header() {
     history.push(`/admin/company_id/${company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`)
   }
 
+  function CustomerRegisterURL() {
+    const adminHeaders = useSelector(selectAdminHeaders);
+    const [open, setOpen] = React.useState(false);
+    const [company, setComapny] = React.useState();
+    const company_id_url = '/check_company_id_by_admin'
+    // TODO::
+    useEffect(()=>{
+        axios.get(company_id_url, adminHeaders)
+        .then(function(res) {
+          console.log(res)
+          setComapny(res.data.company)
+        })
+        .catch(function(error) {
+            console.log({error})
+        });
+    },[])
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
 
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <div>
+        <Button variant="outlined" color="primary" style={{backgroundColor: '#CCFFFF'}} onClick={handleClickOpen}>
+          お客様登録
+        </Button>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            お客様に以下のURLより登録して頂くようお願いします。
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {company? (<>
+                https://main.d3udfnrfdm3q44.amplifyapp.com/customer/sign_up/company/{company.id}     
+                <br/>
+                {/* http://localhost:3001/customer/sign_up/company/{company.id} */}
+              </>):(<></>)}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              閉じる
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{backgroundColor: '#4DA7F0'}}>
@@ -279,6 +338,7 @@ function Header() {
               </>
             ): currentAdmin?.id ?(
               <>
+                <CustomerRegisterURL/>
                 <div>
                   <IconButton
                     aria-label="account of current user"
@@ -372,11 +432,12 @@ function Header() {
                     open={open}
                     onClose={handleClose}
                   >
-                    <MenuItem><Link color="inherit" href="/admin/log_in">管理者としてログイン</Link></MenuItem><hr/>
+                    {/* <MenuItem><Link color="inherit" href="/admin/log_in">管理者としてログイン</Link></MenuItem><hr/>
                     <MenuItem><Link color="inherit" href="/trainer/log_in">トレーナーとしてログイン</Link></MenuItem><hr/>
                     <MenuItem><Link color="inherit" href="/master_admin/log_in">マスタ管理者としてログイン</Link></MenuItem><hr/>
-                    <MenuItem><Link color="inherit" href="/customer/log_in">お客様としてログイン</Link></MenuItem><hr/>
-                    <MenuItem><Link color="inherit" href="/customer/sign_up">お客様新規登録</Link></MenuItem>
+                    <MenuItem><Link color="inherit" href="/customer/sign_up">お客様新規登録</Link></MenuItem> */}
+                    <MenuItem><Link color="inherit" href="/customer/log_in">お客様としてログイン</Link></MenuItem>
+                    {/* <hr/> */}
                   </Menu>
                 </div>
               </>

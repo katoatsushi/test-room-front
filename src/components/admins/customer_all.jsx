@@ -210,7 +210,9 @@ export default function AllCustomers(){
                   <StyledTableCell align="left">メールアドレス</StyledTableCell>
                   <StyledTableCell align="left">住所</StyledTableCell>
                   <StyledTableCell align="left">電話番号</StyledTableCell>
-                  <StyledTableCell align="left">会員情報</StyledTableCell>
+                  <StyledTableCell align="left">
+                  会員情報
+                  </StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

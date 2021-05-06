@@ -93,8 +93,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function SignUp() {
-    const [companyId, setCompanyId] = React.useState();
+export default function SignUp(props) {
+    console.log({props})
+    // const [companyId, setCompanyId] = React.useState();
     const classes = useStyles();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -116,18 +117,19 @@ export default function SignUp() {
       [classes.buttonSuccess]: success,
     });
 
-    React.useEffect(() => {
-      axios.get('/customer/get_company_id')
-      .then(function(res) {
-          setCompanyId(res.data.id)
-      })
-      return () => {
-        clearTimeout(timer.current);
-      };
-    }, []);
+    // React.useEffect(() => {
+    //   axios.get('/customer/get_company_id')
+    //   .then(function(res) {
+    //       setCompanyId(res.data.id)
+    //   })
+    //   return () => {
+    //     clearTimeout(timer.current);
+    //   };
+    // }, []);
 
     function onSubmit() {
-      const url = `/companies/${ companyId }/v1/customer_auth`
+      // const url = `/companies/${ companyId }/v1/customer_auth`
+      const url = `/companies/${ props.match.params.company_id }/v1/customer_auth`
       if (!loading) {
         setSuccess(false);
         setLoading(true);

@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import React , { useEffect, useState } from 'react';
+import axios from 'axios'
+import { useHistory , BrowserRouter, Route, Switch} from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import './index.css';
 import Root from './components/root';
 import { useSelector, useDispatch } from 'react-redux';
@@ -36,7 +38,6 @@ import CustomerJobs from './components/customers/customer_individual_info/custom
 import CustomerInterests from './components/customers/customer_individual_info/customer_interests'
 import CustomerConditions from './components/customers/customer_individual_info/customer_condition'
 import CreateCustomerIndividualInfo from  './components/customers/customer_individual_info/customer_individual_info'
-import { selectCurrentCustomer, selectCustomerHeaders, customerRemove, } from './slices/customer';
 import CustomerWeightNew from './components/customers/weight_new';
 import RecordsHistory from './components/customers/records_history'
 import AllCustomers from './components/admins/customer_all'
@@ -57,9 +58,73 @@ import AdminSelectDate from './components/appointments/admin/select_date'
 import AdminScheduleCheck from './components/appointments/admin/check_schedule'
 import ScheduleShow from  './components/appointments/admin/schedule_show'
 import RoomPlus from './components/appointments/room_plus'
+import { selectCurrentCustomer, selectCustomerHeaders, customerRemove } from './slices/customer';
+import { selectCurrentTrainer, selectTrainerHeaders, trainerRemove, } from './slices/trainer';
+import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from './slices/admin';
+import { selectCurrentMasterAdmin, selectMasterAdminHeaders, masterAdminRemove, } from './slices/master_admin';
 
 const Routes: React.FC = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const currentCustomer = useSelector(selectCurrentCustomer);
+  const customerHeader = useSelector(selectCustomerHeaders);
+  const trainerHeader = useSelector(selectTrainerHeaders);
+  const adminHeader = useSelector(selectAdminHeaders);
+  const masterAdminHeader = useSelector(selectMasterAdminHeaders);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  
+  useEffect(()=>{
+    if(customerHeader){
+      axios.get('/auth/check/customer', customerHeader)
+      .then(function(res) {
+        console.log(res)
+      }).catch(function(res) {
+        dispatch(customerRemove());
+        const message = "セッションの有効期限が切れたため、ログアウトしました"
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
+        history.push('/');
+      })
+    }else if(trainerHeader){
+      axios.get('/auth/check/trainer', trainerHeader)
+      .then(function(res) {
+        console.log(res)
+      }).catch(function(res) {
+        dispatch(trainerRemove());
+        const message = "セッションの有効期限が切れたため、ログアウトしました"
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
+        history.push('/');
+      })
+    }else if(adminHeader) {
+      axios.get('/auth/check/admin',adminHeader)
+      .then(function(res) {
+        console.log(res)
+      }).catch(function(res) {
+        dispatch(adminRemove());
+        const message = "セッションの有効期限が切れたため、ログアウトしました"
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
+        history.push('/');
+      })
+    }else if(masterAdminHeader){
+      axios.get('/auth/check/master_admin',masterAdminHeader)
+      .then(function(res) {
+        console.log(res)
+      }).catch(function(res) {
+        dispatch(masterAdminRemove());
+        const message = "セッションの有効期限が切れたため、ログアウトしました"
+        enqueueSnackbar(message, { 
+            variant: 'error',
+        });
+        history.push('/');
+      })
+    }
+  },[])
+
   return (
     <BrowserRouter>
     <Switch>
@@ -86,6 +151,7 @@ const Routes: React.FC = () => {
         <Route exact path="/appointment/room_plus/show" component={ RoomPlus } />
         {/* customer auth */}
         <Route exact path="/customer/sign_up" component={ SignUp } />
+        <Route exact path="/customer/sign_up/company/:company_id" component={ SignUp } />
         <Route exact path="/customer/log_in" component={ LogIn } />
         <Route exact path="/customer/password/reset" component={ CustomerPasswordReset } />
         <Route exact path="/v1/customer_auth/password/:token" component={ CustomerPasswordEdit } />

@@ -23,7 +23,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { trainerRemove } from '../../slices/trainer'
 import { adminRemove } from '../../slices/admin'
 import { useDispatch } from 'react-redux';
-import { ForceCustomerSignOut, ForceTrainerSignOut, ForceAdminSignOut, ForceMasterAdminSignOut } from '../applications/forced_sign_out';
+// import { ForceCustomerSignOut, ForceTrainerSignOut, ForceAdminSignOut, ForceMasterAdminSignOut } from '../applications/forced_sign_out';
 
 const useStyles = makeStyles((theme) => ({
   root: {
