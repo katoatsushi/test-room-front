@@ -23,6 +23,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useSnackbar } from 'notistack';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCustomerHeaders, customerRemove, selectCurrentCustomer} from  '../../../slices/customer';
+import { selectCurrentTrainer, selectTrainerHeaders, trainerRemove, } from '../../../slices/trainer';
+import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from '../../../slices/admin';
+import { selectCurrentMasterAdmin, selectMasterAdminHeaders, masterAdminRemove, } from '../../../slices/master_admin'
 
 function Copyright() {
   return (
@@ -94,8 +99,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function SignUp(props) {
-    console.log({props})
-    // const [companyId, setCompanyId] = React.useState();
     const classes = useStyles();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -108,7 +111,12 @@ export default function SignUp(props) {
     const [open, setOpen] = React.useState(false);
     const [name, setName] = useState({first_name_kanji: "", last_name_kanji: "", first_name_kana: "",last_name_kana: ""});
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
+    // 認証用
+    const dispatch = useDispatch();
+    const customerHeader = useSelector(selectCustomerHeaders);
+    const trainerHeader = useSelector(selectTrainerHeaders);
+    const adminHeader = useSelector(selectAdminHeaders);
+    const masterAdminHeader = useSelector(selectMasterAdminHeaders);
 
     const handleClose = () => {
       setOpen(false);
@@ -117,18 +125,21 @@ export default function SignUp(props) {
       [classes.buttonSuccess]: success,
     });
 
-    // React.useEffect(() => {
-    //   axios.get('/customer/get_company_id')
-    //   .then(function(res) {
-    //       setCompanyId(res.data.id)
-    //   })
-    //   return () => {
-    //     clearTimeout(timer.current);
-    //   };
-    // }, []);
+    function DeleteAuth() {
+        if(customerHeader){
+            dispatch(customerRemove());
+        }else if(trainerHeader){
+            dispatch(trainerRemove());
+        }else if(adminHeader){
+            dispatch(adminRemove());
+        }else if(masterAdminHeader){
+            dispatch(masterAdminRemove());
+        } 
+    }
 
     function onSubmit() {
-      // const url = `/companies/${ companyId }/v1/customer_auth`
+      // 重複でログインしている場合、強制ログアウト
+      DeleteAuth()
       const url = `/companies/${ props.match.params.company_id }/v1/customer_auth`
       if (!loading) {
         setSuccess(false);

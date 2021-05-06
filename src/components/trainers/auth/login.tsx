@@ -2,7 +2,6 @@
 import React , { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import { useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
@@ -19,7 +18,11 @@ import {
   IErrorResponse,
   IServerMessages,
 } from '../../../interfaces';
-import { setHeaders, setCurrentTrainer } from '../../../slices/trainer';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCustomerHeaders, customerRemove, selectCurrentCustomer} from  '../../../slices/customer';
+import { selectCurrentTrainer, selectTrainerHeaders, trainerRemove,setHeaders, setCurrentTrainer } from '../../../slices/trainer';
+import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from '../../../slices/admin';
+import { selectCurrentMasterAdmin, selectMasterAdminHeaders, masterAdminRemove, } from '../../../slices/master_admin'
 import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../../constants/errorMessages.json';
 import { useSnackbar } from 'notistack';
@@ -82,8 +85,26 @@ export default function TrainerLogIn() {
     const buttonClassname = clsx({
       [classes.buttonSuccess]: success,
     });
+    // 認証用
+    const customerHeader = useSelector(selectCustomerHeaders);
+    const trainerHeader = useSelector(selectTrainerHeaders);
+    const adminHeader = useSelector(selectAdminHeaders);
+    const masterAdminHeader = useSelector(selectMasterAdminHeaders);
+
+    function DeleteAuth() {
+        if(customerHeader){
+            dispatch(customerRemove());
+        }else if(trainerHeader){
+            dispatch(trainerRemove());
+        }else if(adminHeader){
+            dispatch(adminRemove());
+        }else if(masterAdminHeader){
+            dispatch(masterAdminRemove());
+        } 
+    }
 
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
+      DeleteAuth()
       if (!loading) {
         setSuccess(false);
         setLoading(true);

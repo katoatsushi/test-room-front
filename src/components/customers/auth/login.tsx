@@ -21,12 +21,17 @@ import {
   ISignInSuccessResponse,
   IErrorResponse,
 } from '../../../interfaces';
-import {setCurrentCustomer, setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders, selectCurrentCustomer} from  '../../../slices/customer';
+import { selectCustomerHeaders, customerRemove, setCurrentCustomer, setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders, selectCurrentCustomer} from  '../../../slices/customer';
 import { setCustomerRecords, customerRecordRemove, getCustomerRecords } from '../../../slices/customer_record';
 import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../../constants/errorMessages.json';
 import { useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { selectCurrentCustomer, selectCustomerHeaders, customerRemove } from '../../../slices/customer';
+import { selectCurrentTrainer, selectTrainerHeaders, trainerRemove, } from '../../../slices/trainer';
+import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from '../../../slices/admin';
+import { selectCurrentMasterAdmin, selectMasterAdminHeaders, masterAdminRemove, } from '../../../slices/master_admin'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,6 +81,10 @@ export default function LogIn() {
     const get_customer_datas_url = `/customer/after/sign_in`
     const classes = useStyles();
     const dispatch = useDispatch();
+    const customerHeader = useSelector(selectCustomerHeaders);
+    const trainerHeader = useSelector(selectTrainerHeaders);
+    const adminHeader = useSelector(selectAdminHeaders);
+    const masterAdminHeader = useSelector(selectMasterAdminHeaders);
     const history = useHistory();
     const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
     const customerRecords = useSelector(getCustomerRecords);
@@ -86,7 +95,20 @@ export default function LogIn() {
     });
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
+    function DeleteAuth() {
+        if(customerHeader){
+            dispatch(customerRemove());
+        }else if(trainerHeader){
+            dispatch(trainerRemove());
+        }else if(adminHeader){
+            dispatch(adminRemove());
+        }else if(masterAdminHeader){
+            dispatch(masterAdminRemove());
+        } 
+    }
+
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
+      DeleteAuth()
       if (!loading) {
         setSuccess(false);
         setLoading(true);

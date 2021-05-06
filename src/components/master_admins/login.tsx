@@ -3,7 +3,6 @@ import React , { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -24,13 +23,17 @@ import {
   IErrorResponse,
   IServerMessages,
 } from '../../interfaces';
-import { setHeaders, setCurrentMasterAdmin } from '../../slices/master_admin';
 import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../constants/errorMessages.json';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSnackbar } from 'notistack';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCustomerHeaders, customerRemove, selectCurrentCustomer} from  '../../slices/customer';
+import { selectCurrentTrainer, selectTrainerHeaders, trainerRemove, setCurrentTrainer } from '../../slices/trainer';
+import { selectCurrentAdmin, selectAdminHeaders, adminRemove, setCurrentAdmin } from '../../slices/admin';
+import { selectCurrentMasterAdmin, selectMasterAdminHeaders, masterAdminRemove,setHeaders, setCurrentMasterAdmin } from '../../slices/master_admin'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -93,6 +96,10 @@ export default function MasterAdminLogIn() {
       [classes.buttonSuccess]: success,
     });
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const customerHeader = useSelector(selectCustomerHeaders);
+    const trainerHeader = useSelector(selectTrainerHeaders);
+    const adminHeader = useSelector(selectAdminHeaders);
+    const masterAdminHeader = useSelector(selectMasterAdminHeaders);
 
     const handleSnackbarClick = () => {
       setSnackOpen(true);
@@ -103,8 +110,20 @@ export default function MasterAdminLogIn() {
       }
       setSnackOpen(false);
     };
+
+    function DeleteAuth() {
+        if(customerHeader){
+            dispatch(customerRemove());
+        }else if(trainerHeader){
+            dispatch(trainerRemove());
+        }else if(adminHeader){
+            dispatch(adminRemove());
+        }else if(masterAdminHeader){
+            dispatch(masterAdminRemove());
+        } 
+    }
     const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
-      console.log({data})
+      DeleteAuth()
       if (!loading) {
         setSuccess(false);
         setLoading(true);
@@ -114,7 +133,6 @@ export default function MasterAdminLogIn() {
       .then((res) => {
         setSuccess(true);
         setLoading(false);
-        console.log("マスタ　管理者",{res})
         dispatch(setCurrentMasterAdmin(res.data.data));
         dispatch(setHeaders(res.headers));
         history.push('/master_admin');
@@ -147,7 +165,6 @@ export default function MasterAdminLogIn() {
             <Typography variant="h5" align="center" gutterBottom>
                 マスタ管理者ログイン
             </Typography>
-            {/* <ServerAlert serverMessages={serverMessages} /> */}
             <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
               <Box mb={2}>
                 <Controller

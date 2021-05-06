@@ -196,16 +196,16 @@ function Header() {
     const [open, setOpen] = React.useState(false);
     const [company, setComapny] = React.useState();
     const company_id_url = '/check_company_id_by_admin'
-    // TODO::
     useEffect(()=>{
-        axios.get(company_id_url, adminHeaders)
-        .then(function(res) {
-          console.log(res)
-          setComapny(res.data.company)
-        })
-        .catch(function(error) {
-            console.log({error})
-        });
+        if(adminHeaders){
+          axios.get(company_id_url, adminHeaders)
+          .then(function(res) {
+            setComapny(res.data.company)
+          })
+          .catch(function(error) {
+              console.log({error})
+          });
+        }
     },[])
     const handleClickOpen = () => {
       setOpen(true);
