@@ -71,6 +71,7 @@ export default function ShiftNew(props){
       [classes.buttonSuccess]: success,
     });
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const [button, setButton] = useState(false);
 
     useEffect(()=>{
         if (!loading) {
@@ -111,7 +112,6 @@ export default function ShiftNew(props){
         console.log({shift})
     },[shift])
 
-    const [button, setButton] = useState(false);
     function handleSubmit(){
         if (!loading) {
             setSuccess(false);
@@ -129,6 +129,7 @@ export default function ShiftNew(props){
                 autoHideDuration: 1000,
                 variant: 'success',
             });
+            setButton(false)
             // history.push(`/trainer/${currentTrainer.id}`);
             history.push(`/`);
         })
