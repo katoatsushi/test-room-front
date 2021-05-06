@@ -20,7 +20,6 @@ import {
   ISignInFormValues,
   ISignInSuccessResponse,
   IErrorResponse,
-  IServerMessages,
 } from '../../../interfaces';
 import {setCurrentCustomer, setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders, selectCurrentCustomer} from  '../../../slices/customer';
 import { setCustomerRecords, customerRecordRemove, getCustomerRecords } from '../../../slices/customer_record';
@@ -97,15 +96,12 @@ export default function LogIn() {
       .then((res) => {
         setSuccess(true);
         setLoading(false);
-        console.log("ログイン",{res})
         const customer_id = res.data.data.id
         dispatch(setCurrentCustomer(res.data.data));
         dispatch(setHeaders(res.headers));
         // お客様の詳細情報を入手
         axios.get(get_customer_datas_url, {headers: res.headers} )
         .then(function(response) {
-          // TODO::トレーナーを評価するものを取得
-          console.log("成功",{response})
           dispatch(setCurrentCustomerInfo(response.data.customer_info));
           dispatch(setCurrentCustomerStatus(response.data.customer_status));
           dispatch(setCurrentCustomerInterests(response.data.customer_interests));
@@ -113,7 +109,6 @@ export default function LogIn() {
             dispatch(setCustomerRecords(response.data.evaluations));
             history.push(`/customer/my_page/${customer_id}`);
           }else{
-            // console.log("現在返すべきトレーナーの評価はありません")
             history.push(`/customer/my_page/${customer_id}`);
           }
           const message = "ログインに成功しました！"
@@ -127,7 +122,6 @@ export default function LogIn() {
         });
       })
       .catch((err: AxiosError<IErrorResponse>) => {
-        console.log({err})
         const message = err.response?.data.errors[0];
         enqueueSnackbar(message, { 
             variant: 'error',
@@ -235,13 +229,13 @@ export default function LogIn() {
                 </Button>
                 {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
               </div>
-              <Grid container justify="flex-end">
+              {/* <Grid container justify="flex-end">
                 <Grid item>
                   <Link href="/customer/sign_up" variant="body2">
-                    {/* まだアカウントをお持ちでない方はこちらへ */}
+                    まだアカウントをお持ちでない方はこちらへ
                   </Link>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </form>
           </Box>
         </div>

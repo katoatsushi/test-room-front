@@ -227,13 +227,13 @@ function Confirmation(props) {
                 </Button>
                 {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
               </div>
-              <Grid container justify="flex-end">
+              {/* <Grid container justify="flex-end">
                 <Grid item>
                   <Link href="/customer/sign_up" variant="body2">
-                    {/* まだアカウントをお持ちでない方はこちらへ */}
+                    まだアカウントをお持ちでない方はこちらへ
                   </Link>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </form>
           </Box>
         </div>

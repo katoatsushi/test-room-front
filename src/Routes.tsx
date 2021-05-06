@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React , { useEffect, useState } from 'react';
+import React , { useEffect } from 'react';
 import axios from 'axios'
 import { useHistory , BrowserRouter, Route, Switch} from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -59,9 +59,9 @@ import AdminScheduleCheck from './components/appointments/admin/check_schedule'
 import ScheduleShow from  './components/appointments/admin/schedule_show'
 import RoomPlus from './components/appointments/room_plus'
 import { selectCurrentCustomer, selectCustomerHeaders, customerRemove } from './slices/customer';
-import { selectCurrentTrainer, selectTrainerHeaders, trainerRemove, } from './slices/trainer';
-import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from './slices/admin';
-import { selectCurrentMasterAdmin, selectMasterAdminHeaders, masterAdminRemove, } from './slices/master_admin';
+import { selectTrainerHeaders, trainerRemove, } from './slices/trainer';
+import { selectAdminHeaders, adminRemove, } from './slices/admin';
+import { selectMasterAdminHeaders, masterAdminRemove, } from './slices/master_admin';
 
 const Routes: React.FC = () => {
   const dispatch = useDispatch();
@@ -150,7 +150,7 @@ const Routes: React.FC = () => {
         <Route exact path="/customer_evaluation_data/:customer_id" component={ EvaluationData } />
         <Route exact path="/appointment/room_plus/show" component={ RoomPlus } />
         {/* customer auth */}
-        <Route exact path="/customer/sign_up" component={ SignUp } />
+        {/* <Route exact path="/customer/sign_up" component={ SignUp } /> */}
         <Route exact path="/customer/sign_up/company/:company_id" component={ SignUp } />
         <Route exact path="/customer/log_in" component={ LogIn } />
         <Route exact path="/customer/password/reset" component={ CustomerPasswordReset } />
