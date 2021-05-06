@@ -21,6 +21,8 @@ import { selectCurrentMasterAdmin, selectMasterAdminHeaders, masterAdminRemove, 
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import FaceIcon from '@material-ui/icons/Face';
 import { useSnackbar } from 'notistack';
+import Button from '@material-ui/core/Button';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +47,7 @@ function Header() {
   const open = Boolean(anchorEl);
   const history = useHistory();
   const dispatch = useDispatch();
+  const today = new Date
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const currentCustomer = useSelector(selectCurrentCustomer);
@@ -73,15 +76,12 @@ function Header() {
       .then(() => {
         dispatch(customerRemove());
         handleClose()
-        // console.log("ログアウトしました")
         const message = "ログアウトしました"
         enqueueSnackbar(message, { 
             variant: 'success',
         });
         setAnchorEl(null);
         history.push('/');
-        // window.location.reload()
-        
       })
       .catch((err) => {
         const message = 'ログアウトに失敗しました';
@@ -116,11 +116,9 @@ function Header() {
   }
   const handleTrainerSignOut = () => {
     if (!trainer_headers) return;
-    console.log("実際にここからログアウトする")
     axios
       .delete('/v1/trainer_auth/sign_out', trainer_headers)
       .then((res) => {
-        console.log({res})
         dispatch(trainerRemove());
         handleClose()
         const message = "ログアウトしました"
@@ -166,12 +164,10 @@ function Header() {
   function MoveToMyPage(){
     setAnchorEl(null);
     history.push(`/customer/my_page/${currentCustomer.id}`)
-    // window.location.reload()
   }
   function MoveToHome(){
     setAnchorEl(null);
     history.push(`/`)
-    // window.location.reload()
   }
 
   function MoveToTrainerPage(){
@@ -189,7 +185,6 @@ function Header() {
       company_id = currentAdmin.company_id
     }
     history.push(`/admin/company_id/${company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`)
-    // window.location.reload()
   }
 
 
@@ -239,6 +234,11 @@ function Header() {
             </div>
             ) : currentTrainer?.id ? (
               <>
+                <Link href={`/`}>
+                  <Button variant="contained" color="secondary">
+                      シフト提出
+                  </Button>
+                </Link>
                 <div>
                   <IconButton
                     aria-label="account of current user"
