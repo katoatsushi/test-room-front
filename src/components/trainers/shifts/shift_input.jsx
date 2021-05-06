@@ -41,10 +41,10 @@ export default function ShiftInput({setButton, shift, all_shift, setShift, workD
                 if(s.date == shift.date){
                     if(!workDays.includes(shift.date)){
                         // 新規追加のシフト
-                        return {date: shift.date, shift: {start: startArray, end: finishArray}, edit: true, work: false, new_shiift: true}
+                        return {date: shift.date, shift: {start: startArray, end: finishArray}, edit: true, work: true, new_shift: true}
                     }else{
                          // 既存のシフト
-                        return {date: shift.date, shift: {start: s.shift.start, end: s.shift.end}, edit: false, work: false, new_shift: false, id: s.id}
+                        return {date: shift.date, shift: {start: s.shift.start, end: s.shift.end}, edit: false, work: true, new_shift: false, id: s.id}
                     }
                 }else{
                     return s
@@ -85,10 +85,10 @@ export default function ShiftInput({setButton, shift, all_shift, setShift, workD
             if(s.date == shift.date){
                 if(workDays.includes(shift.date)){
                     // 過去に存在する
-                    return {date: shift.date, shift: {start: s.shift.start, end: s.shift.end},  edit: true, work: true, new_shift: false, id: s.id}
+                    return {date: shift.date, shift: {start: times_array, end: s.shift.end},  edit: true, work: true, new_shift: false, id: s.id}
                 }else{
                     // 存在しない
-                    return {date: shift.date, shift: {start: s.shift.start, end: s.shift.end},  edit: true, work: true, new_shift: true}
+                    return {date: shift.date, shift: {start: times_array, end: s.shift.end},  edit: true, work: true, new_shift: true}
                 }
             }else{
                 return s

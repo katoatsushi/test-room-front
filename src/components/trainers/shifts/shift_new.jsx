@@ -129,8 +129,8 @@ export default function ShiftNew(props){
                 autoHideDuration: 1000,
                 variant: 'success',
             });
-            history.push(`/trainer/${currentTrainer.id}`);
-            // history.push(`/`);
+            // history.push(`/trainer/${currentTrainer.id}`);
+            history.push(`/`);
         })
         .catch(function (response) {
             setLoading(false);

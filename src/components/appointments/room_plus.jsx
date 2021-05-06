@@ -5,7 +5,6 @@ import axios from 'axios'
 import {selectCurrentCustomer} from '../../slices/customer'
 import {selectCurrentAdmin} from '../../slices/admin'
 import {selectCurrentTrainer} from '../../slices/trainer'
-import {selectCurrentMasterAdmin} from '../../slices/master_admin'
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -14,7 +13,6 @@ export default function RoomPlus(){
     const currentCustomer = useSelector(selectCurrentCustomer);
     const currentAdmin = useSelector(selectCurrentAdmin);
     const currentTrainer = useSelector(selectCurrentTrainer);
-    const currentMasterAdmin = useSelector(selectCurrentMasterAdmin);
     const [aposDatas, setAposDatas] = React.useState([]);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     var message = ""
@@ -32,7 +30,6 @@ export default function RoomPlus(){
         const url = `/room_plus/comapny/${company_id}`
         axios.get(url)
         .then(function (response) {
-            console.log({response})
             setAposDatas(response.data.data)
             message = response.data.message
             enqueueSnackbar(message, { 
