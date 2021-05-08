@@ -17,21 +17,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AdminMenues(){
-    // const url = `/get/all_customers`
-    // const serch_url = `/serch/customers`
-    // const [allCustomers, setAllCustomers] = useState([]);
-    // const [searchCustomers, setSearchCustomers] = useState([]);
     const classes = useStyles();
-
-    // useEffect(()=>{
-    //     axios.get(url)
-    //     .then(function(res) {
-    //         setAllCustomers(res.data.all_customers);
-    //     })
-    //     .catch(function(error) {
-    //       console.log({error})
-    //     });
-    // },[])
 
     return(
         <>
