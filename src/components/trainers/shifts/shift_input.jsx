@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ShiftInput({setButton, shift, all_shift, setShift, workDays, year,  month}) {
     const classes = useStyles();
     const [checked, setChecked] = React.useState(false);
-    const [startArray, setStartArray] = React.useState([7,30]);
-    const [finishArray, setFinishArray] = React.useState([19,30]);
+    const [startArray, setStartArray] = React.useState([8,30]);
+    const [finishArray, setFinishArray] = React.useState([22,30]);
     // 曜日を出す
     const this_date = new Date(year, month - 1, shift.date)
     const getDay = this_date.getDay()
