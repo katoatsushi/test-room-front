@@ -79,8 +79,8 @@ const AppointmentNew = (props) => {
                 disabled={(time[1] <= 0)}
                 onClick={() => handleTimeSelect(time)}
                 control={<Radio />}
-                label= {time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"}
-                // label= {time[1] + "枠" + time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"} 
+                // label= {time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"}
+                label= {time[1] + "枠" + time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"} 
             />
         </React.Fragment>
     );
