@@ -21,14 +21,8 @@ const useStyles = makeStyles((theme) => ({
 // export default function PasswordResetSnackBar({barOpen, error,message}) {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function PasswordResetSnackBar({barOpen, error , message}) {
-  console.log({barOpen})
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-
-  // useEffect(()=>{
-  //   console.log({barOpen})
-  //   setOpen(barOpen)
-  // },[])
 
   const handleClick = () => {
     setOpen(true);

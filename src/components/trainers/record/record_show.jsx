@@ -12,14 +12,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 export default function ShowRecord(props) {
-    console.log({props})
     const record_id = props.match.params.id
     const history = useHistory();
     const trainerHeaders = useSelector(selectTrainerHeaders);
     const url = `/show/record/${record_id}`
     const [customer, setCustomer] = React.useState();
     const [apo, setApo] = React.useState();
-    // const [record, setRecord] = React.useState();
     const [recordMenues, setRecordMenues] = React.useState([]);
     const [open, setOpen] = React.useState(false);
     const message = ""
@@ -42,10 +40,8 @@ export default function ShowRecord(props) {
 
         axios.get(url, trainerHeaders)
         .then(function(res) {
-            console.log({res})
             setCustomer(res.data.customer)
             setApo(res.data.apo)
-            // setRecord(res.data.record)
             setRecordMenues(res.data.records_menues)
         })
         .catch(function(error) {
@@ -58,7 +54,6 @@ export default function ShowRecord(props) {
         const delete_url =  `/delete/record/${record_id}`
         axios.delete(delete_url, trainerHeaders)
         .then(res => {         
-            console.log(res.data.message)
             setOpen(false);
             history.push(`/trainers/customer_session_records`);   
         })

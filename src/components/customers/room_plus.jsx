@@ -173,7 +173,6 @@ export default function RoomPlusBox(){
         setOpen(true);
     }
 
-    console.log({selectTime})
     return(
         <>
         {open?(

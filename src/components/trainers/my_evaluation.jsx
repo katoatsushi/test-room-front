@@ -17,7 +17,6 @@ import { useHistory } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 
 function BarChart({avaTrainer}) {
-    console.log({avaTrainer})
     const graphData= {
         labels: avaTrainer.name,
         datasets: [
@@ -67,18 +66,12 @@ function BarChart({avaTrainer}) {
 
 export default function MyEvaluation(props) {
     const url = `/trainer/get/my_evaluation/${props.props.match.params.id}`
-    // const currentTrainer = useSelector(selectCurrentTrainer);
-    // const trainerHeaders = useSelector(selectTrainerHeaders);
     const [myEvaluation, setMyEvaluation] = React.useState();
 
-    console.log({props})
-    console.log(props.props.match.params.id)
     useEffect(()=>{
         axios.get(url)
         .then(function(res) {
-            console.log({res})
             setMyEvaluation(res.data.data)
-            console.log("res.data.intial_data", res.data.intial_data)
         })
         .catch(function(error) {
             console.log({error})

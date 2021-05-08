@@ -45,11 +45,9 @@ export default function TrainerMyPage(props) {
   function handleAvatarSubmit(){
       const formData = new FormData();
       const url = `/trainer/update_avatar`
-      console.log({trainerHeaders})
       formData.append("avatar", avatarData);
       axios.put(url, formData, trainerHeaders)
       .then(res => {
-          console.log({res})
           setAvatarOpen(false);
           dispatch(setCurrentTrainerInfo(res.data.data));
       })

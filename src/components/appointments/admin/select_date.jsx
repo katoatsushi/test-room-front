@@ -16,7 +16,6 @@ const AdminSelectDate = () => {
     const history = useHistory();
     const onSubmit = (data) => console.log(data);
     const { handleSubmit } = useForm();
-    console.log({value})
 
     return (
         <>
@@ -36,7 +35,6 @@ const AdminSelectDate = () => {
                     color="secondary"
                     style={{width: '95%', marginTop: 30, marginRight: 'auto', marginLeft: 'auto'}}
                     onClick = {() => history.push(`/admin/schedule/check/year/${value.getFullYear()}/month/${value.getMonth() + 1}/day/${value.getDate()}`)} 
-                    // onClick = {() => history.push(`/admin/schedule/show/year/${value.getFullYear()}/month/${value.getMonth() + 1}/day/${value.getDate()}`)}
                 >
                     時間を選ぶ
                 </Button>

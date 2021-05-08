@@ -128,7 +128,6 @@ function CreateTrainer() {
         .then(function (response) {
             // fitnessとの関連付け
             const fitness_url = `/set_fitnesses`
-            console.log({response})
             axios.post( fitness_url,
                 {
                   trainer: response.data,
@@ -139,15 +138,12 @@ function CreateTrainer() {
             .then(function (response) {
                 setSuccess(true);
                 setLoading(false);
-                console.log({response})
                 history.push(`/`)
             }).catch(function (response) {
               setLoading(false);
-              console.log({response})
             })
         }).catch(function (response) {
             setLoading(false);
-            console.log({response})
         })
     }
     const handleEMailChange = (e) => {

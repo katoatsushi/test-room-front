@@ -127,7 +127,6 @@ export default function AdminLogIn() {
       .then((res) => {
         setSuccess(true);
         setLoading(false);
-        console.log("admin",{res})
         dispatch(setCurrentAdmin(res.data.data));
         dispatch(setHeaders(res.headers));
         const message = "ログインに成功しました！"

@@ -180,7 +180,6 @@ export default function AllCustomers(){
             }
         })
         .catch(function(error) {
-          console.log({error})
           dispatch(adminRemove());
           history.push("/admin/log_in")
         });
@@ -191,14 +190,13 @@ export default function AllCustomers(){
           setAllCustomers(res.data.all_customers);
         })
         .catch(function(error) {
-          console.log({error})
           dispatch(trainerRemove());
           history.push("/trainer/log_in")
         });
 
       }
     },[theChange])
-  console.log({allCustomers})
+
     return(
         <>
           <TableContainer component={Paper}>

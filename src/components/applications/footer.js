@@ -43,7 +43,6 @@ function Footer() {
   const currentMasterAdmin = useSelector(selectCurrentMasterAdmin);
   const customerStatus = useSelector(selectCurrentCustomerStatus);
   const today = new Date
-  console.log({currentCustomer})
 
   return (
     <div className={classes.root}>

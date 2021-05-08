@@ -57,14 +57,11 @@ export default function ScheduleShow({company_id,  day, scroll}) {
         .then(function(res) {
             setStoreAppointments(res.data.schedules);
             setStores(res.data.stores)
-            console.log({これどう: res.data.stores[0].store_name})
             setThisStores(res.data.stores[0].store_name)
             // 初期のスケージュール
             setThisStoreAppointments(res.data.schedules[0].data)
-            console.log({スケジュール: res.data.schedules[0].data})
             if (res.data.today_schedules.length){
               // 初期値を設定
-              console.log({res})
               setThisStoreAppointments(res.data.today_schedules[0].value);
             }
         })
@@ -98,12 +95,10 @@ export default function ScheduleShow({company_id,  day, scroll}) {
     ): 
         <MenuItem />
     function handlehange(e) {
-        // setStores(e.target.value.store_name);
         setThisStores(e.target.value);
         const selectAppointment = storeAppointments.filter((apo, index) => {
             return apo.name == e.target.value
         });
-        console.log({テスト: selectAppointment[0]})
         setThisStoreAppointments(selectAppointment[0].data)
     }
     function timeChange(a) {
@@ -117,7 +112,6 @@ export default function ScheduleShow({company_id,  day, scroll}) {
     }
 
     function SearchTrialCustomer(e){
-        console.log({e})
         return(<></>)
     }
 

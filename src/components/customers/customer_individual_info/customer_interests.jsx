@@ -49,10 +49,7 @@ function SetChip({interest, setInterestIDs, interestIDs, clickedInterests, setUp
             }
         }else{
             // 追加
-            console.log({interest})
-            console.log({interestIDs})
             const newIDs =  interestIDs.splice(-1, 0, interest.id);
-            console.log({newIDs})
             setInterestIDs((prev) => [...prev, ...newIDs])
             if (setUpdateInterestsIDs){
                 // eslint-disable-next-line no-unused-vars

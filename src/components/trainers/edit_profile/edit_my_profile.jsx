@@ -128,20 +128,17 @@ function PhoneNumber(props) {
 }
 
 export default function EditMyProfile() {
-    const classes = useStyles();
-    const history = useHistory();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [completed, setCompleted] = React.useState(new Set());
-    const steps = getSteps();
-    // const [open, setOpen] = React.useState(true);
-    const [trainerInfo, setTrainerInfo] = React.useState(
-              {name: {first_name_kanji: "", last_name_kanji: "", first_name_kana: "", last_name_kana: ""}, 
-              gender: "", birthday: null, phoneNumber: {}});
-    // eslint-disable-next-line no-unused-vars
-    const [button, setButton] = React.useState(false);
-    const trainerHeaders = useSelector(selectTrainerHeaders);
-
-  console.log({trainerInfo})
+  const classes = useStyles();
+  const history = useHistory();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [completed, setCompleted] = React.useState(new Set());
+  const steps = getSteps();
+  const [trainerInfo, setTrainerInfo] = React.useState(
+            {name: {first_name_kanji: "", last_name_kanji: "", first_name_kana: "", last_name_kana: ""}, 
+            gender: "", birthday: null, phoneNumber: {}});
+  // eslint-disable-next-line no-unused-vars
+  const [button, setButton] = React.useState(false);
+  const trainerHeaders = useSelector(selectTrainerHeaders);
 
   const totalSteps = () => {
     return getSteps().length;

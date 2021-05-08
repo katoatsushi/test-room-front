@@ -48,9 +48,7 @@ export default function CreateTableCellEdit({data, setSubmitData, stores, submit
     },[])
 
     const handleChange = (event) => {
-        console.log({data})
         if(event.target.checked){
-            console.log({data},"追加")
             setOpen(true);
         }else{
             console.log({data},"削除")
@@ -71,7 +69,6 @@ export default function CreateTableCellEdit({data, setSubmitData, stores, submit
         setInputCheck({start: inputCheck.start, finish: true, store: inputCheck.store})
     }
     function handleStoreChange(e) {
-        console.log({e}) 
         setSelectStore(e.target.value);
         setInputCheck({start: inputCheck.start, finish: inputCheck.finish, store: true})
     }
@@ -84,7 +81,6 @@ export default function CreateTableCellEdit({data, setSubmitData, stores, submit
 
     function handleEditChange(){
         setOpen(true);
-        console.log({data})
     }
 
     function handleSubmitDataChange(){
@@ -99,7 +95,6 @@ export default function CreateTableCellEdit({data, setSubmitData, stores, submit
         start_date  = `${start_date}`
         finish_date = `${finish_date}`
         const new_data_for_submit = {trainer_id: data.trainer_id, day: data.day, day_ja: data.day_ja, shifts: {start: start_date, finish: finish_date, trainer_id: data.trainer_id, store: selectStore}}
-        // data.shifts = {start: start, finish: finish, trainer_id: data.trainer_id, store: selectStore}
         if (exist){
             // すでに指定のオブジェクトが存在する場合
             const updateShiftData = submitData.filter((sd) => {
@@ -114,7 +109,6 @@ export default function CreateTableCellEdit({data, setSubmitData, stores, submit
             // まだオブジェクトが存在しない場合
             submitData.push(new_data_for_submit)
         }
-        console.log({data},{submitData},{exist})
         setOpen(false);
         setShiftEdit(true)
     }

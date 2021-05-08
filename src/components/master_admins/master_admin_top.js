@@ -29,7 +29,6 @@ const MasterAdminTop = () => {
         });
         
     },[])
-    console.log(companies)
 
     const StyledTableCell = withStyles((theme) => ({
         head: {
@@ -49,8 +48,6 @@ const MasterAdminTop = () => {
         },
     }))(TableRow);
 
-   
-    console.log(companies)
     const readCompanies = companies.length ?  
         companies.map((company , index) =>
             <StyledTableRow key={ index } >

@@ -12,7 +12,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
-import PasswordResetSnackBar from './password_reset_snack_bar'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { setCurrentCustomer, setCurrentCustomerInfo, setCurrentCustomerStatus, setCurrentCustomerInterests, setHeaders} from  '../../../slices/customer';
 import { setCustomerRecords, customerRecordRemove, getCustomerRecords } from '../../../slices/customer_record';
@@ -56,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomerPasswordEdit(props) {
-    console.log({props})
     const url = `/v1/customer_auth/password`
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -110,10 +108,8 @@ export default function CustomerPasswordEdit(props) {
         setSuccess(false);
         setLoading(true);
       }
-      console.log({tokenHeader})
       axios.put(url, submitData, {headers: tokenHeader})
       .then((res) => {
-        console.log({res})
         setSuccess(true);
         setLoading(false);
         // お客様情報・ヘッダー情報を保存
@@ -130,7 +126,6 @@ export default function CustomerPasswordEdit(props) {
             dispatch(setCustomerRecords(response.data.evaluations));
             history.push('/');
           }else{
-            console.log("現在返すべきトレーナーの評価はありません")
             history.push('/');
           }
           const message = res.data.message
@@ -144,7 +139,6 @@ export default function CustomerPasswordEdit(props) {
       })
       .catch((err) => {
         // すでにパスワードの設定済みや有効期限切れの場合
-        console.log({err})
         setLoading(false);
         const message = err.response?.data.errors[0]
         enqueueSnackbar(message, { 

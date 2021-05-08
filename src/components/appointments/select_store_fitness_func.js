@@ -14,7 +14,6 @@ import { selectCustomerHeaders} from '../../slices/customer'
 import { selectTrainerHeaders} from '../../slices/trainer'
 
 const SelectStoreFitness = (props) => {
-    console.log("SelectStoreFitness", {props})
     const customerHeader = useSelector(selectCustomerHeaders);
     const trainerHeader = useSelector(selectTrainerHeaders);
     const [customer_menu, setCustomerMenu] = useState([]);
@@ -35,7 +34,6 @@ const SelectStoreFitness = (props) => {
         }
         axios.get(url, header)
         .then(function(res) {
-            console.log("レプポンス",{res})
             setCustomerMenu(res.data.fitnesses);
             setStore(res.data.store);
         })
@@ -47,12 +45,10 @@ const SelectStoreFitness = (props) => {
     function handleCustomerMenuChange(e) { 
         setSelectCustomerMenu(e.target.value)
         setFitnessCheck(true)
-        // console.log({check})
     }
     function handleStoreChange(e) {  
         setSelectStore(e.target.value)
         setStoreCheck(true)
-        // console.log({check})
     }
 
     const onSubmit = (data) => console.log(data);

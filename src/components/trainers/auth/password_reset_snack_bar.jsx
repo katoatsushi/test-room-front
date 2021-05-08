@@ -20,10 +20,8 @@ const useStyles = makeStyles((theme) => ({
 
 // export default function PasswordResetSnackBar({barOpen, error,message}) {
 export default function TrainerPasswordResetSnackBar({barOpen, error , message}) {
-  console.log({barOpen})
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-
 
   const handleClick = () => {
     setOpen(true);

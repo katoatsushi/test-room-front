@@ -71,10 +71,9 @@ export default function TrainerPasswordReset() {
     default:
         redirect_url  = 'http://localhost:3001/trainer/password/';
     }
+    
     const url = `/v1/trainer_auth/password`
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const history = useHistory();
     const [ submitData, setSubmitData ] = useState({email: "", redirect_url: redirect_url});
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
@@ -84,7 +83,6 @@ export default function TrainerPasswordReset() {
     });
 
     function handlePasswordResetSubmit() {
-      console.log({submitData})
       if (!loading) {
         setSuccess(false);
         setLoading(true);
@@ -93,14 +91,12 @@ export default function TrainerPasswordReset() {
       .then((res) => {
         setSuccess(true);
         setLoading(false);
-        console.log({res})
         const message = res.data.message
         enqueueSnackbar(message, { 
             variant: 'success',
         });
       })
       .catch((err) => {
-        console.log({err})
         setLoading(false);
         const message = err.response?.data.errors[0]
         enqueueSnackbar(message, { 

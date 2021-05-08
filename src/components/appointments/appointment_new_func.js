@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AppointmentNew = (props) => {
-    console.log("AppointmentNew", {props})
     const allIDs = props.match.params
     const classes = useStyles();
     const [appointments, setAppointments] = useState([]);
@@ -51,7 +50,6 @@ const AppointmentNew = (props) => {
     const [success, setSuccess] = React.useState(false);
     const [ radioCheck, setRadioCheck ] = useState(false);
     const params = props.match.params
-    // const url = `/appointments/new/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
     const url = `/appointments/new/customer/${params.customer_id}/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
 
     useEffect(()=>{
@@ -64,11 +62,9 @@ const AppointmentNew = (props) => {
             setSuccess(true);
             setLoading(false);
             setAppointments(res.data);
-            console.log({res})
         })
         .catch(function(error) {
             setLoading(false);
-            console.log({error})
         });
     },[])
 

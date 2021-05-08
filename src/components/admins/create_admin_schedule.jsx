@@ -109,7 +109,6 @@ export default function CreateAdminSchedule(){
     const [timeFin, setTimeFin] = useState({hour: 7, min: 30})
     const [check, setCheck] = React.useState('false');
     const [trialValue, setTrialValue] = useState({name: "", address: "", tel: "", email: "", details: ""});
-    // console.log({trialValue})
     function handleStartChange(e){
         const hour_min = e.target.value.split(':') 
         setTimeStart({hour: Number(hour_min[0]), min: Number(hour_min[1])})
@@ -126,9 +125,6 @@ export default function CreateAdminSchedule(){
         setCheck(event.target.value);
     };
     function handleAdminScheduleSubmit() {
-        console.log({dayInfo})
-        console.log({timeStart})
-        console.log({selectStore})
         const submit_url  = `/black_schedules`
         axios.post( submit_url, {
             dayInfo: dayInfo,
@@ -139,7 +135,6 @@ export default function CreateAdminSchedule(){
             trial_session: trialValue
         }, adminHeaders)
         .then(function (response) {
-            console.log(response)
             history.push('/customer_all');
         })
     }
@@ -147,7 +142,6 @@ export default function CreateAdminSchedule(){
         const check_scedule_url = `/admin/company_id/${currentAdmin.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`
         axios.get(check_scedule_url, adminHeaders)
         .then(function(res) {
-            console.log({res}, "確認だよん")
             setStores(res.data.today_schedules);
         })
         .catch(function(error) {

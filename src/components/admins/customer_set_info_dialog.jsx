@@ -58,8 +58,6 @@ export default function CustomerSetInfoDialog({customer, setAllCustomers,setTheC
     };
     const [currency, setCurrency] = React.useState(0);
     const handleCurrencyChange = (event) => {
-        console.log({event})
-        console.log(event.target.value)
         setCurrency(event.target.value);
         setChange(true);
     };
@@ -83,15 +81,7 @@ export default function CustomerSetInfoDialog({customer, setAllCustomers,setTheC
         axios.put(url, {paid: paid,room_plus: roomPlus, dozen_sessions: false, numbers_of_contractnt: currency}, adminHeaders)
         .then(res => {
             handleClose();
-            console.log({res})
             setTheChange((prev) => (!prev))
-            // setAllCustomers((prev) => prev.map((p) => {
-            //     if(p.id == res.data.id) {
-            //         p = res.data
-            //     }
-            //     return p
-            //     })
-            // );
         })
         .catch(error => {
             console.log({error})

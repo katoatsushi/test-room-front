@@ -60,7 +60,6 @@ const StyledTableRow = withStyles((theme) => ({
 
 // eslint-disable-next-line react/prop-types
 function StoreCell({store, setReload}){
-    console.log({store})
     const [open, setOpen] = React.useState(false);
     const [newStore, setNewStore] = React.useState();
     const [ check, setCheck] = React.useState(false);
@@ -89,13 +88,11 @@ function StoreCell({store, setReload}){
     }
     function handleNameChange(e){
         setCheck(true)
-        console.log({newStore})
         setNewStore((prev) => ({id: prev.id, company_id: prev.company_id, number_of_rooms: prev.number_of_rooms,
                                 store_address: prev.store_address,store_name: e.target.value, tel: prev.tel }))
     }
     function handleAddressChange(e){
         setCheck(true)
-        console.log({newStore})
         setNewStore((prev) => ({id: prev.id, company_id: prev.company_id, number_of_rooms: prev.number_of_rooms,
                                 store_address: e.target.value,store_name: prev.store_name, tel: prev.tel }))
     }
@@ -115,7 +112,6 @@ function StoreCell({store, setReload}){
     function handleSubmit(){
         axios.put(url, newStore, adminHeaders)
         .then(res => {
-          console.log({res})
           setOpen(false);
           setDeleteOpen(false)
           setReload((prev) => (!prev))
@@ -156,7 +152,6 @@ function StoreCell({store, setReload}){
         enqueueSnackbar(message, { 
             variant: 'error',
         });
-        console.log({err})
         setDeleteOpen(false)
         setReload((prev) => (!prev))
       });
@@ -304,7 +299,6 @@ export default function AdminEditStore() {
     useEffect(()=>{
         axios.get(url, adminHeaders)
         .then(function(res) {
-            console.log({res})
             setStores(res.data.stores)
             setCompany(res.data.company)
         })

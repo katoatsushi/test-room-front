@@ -4,9 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 export default function InputName(props) {
-    console.log({props})
     function handleName_A(e){
-        console.log({e})
         props.setTrainerInfo((prev) =>  ({...prev, name: {
                     first_name_kanji: e.target.value, 
                     last_name_kanji:  prev.name.last_name_kanji,
@@ -15,7 +13,6 @@ export default function InputName(props) {
                 }}))
     }
     function handleName_B(e){
-        console.log({e})
         props.setTrainerInfo((prev) =>  ({...prev, name: {
                     first_name_kanji: prev.name.first_name_kanji,
                     last_name_kanji:  e.target.value,
@@ -24,7 +21,6 @@ export default function InputName(props) {
                 }}))
     }
     function handleName_C(e){
-        console.log({e})
         props.setTrainerInfo((prev) =>  ({...prev, name: {
                     first_name_kanji: prev.name.first_name_kanji,
                     last_name_kanji:  prev.name.last_name_kanji,
@@ -33,7 +29,6 @@ export default function InputName(props) {
                 }}))
     }
     function handleName_D(e){
-        console.log({e})
         props.setTrainerInfo((prev) =>  ({...prev, name: {
                     first_name_kanji: prev.name.first_name_kanji,
                     last_name_kanji:  prev.name.last_name_kanji,

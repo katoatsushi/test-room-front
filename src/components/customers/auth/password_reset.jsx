@@ -85,7 +85,6 @@ export default function CustomerPasswordReset() {
     });
 
     function handlePasswordResetSubmit() {
-      console.log({submitData})
       if (!loading) {
         setSuccess(false);
         setLoading(true);
@@ -94,14 +93,12 @@ export default function CustomerPasswordReset() {
       .then((res) => {
         setSuccess(true);
         setLoading(false);
-        console.log({res})
         const message = res.data.message
         enqueueSnackbar(message, { 
             variant: 'success',
         });
       })
       .catch((err) => {
-        console.log({err})
         setLoading(false);
         const message = err.response?.data.errors[0]
         enqueueSnackbar(message, { 

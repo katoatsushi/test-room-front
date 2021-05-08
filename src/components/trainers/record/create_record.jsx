@@ -91,7 +91,6 @@ export default function TrainerCreateRecord(props) {
       [classes.buttonSuccess]: success,
     });
     const url = `/get/res_second/fitness/${props.match.params.fitness_id}`
-    console.log({props})
     useEffect(()=>{
         if (!loading) {
             setSuccess(false);

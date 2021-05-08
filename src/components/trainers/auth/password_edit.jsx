@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TrainerPasswordEdit(props) {
-    console.log({props})
     const url = `/v1/trainer_auth/password`
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -68,12 +67,10 @@ export default function TrainerPasswordEdit(props) {
     useEffect(()=>{
         let params = (new URL(document.location)).searchParams;
         let reset_password_token = params.get('reset_password_token'); 
-        console.log({reset_password_token})
         const dataSet = {reset_password_token: reset_password_token, redirect_url: "http://localhost:3000"}
         const get_token_url = '/v1/trainer_auth/password/edit'
         axios.get(get_token_url, {params: dataSet})
         .then(function(res) { 
-          console.log({res})
           const str = res.data.tokens
           const tokensString =  str.split('?')[1];
           const tokenSet =  tokensString.split('&');
@@ -123,7 +120,6 @@ export default function TrainerPasswordEdit(props) {
       })
       .catch((err) => {
         // すでにパスワードの設定済みや有効期限切れの場合
-        console.log({err})
         setLoading(false);
         const message = err.response?.data.errors[0]
         enqueueSnackbar(message, { 

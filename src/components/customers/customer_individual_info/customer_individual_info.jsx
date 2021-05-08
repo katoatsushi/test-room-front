@@ -99,7 +99,6 @@ export default function CreateCustomerIndividualInfo() {
       const url = `/customer_individual_infos`
       axios.put(url, customerStatus, customerHeaders)
       .then(function (response) {
-        console.log("success", {response})
         dispatch(setCurrentCustomerInfo(response.data.data));
         dispatch(setCurrentCustomerInterests(response.data.interests));
         history.push('/');

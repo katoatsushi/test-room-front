@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AppointmentConfirm = (props) => {
-    console.log("AppointmentConfirm", {props})
     const classes = useStyles();
     const time_strings = props.location.state.time_default
     const time_array_start = props.location.state.time_array[0]
@@ -94,7 +93,6 @@ const AppointmentConfirm = (props) => {
             setCheck(true);
           }).catch(function (response) {
             setLoading(false);
-            console.log(response);
         })
     }
 

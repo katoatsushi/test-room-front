@@ -87,12 +87,9 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
     },[])
     
     const handleChange = (event) => {
-        console.log({data})
         if(event.target.checked){
-            console.log({data},"追加")
             setOpen(true);
         }else{
-            console.log({data},"削除だよん")
             // submitDataの中にあるか確認
             const deletedDatas = submitData.filter((submitd) => {
                 return submitd.shifts.id == data.shifts.id
@@ -111,38 +108,28 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
     };
 
     function handleStartChange(e) {
-        console.log("start",e.target.value)
         setStart(e.target.value)
         setInputCheck({start: true, finish: inputCheck.finish, store: inputCheck.store})
     }
     function handleFinishChange(e) {
-        console.log("finish",e.target.value)
         setFinish(e.target.value)
         setInputCheck({start: inputCheck.start, finish: true, store: inputCheck.store})
     }
     function handleStoreChange(e) {
-        console.log({e}) 
         setSelectStore(e.target.value);
         setInputCheck({start: inputCheck.start, finish: inputCheck.finish, store: true})
     }
     const select_store = stores.length?
     stores.map((s, index) =>
-        // <MenuItem value={s} key={index} onChange={handleStoreChange}>
         <MenuItem value={s} key={index}>
             { s.store_name }
         </MenuItem>
     ): 
         <MenuItem />
 
-    // const option_select_store = stores.length?
-    // stores.map((s, index) =>
-    //     <option key={index} value={s}>{ s.store_name }</option>
-    // ): 
-    //     <option/>
 
     function handleSubmitDataChange(){
         // 存在するかさがす
-        console.log({data})
         const stimes = start.split(':');
         var start_date = new Date(data.year, data.month - 1, data.day, Number(stimes[0]), Number(stimes[1]));
         const ftimes = finish.split(':');
@@ -185,7 +172,6 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
     }
 
     function handleEditChange(){
-        console.log({data})
         setOpen(true);
     }
     function setDate(obj){

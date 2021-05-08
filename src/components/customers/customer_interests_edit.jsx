@@ -33,13 +33,11 @@ function SetChipEdit({thisInterest, setInterestIDs, interestIDs}) {
 
     function handleValueChange(){
         if(value){
-            //  console.log("AAAAAAAAAAAAAAAA")
             const deletedIDs = interestIDs.filter((ID) => {
                 return ID != thisInterest.id;
             });
             setInterestIDs(deletedIDs)
         }else{
-            // console.log("AAAAAAAAAAAAAAAA")
             setInterestIDs((prev) => [...prev, thisInterest.id])
         }
         setValue(!value);
@@ -89,7 +87,6 @@ export default function CustomerInterestsEdit({interestIDs, setInterestIDs}) {
     const select_interests = allInterests.length ?  
         allInterests.map((interest,index) =>
         <>
-
             <SetChipEdit key={index} thisInterest={interest} setInterestIDs={setInterestIDs} interestIDs={interestIDs} />
         </>
     )

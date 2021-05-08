@@ -23,9 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function BarChart({avaTrainer}) {
-  console.log({avaTrainer})
   const graphData= {
-    // labels: [['2019年', '1月'],['2019年', '2月'],],
     labels: avaTrainer.name,
     datasets: [
       // 表示するデータセット
@@ -86,7 +84,6 @@ export default function EvaluationData(props) {
     useEffect(()=>{
         axios.get(url)
         .then(function(res) {
-            // console.log({res})
             setAvaTrainer({details: res.data.average.trainer[0], name: res.data.average.trainer[1], score: res.data.average.trainer[2]})
             setFitnessTrainerData(res.data.average.all)
             setPieChartData(res.data.count.all)
@@ -110,10 +107,8 @@ export default function EvaluationData(props) {
     ):
         <MenuItem />
 
-    // console.log({pieChartData})
     return (
     <div>
-        {/* <div style={{width: '70%', backgroundColor: 'white'}}> */} 
         <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
@@ -138,7 +133,6 @@ export default function EvaluationData(props) {
           </Paper>
         </Grid>
         </Grid>
-        {/* </div> */}
         <Grid container spacing={3}>
         
         {pieChartData?(

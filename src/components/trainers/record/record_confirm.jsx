@@ -49,8 +49,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RecordConfirm(props) {
-    console.log({props})
-    console.log(props.location)
     const history = useHistory();
     const record = props.location.record
     const data = props.location.data
@@ -108,12 +106,10 @@ export default function RecordConfirm(props) {
         .then(function (response) {
             setSuccess(true);
             setLoading(false);
-            console.log({response})
             history.push('/trainers/customer_session_records');
         })
         .catch(function (response) {
             setLoading(false);
-            console.log("error", {response})
         })
     }
     return(<>

@@ -59,8 +59,6 @@ const AppointmentRecordMenusCreate = (props) => {
             detail: detail,
         })
         .then(function (response) {
-            console.log('response is')
-            console.log(response)
             history.push(`/`)
         })
     }

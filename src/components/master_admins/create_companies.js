@@ -45,7 +45,6 @@ function CreateCompany() {
     const { handleSubmit } = useForm();
 
     function onSubmit() {
-        console.log("onSubmit")
         const tel = `${telFirst}-${telSecond}-${telThird}`
         axios.post( url, {
             name: name,
@@ -53,9 +52,7 @@ function CreateCompany() {
             tel: tel
         })
         .then(function (response) {
-            console.log(response);
             if (response.status==200) {
-                console.log(response.data);
                 history.push(`/master_admin`)
             } else {
                console.log(response);

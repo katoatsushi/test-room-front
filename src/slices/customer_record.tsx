@@ -13,13 +13,10 @@ const customerRecordsSlice = createSlice({
   initialState,
   reducers: {
     setCustomerRecords: (state, action: PayloadAction<ICustomerRecord[]>) => {
-     console.log('state',{state}, 'action',{action})
       state.customerRecords = action.payload;
     },
     customerRecordRemove: (state) => {
-      console.log('TODO::ここに削除機能をつける',{state})
       state.customerRecords = null;
-      // state.headers = null;
     },
   },
 });

@@ -45,7 +45,6 @@ const useStyles = makeStyles({
 });
 
 function ShowApo({apo, apos, setApos}) {
-  console.log({apos})
   const customerHeader = useSelector(selectCustomerHeaders);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -57,7 +56,6 @@ function ShowApo({apo, apos, setApos}) {
   function handleCancelClose(e) {
       const url = `/appointment/${e.id}`
       axios.delete(url, customerHeader)
-      // axios.delete(url)
       .then((res) => {
         const message = "予約をキャンセルしました！"
         enqueueSnackbar(message, { 
@@ -75,8 +73,6 @@ function ShowApo({apo, apos, setApos}) {
         enqueueSnackbar(message, { 
             variant: 'error',
         });
-        console.log({err})
-        console.log("error:", err.response.data.errors)
         setOpen(false);
         // TODO::ログイン画面に戻りたい
         // const history = useHistory();
@@ -93,7 +89,6 @@ function ShowApo({apo, apos, setApos}) {
           { apo.date[0] + '/' + apo.date[1] + '/' + apo.date[2] }
           &nbsp;&nbsp;
           { apo.start[0] + ':' + apo.start[1] } 〜 
-          {/* { apo.finish[0] + ':' + apo.finish[1] } */}
         </div>
         【{ apo.store_name}店】
         { apo.menu }
@@ -140,8 +135,6 @@ export default function CustomerHome(props) {
     useEffect(()=>{
         axios.get(url)
         .then(function(res) {
-            // setCustomer(res.data.customer);
-            // setRecords(res.data.customer_records);
             setApos(res.data.appointments);
         })
         .catch(function(error) {

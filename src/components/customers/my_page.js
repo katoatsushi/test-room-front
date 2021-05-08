@@ -129,7 +129,6 @@ export default function CustomerMyPage(props) {
     axios.get(url)
     .then(function(res) {
       setThisCustomer(res.data.customer);
-      console.log({customer: res.data.customer})
       setThisCustomerInfo(res.data.customer_info)
       setApoNum(res.data.appointment_count)
       setApoFinNum(res.data.session_count)

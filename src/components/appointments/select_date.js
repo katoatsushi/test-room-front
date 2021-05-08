@@ -7,7 +7,6 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 const SelectDate = (props) => {
-    console.log("SelectDate", {props})
     const today = new Date
     const store_id = props.match.params.store_id
     const customer_menu_id = props.match.params.customer_menu_id

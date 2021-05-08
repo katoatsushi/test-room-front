@@ -75,7 +75,6 @@ export default function SetTimesWeight(props) {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const [dataCheck, setDataCheck] = React.useState(true);
 
-    console.log({props})
     useEffect(()=>{
         if (props.location.data.length == 0) {
             setDataCheck(false)
@@ -93,7 +92,6 @@ export default function SetTimesWeight(props) {
     function handleMessageChange(e){
         setMessage(e.target.value);
     }
-    console.log({submitData})
 
     return (<>
     {dataCheck? (<>
@@ -102,7 +100,7 @@ export default function SetTimesWeight(props) {
                 カルテを発行する
             </Paper>
            <Paper variant="outlined"style={{padding: 10, margin: 5}}>
-            {/* <span className="karute_text">内容を選んでください</span> */}
+
             <Paper variant="outlined" style={{padding: 5,backgroundColor: '#CCCCCC',  margin: 0, textAlign: 'left', fontSize: '0.7em'}}>
                 <Grid container style={{fontWeight: 500}}>
                     <Grid item xs={5} >
@@ -169,7 +167,6 @@ export default function SetTimesWeight(props) {
                 multiline
                 style={{width: '100%', color: '#4DA7F0', marginTop: 10}}
                 rows={4}
-                // defaultValue="Default Value"
                 onChange={handleMessageChange}
                 variant="outlined"
             />

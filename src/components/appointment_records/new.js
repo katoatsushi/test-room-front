@@ -11,11 +11,8 @@ import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
-    // minWidth: 275,
     width: '90%',
     margin: '0 auto',
-    // margin: 'auto 0',
-    // textAlign: 'center'
   },
   bullet: {
     display: 'inline-block',
@@ -31,7 +28,6 @@ const useStyles = makeStyles({
 });
 
 const AppointmentRecordNew = (props) => {
-    console.log({props})
     const classes = useStyles();
     const history = useHistory();
 

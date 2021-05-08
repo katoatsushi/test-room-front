@@ -186,7 +186,6 @@ export default function CreateCustomerInfo() {
       const url = `/customer_infos`
       axios.put(url, customerInfo, customerHeaders)
       .then(function (response) {
-        console.log({response})
         dispatch(setCurrentCustomerInfo(response.data.data));
       }).catch(function (response) {
         console.log({response})

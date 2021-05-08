@@ -105,16 +105,13 @@ function CreateAdmin(props) {
         .then(function (response) {
           setSuccess(true);
           setLoading(false);
-          console.log(response);
           if (response.status==200) {
-              console.log(response.data);
               history.push(`/master_admin`)
           } else {
               console.log(response);
           }
         }).catch(function (response) {
           setLoading(false);
-          console.log({response})
       })
     }
     const handleEMailChange = (e) => {

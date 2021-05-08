@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RecordDialog({session}) {
-    console.log({session})
     const [open, setOpen] = useState(true);
     const [value, setValue] = React.useState(0);
     const [food, setFood] = React.useState(0);
@@ -86,7 +85,6 @@ function RecordDialog({session}) {
     }
 
     function handleSubmit(e) {
-        console.log({e})
         if (!loading) {
             setSuccess(false);
             setLoading(true);
@@ -100,7 +98,6 @@ function RecordDialog({session}) {
             trainer_score: value
         },customerHeader )
         .then(function (response) {
-            console.log({response})
             setSuccess(true);
             setLoading(false);
             setOpen(false);
@@ -114,14 +111,12 @@ function RecordDialog({session}) {
             dispatch(customerRemove());
             dispatch(customerRecordRemove());
             setLoading(false);
-            console.log(response.data);
         })
     }
     return(
         <>
             <Dialog
                 open={open}
-                // onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -192,16 +187,14 @@ function RecordDialog({session}) {
                         </Button>)
                     :
                     (<>
-                        {/* <div className={classes.wrapper}> */}
-                            <Button size="large" color="secondary" 
-                                style={{width: '90%', marginRight: 'auto', marginLeft: 'auto'}} 
-                                onClick={() => handleSubmit(session)} variant="contained"
-                                disabled={loading || success}
-                            >
-                                送信
-                            </Button>
-                            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-                        {/* </div> */}
+                        <Button size="large" color="secondary" 
+                            style={{width: '90%', marginRight: 'auto', marginLeft: 'auto'}} 
+                            onClick={() => handleSubmit(session)} variant="contained"
+                            disabled={loading || success}
+                        >
+                            送信
+                        </Button>
+                        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                     </>)
                 }
             </CardActions>
@@ -214,11 +207,9 @@ function RecordDialog({session}) {
 export default function Evaluation(props) {
     const classes = useStyles();
     const customerRecords = useSelector(getCustomerRecords);
-    console.log("確認だよ",{customerRecords})
     function CustomerRecordsDialog() {
         if (customerRecords){
             if(customerRecords.length){
-                console.log({customerRecords})
                 const this_session = customerRecords.slice(-1)[0]
                 return (
                     <RecordDialog session={ this_session } />
