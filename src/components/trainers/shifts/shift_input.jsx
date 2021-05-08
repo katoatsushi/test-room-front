@@ -18,11 +18,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ShiftInput({setButton, shift, all_shift, setShift, workDays}) {
+export default function ShiftInput({setButton, shift, all_shift, setShift, workDays, year,  month}) {
     const classes = useStyles();
     const [checked, setChecked] = React.useState(false);
     const [startArray, setStartArray] = React.useState([7,30]);
     const [finishArray, setFinishArray] = React.useState([19,30]);
+    // 曜日を出す
+    const this_date = new Date(year, month - 1, shift.date)
+    const getDay = this_date.getDay()
+    console.log({年は: year, 月は: month, 日付は: shift.date, タイム: this_date, 曜日は: getDay})
+    var dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][getDay];
+
     useEffect(()=>{
         if(shift.shift.start || shift.shift.end){
             setChecked(true)
@@ -132,6 +138,7 @@ export default function ShiftInput({setButton, shift, all_shift, setShift, workD
         }
         return hour + ":" + min
     }
+
     return (
         <>
         <Grid item xs={2} style={{paddingBottom: 0, marginBottom: 0}}>
@@ -142,7 +149,7 @@ export default function ShiftInput({setButton, shift, all_shift, setShift, workD
         />
         </Grid>
         <Grid item xs={2} style={{paddingBottom: 0, marginBottom: 0}}>
-        <div style={{marginTop: 5}}>{shift.date}日</div>
+            <div style={{marginTop: 5, fontSize: 15}}>{dayOfWeekStr? (<>{shift.date}({dayOfWeekStr})</>):<></>}</div>
         </Grid>
         <Grid item xs={8} style={{paddingBottom: 0, marginBottom: 0}}>
             <TextField

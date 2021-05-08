@@ -57,7 +57,8 @@ export default function ShiftNew(props){
     const history = useHistory();
     const currentTrainer = useSelector(selectCurrentTrainer);
     const trainer_headers = useSelector(selectTrainerHeaders);
-    var dt = new Date(props.year, props.month);
+    // var dt = new Date(props.year, props.month);
+    const dt = new Date()
     const last_day = new Date(dt.getFullYear(), dt.getMonth() + 2, 0)
     const the_last_day = last_day.getDate()
     var dataSet = []
@@ -130,7 +131,6 @@ export default function ShiftNew(props){
                 variant: 'success',
             });
             setButton(false)
-            // history.push(`/trainer/${currentTrainer.id}`);
             history.push(`/`);
         })
         .catch(function (response) {
@@ -152,7 +152,7 @@ export default function ShiftNew(props){
             <Grid container spacing={3}>
             {shift? (<>
                 {shift.map((s, index) => (
-                    <ShiftInput key={index} setButton={setButton} shift={s} all_shift={shift} setShift={setShift} workDays={workDays} />
+                    <ShiftInput key={index} setButton={setButton} shift={s} all_shift={shift} setShift={setShift} workDays={workDays} year={dt.getFullYear()} month={dt.getMonth() + 2}/>
                 ))}
             </>):(<>
                 {loading && <CircularProgress size={60} style={{marginLeft: 'auto', marginRight: 'auto', marginTop: 180, color: '#4DA7F0', paddingTop: 5}} />}
