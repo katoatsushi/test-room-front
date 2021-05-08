@@ -7,7 +7,6 @@ import Link from '@material-ui/core/Link';
 import HomeIcon from '@material-ui/icons/Home';
 import Grid from '@material-ui/core/Grid';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import {selectCurrentCustomer, selectCustomerHeaders, customerRemove, selectCurrentCustomerStatus} from '../../slices/customer'
 import {selectCurrentAdmin} from '../../slices/admin'
@@ -26,8 +25,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     left: 0,
     width: '100%',
-    color: 'white',
-    // height: 140,  
+    color: 'white', 
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -38,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Footer() {
-  // console.log({props})
   const classes = useStyles();
   const currentCustomer = useSelector(selectCurrentCustomer);
   const currentAdmin = useSelector(selectCurrentAdmin);

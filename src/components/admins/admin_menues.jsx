@@ -50,7 +50,6 @@ export default function AdminMenues(){
                   </Paper>
                 </Grid>
 
-
                 <Grid item xs={12}>
                   <Paper className={classes.paper}>
                     <Link href="/admin/trainer_shifts" style={{textAlign: 'center'}}>
