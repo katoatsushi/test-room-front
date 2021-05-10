@@ -60,10 +60,10 @@ export default function ScheduleShow({company_id,  day, scroll}) {
             setThisStores(res.data.stores[0].store_name)
             // 初期のスケージュール
             setThisStoreAppointments(res.data.schedules[0].data)
-            if (res.data.today_schedules.length){
-              // 初期値を設定
-              setThisStoreAppointments(res.data.today_schedules[0].value);
-            }
+            // if (res.data.today_schedules.length){
+            //   // 初期値を設定
+            //   setThisStoreAppointments(res.data.today_schedules[0].value);
+            // }
         })
         .catch(function(error) {
           console.log({error})

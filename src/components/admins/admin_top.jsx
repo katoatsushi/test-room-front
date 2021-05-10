@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import ScheduleCheck from './admin_schedule_cehck'
 import Paper from '@material-ui/core/Paper';
 import {selectCurrentAdmin} from '../../slices/admin'
 import {selectCurrentTrainer} from '../../slices/trainer'
 import { useSelector } from 'react-redux';
+import ScheduleShow from '../appointments/admin/schedule_show'
 
 export default function AdminTop(props){
     const currentAdmin = useSelector(selectCurrentAdmin);
@@ -22,7 +22,7 @@ export default function AdminTop(props){
                     return(
                         <>
                             <Paper style={{textAlign: 'center', padding: 10}}>本日のスケジュール</Paper>
-                            <ScheduleCheck company_id={company_id} day={day_info}/>
+                            <ScheduleShow company_id={company_id}  day={day_info} scroll={null} />
                         </>
                     );
                 } else if (currentTrainer) {
@@ -30,7 +30,7 @@ export default function AdminTop(props){
                     return (
                         <>
                             <Paper style={{textAlign: 'center', padding: 10}}>本日のスケジュール</Paper>
-                            <ScheduleCheck company_id={company_id} day={day_info}/>
+                            <ScheduleShow company_id={company_id}  day={day_info} scroll={null} />
                         </>
                     );
                 }

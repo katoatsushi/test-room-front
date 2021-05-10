@@ -12,7 +12,6 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import ja from "date-fns/locale/ja";
-import ScheduleCheck from './admin_schedule_cehck'
 import Paper from '@material-ui/core/Paper';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -24,6 +23,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { useHistory } from 'react-router-dom';
+import ScheduleShow from '../appointments/admin/schedule_show'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -272,7 +272,7 @@ export default function CreateAdminSchedule(){
                 <Paper style={{textAlign: 'center', padding: 20, backgroundColor: '#DDDDDD'}}>
                     {selectedDate.getFullYear()}/{selectedDate.getMonth() + 1}/{selectedDate.getDate()}のスケジュールを確認してください
                 </Paper>
-                <ScheduleCheck company_id={company_id} day={dayInfo} scroll={true}/>
+                <ScheduleShow company_id={company_id}  day={dayInfo} scroll={true} />
             </Grid>
             <Grid item xs={12} sm={1} />
         </Grid>
