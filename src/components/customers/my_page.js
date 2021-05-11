@@ -295,7 +295,7 @@ export default function CustomerMyPage(props) {
       <Paper elevation={3} variant="outlined" square>
       <Grid container style={{marginBottom: 10}}>
         <Grid container  style={{paddingTop: 5}}>
-          <Grid item xs={2}/>
+          {/* <Grid item xs={2}/> */}
           <Grid item xs={4} style={{textAlign: 'center'}}>
               <span className="customer_my_page_tag">今月の終了カルテ数</span><br/>
               <span style={{fontSize: '2em'}}>{apoFinNum}</span><br/>
@@ -333,11 +333,6 @@ export default function CustomerMyPage(props) {
                   { customerStatus.numbers_of_contractnt - apoNum - apoFinNum }
                  </>):<></>}
               </span>
-              {/* <span style={{fontSize: '1.2em'}}>/
-                {customerStatus? (<>
-                  { customerStatus.numbers_of_contractnt }
-                 </>):<></>}
-              </span> */}
               <br/>
           </>):<></>}
             {
@@ -369,7 +364,36 @@ export default function CustomerMyPage(props) {
                 })()
             }
           </Grid>
-          <Grid item xs={2}/>
+          <Grid item xs={4} style={{textAlign: 'center'}}>
+              <span className="customer_my_page_tag">今月予約済み</span><br/>
+              <span style={{fontSize: '2em'}}>{apoNum}</span><br/>
+            {/* {
+                (() => {
+                    // eslint-disable-next-line react/prop-types
+                    if ((currentCustomer && currentCustomer.id == props.match.params.id) || currentAdmin || currentTrainer) {
+                        return(
+                        <Chip
+                          size="small"
+                          label="全て"
+                          clickable
+                          // eslint-disable-next-line react/prop-types
+                          onClick={() => history.push(`/customer_records/${props.match.params.id}`)}
+                          style={{backgroundColor: '#4DA7F0', fontWeight: 700, color: 'white', paddingLeft: 20,paddingRight: 20}}
+                        />
+                        );
+                    } else {
+                        return (
+                          <Chip
+                            size="small"
+                            label="全て"
+                            style={{backgroundColor: '#4DA7F0', fontWeight: 700, color: 'white', paddingLeft: 20,paddingRight: 20}}
+                          />
+                        );
+                    }
+                })()
+            } */}
+          </Grid>
+          {/* <Grid item xs={2}/> */}
         </Grid>{/* <Grid container> */}
         {/* 予約中のカルテ */}
         <CustomerHome props={props}/>

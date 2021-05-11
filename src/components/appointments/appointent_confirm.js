@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AppointmentConfirm = (props) => {
+    console.log({props})
     const classes = useStyles();
     const time_strings = props.location.state.time_default
     const time_array_start = props.location.state.time_array[0]

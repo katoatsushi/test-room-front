@@ -49,6 +49,8 @@ const AppointmentNew = (props) => {
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
     const [ radioCheck, setRadioCheck ] = useState(false);
+    const [ store, setStore ] = useState(false);
+    const [ fitness, setFitness ] = useState(false);
     const params = props.match.params
     const url = `/appointments/new/customer/${params.customer_id}/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`
 
@@ -61,7 +63,9 @@ const AppointmentNew = (props) => {
         .then(function(res) {
             setSuccess(true);
             setLoading(false);
-            setAppointments(res.data);
+            setAppointments(res.data.data);
+            setStore(res.data.store)
+            setFitness(res.data.fitness)
         })
         .catch(function(error) {
             setLoading(false);
@@ -79,8 +83,8 @@ const AppointmentNew = (props) => {
                 disabled={(time[1] <= 0)}
                 onClick={() => handleTimeSelect(time)}
                 control={<Radio />}
-                // label= {time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"}
-                label= {time[1] + "枠" + time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"} 
+                label= {time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"}
+                // label= {time[1] + "枠" + time[2][0][0]+ "時"+ time[2][0][1] + "分" + " 〜 " + time[2][1][0] + "時" + time[2][1][1] + "分"} 
             />
         </React.Fragment>
     );
@@ -93,12 +97,14 @@ const AppointmentNew = (props) => {
         setValue(e.target.value);
     };
     function handleClick(){
-        history.push({
-            pathname: `/customer/${props.match.params.customer_id}/appointments/confirm/${props.match.params.store_id}/${props.match.params.customer_menu_id}/${props.match.params.year}/${props.match.params.month}/${props.match.params.day}`,
-            state: { 
-                store: props.location.state.store, customer_menu: props.location.state.customer_menu,
-                time_default: timeValue[0][0], time_array: timeValue[2], free_box: value,}
-        })
+        if(store && fitness){
+            history.push({
+                pathname: `/customer/${params.customer_id}/appointments/confirm/${params.store_id}/${params.customer_menu_id}/${params.year}/${params.month}/${params.day}`,
+                state: { 
+                    store: store.store_name, customer_menu: fitness.name,
+                    time_default: timeValue[0][0], time_array: timeValue[2], free_box: value,}
+            })
+        }
     }
     
     return (

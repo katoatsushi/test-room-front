@@ -100,7 +100,10 @@ export default function CreateAdminSchedule(){
     const currentAdmin = useSelector(selectCurrentAdmin);
     const today = new Date()
     const [selectedDate, setSelectedDate] = React.useState(today);
-    const company_id = currentAdmin.company_id
+    var company_id = null
+    if(currentAdmin){
+        company_id = currentAdmin.company_id
+    }
     const [dayInfo, setDayInfo] = useState({year: selectedDate.getFullYear(), month: selectedDate.getMonth() + 1, day: selectedDate.getDate()});
     const [ok, setOk] = useState(false);
     const [stores, setStores] = useState([]);
@@ -139,14 +142,18 @@ export default function CreateAdminSchedule(){
         })
     }
     useEffect(()=>{
-        const check_scedule_url = `/admin/company_id/${currentAdmin.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`
-        axios.get(check_scedule_url, adminHeaders)
-        .then(function(res) {
-            setStores(res.data.today_schedules);
-        })
-        .catch(function(error) {
-          console.log({error})
-        });
+        if(currentAdmin){
+            const check_scedule_url = `/admin/company_id/${currentAdmin.company_id}/year/${today.getFullYear()}/month/${today.getMonth() + 1}/day/${today.getDate()}`
+            axios.get(check_scedule_url, adminHeaders)
+            .then(function(res) {
+                setStores(res.data.today_schedules);
+            })
+            .catch(function(error) {
+            console.log({error})
+            });
+        }else{
+            history.push('/');
+        }
       },[selectedDate])
 
     const stores_box = stores.length ?  
@@ -268,13 +275,16 @@ export default function CreateAdminSchedule(){
                 </Grid>
             </Grid>
             </Grid>{/* <Grid item xs={12} sm={4}> */}
-            <Grid item xs={12} sm={7}>
-                <Paper style={{textAlign: 'center', padding: 20, backgroundColor: '#DDDDDD'}}>
-                    {selectedDate.getFullYear()}/{selectedDate.getMonth() + 1}/{selectedDate.getDate()}のスケジュールを確認してください
-                </Paper>
-                <ScheduleShow company_id={company_id}  day={dayInfo} scroll={true} />
-            </Grid>
-            <Grid item xs={12} sm={1} />
+            {currentAdmin? (<>
+                <Grid item xs={12} sm={7}>
+                    <Paper style={{textAlign: 'center', padding: 20, backgroundColor: '#DDDDDD'}}>
+                        {selectedDate.getFullYear()}/{selectedDate.getMonth() + 1}/{selectedDate.getDate()}のスケジュールを確認してください
+                    </Paper>
+                    <ScheduleShow company_id={company_id}  day={dayInfo} scroll={true} />
+                </Grid>
+                <Grid item xs={12} sm={1} />
+                </>):<></>
+            }
         </Grid>
         </>
     );
