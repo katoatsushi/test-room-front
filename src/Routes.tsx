@@ -182,6 +182,8 @@ const Routes: React.FC = () => {
         <Route exact path="/admin_schedule" component={ CreateAdminSchedule } />
         <Route exact path="/admin/trainer_shifts" component={ ManageTrainerShift } />
         <Route exact path="/admin/this_month/trainer_shift" component={ ThisMonthTrainerShift } />
+        {/* 以下試験版 */}
+        <Route exact path="/admin/trainer_shift/month/:month" component={ ThisMonthTrainerShift } />
         <Route exact path="/admin/store/all" component={ AdminEditStore } />
         <Route exact path="/admin/schedule/check" component={ AdminSelectDate } />
         <Route exact path="/admin/schedule/check/year/:year/month/:month/day/:day" component={ AdminScheduleCheck } />

@@ -32,7 +32,6 @@ const useStyles = makeStyles(() => ({
 
 
 export default function CreateTableCellEdit({data, setSubmitData, stores, submitData, setShiftEdit}){
-// export default function CreateTableCellEdit({data, setSubmitNewData, setSubmitData, stores, submitData, setTrainerShifts, trainerShifts, setShiftEdit}){
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [checked, setChecked] = React.useState(false);

@@ -84,7 +84,7 @@ function ShiftTableCellShow({data}){
 }
 
 // ManageTrainerShiftのnext_monthをthis_monthに変えただけ
-export default function ThisMonthTrainerShift(){
+export default function ThisMonthTrainerShift(props){
     const classes = useStyles();
     const currentAdmin = useSelector(selectCurrentAdmin);
     const url = `/get_trainer_shifts`
@@ -98,9 +98,11 @@ export default function ThisMonthTrainerShift(){
     const [submitOpen, setSubmitOpen] = React.useState(false);
     const [shiftEdit, setShiftEdit] = React.useState(false);
     const [edit, setEdit] = React.useState(false);
+    console.log({props})
+    const month = props.match.params.month
     const today = new Date()
-    // const next_month = today.getMonth() + 2
     const this_month = today.getMonth() + 1
+
     const year = today.getFullYear();
     const history = useHistory();
 
@@ -119,7 +121,7 @@ export default function ThisMonthTrainerShift(){
         axios.get(url, {
         params: {
             year: year,
-            month: this_month,
+            month: month,
             company_id: currentAdmin.company_id
         }})
         .then(function (response) {
@@ -149,7 +151,7 @@ export default function ThisMonthTrainerShift(){
             axios.get(url, {
             params: {
                 year: year,
-                month: this_month,
+                month: month,
                 company_id: currentAdmin.company_id
             }})
             .then(function (response) {
@@ -179,8 +181,8 @@ export default function ThisMonthTrainerShift(){
             <TableHead>
                     <TableRow>
                         <TableCell style={{textAlign: 'center'}}>
-                            {this_month}<br/>
-                            月(今月)
+                            {month}<br/>
+                            月
                         </TableCell>
                         {days.map((row, index) => (
                             <TableCell key={index} style={{textAlign: 'center'}} component="th" scope="row" className="cell_box">

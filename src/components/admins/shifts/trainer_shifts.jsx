@@ -131,6 +131,10 @@ export default function ManageTrainerShift(){
         })
     },[])
 
+    useEffect(()=>{
+        console.log({submitData: submitData, deleteData: deleteData})
+    },[deleteData, submitData])
+
     function submitDialogOpen(){
         setSubmitOpen(true)
     }

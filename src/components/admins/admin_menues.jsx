@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AdminMenues(){
     const classes = useStyles();
+    const today = new Date()
+    const this_month = today.getMonth() + 1
+    const next_month = today.getMonth() + 2
 
     return(
         <>
@@ -52,8 +55,9 @@ export default function AdminMenues(){
 
                 <Grid item xs={12}>
                   <Paper className={classes.paper}>
-                    <Link href="/admin/trainer_shifts" style={{textAlign: 'center'}}>
-                      トレーナーシフト管理
+                    {/* <Link href="/admin/trainer_shifts" style={{textAlign: 'center'}}> */}
+                    <Link href={`/admin/trainer_shift/month/${next_month}`} style={{textAlign: 'center'}}>
+                      【来月】トレーナーシフト管理
                     </Link><br/>
                       来月のトレーナーのシフトを管理する
                   </Paper>
@@ -61,7 +65,8 @@ export default function AdminMenues(){
 
                 <Grid item xs={12}>
                   <Paper className={classes.paper}>
-                    <Link href="/admin/this_month/trainer_shift" style={{textAlign: 'center'}}>
+                    {/* <Link href="/admin/this_month/trainer_shift" style={{textAlign: 'center'}}> */}
+                    <Link href={`/admin/trainer_shift/month/${this_month}`} style={{textAlign: 'center'}}>
                       【当月】トレーナーシフト確認
                     </Link><br/>
                       今月のトレーナーのシフトを管理する

@@ -76,7 +76,6 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
         setStart(setDate(data.shifts.start))
         setFinish(setDate(data.shifts.finish))
         setInputCheck({start: true, finish: true, store: inputCheck.store})
-        //data.shifts.store
         if(data){
             if(data.shifts){
                 if(data.shifts.store){
@@ -94,7 +93,7 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
             const deletedDatas = submitData.filter((submitd) => {
                 return submitd.shifts.id == data.shifts.id
             });
-            // console.log({最初のデータか確認: deletedDatas, submitData: submitData, data: data})
+            console.log({最初のデータか確認: deletedDatas, submitData: submitData, data: data})
             if (data.shifts.id && deletedDatas.length){
                 setShiftEdit(true)
                 setDeleteData((prev) => ([...prev, data.shifts.id]))
@@ -142,8 +141,10 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
         // ここをfilterにすると上手く行かなかった
         const updateShiftData = submitData.map((sd) => {
             if(sd.day == data.day && sd.trainer_id == data.trainer_id){
+                console.log({new_data_for_submit: new_data_for_submit})
                 return new_data_for_submit
             }else{
+                console.log({sd: sd})
                 return sd
             }
         });
@@ -274,23 +275,11 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
                         </Select>
                     </FormControl><br/>
 
-                    {/* <FormControl variant="outlined" style={{ width: '90%',textAlign: 'left',backgroundColor: 'white', marginBottom: 20}} className="select_style">
-                        <InputLabel id="demo-store-select-outlined-label" >店舗を選んでください。</InputLabel>
-                        <NativeSelect
-                            onChange={ handleStoreChange }
-                            defaultValue={ data.shifts.store }
-                        >
-                            { option_select_store }
-                        </NativeSelect>
-                    </FormControl><br/> */}
-
-
                     <br/>
                     <TextField
                         id="time"
                         label="開始時刻"
                         type="time"
-                        // defaultValue="07:30"
                         value={start}
                         className={classes.textField}
                         onChange={handleStartChange}
@@ -306,7 +295,6 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
                         id="time"
                         label="終了時刻"
                         type="time"
-                        // defaultValue="07:30"
                         value={finish}
                         onChange={handleFinishChange}
                         className={classes.textField}
@@ -323,7 +311,12 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
                     キャンセル
                 </Button>
 
-                {
+                <Button onClick={handleSubmitDataChange} variant="contained" color="primary" 
+                    disabled={!(inputCheck.start && inputCheck.finish && inputCheck.store)} >
+                    シフト追加
+                </Button>
+
+                {/* {
                     (() => {
                         if (inputCheck.start && inputCheck.finish && inputCheck.store)
                             return (
@@ -338,7 +331,7 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
                             </Button>
                         )
                     })()
-                }
+                } */}
                 </DialogActions>
             </Dialog>
         </>): (<>
