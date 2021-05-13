@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import axios, { AxiosError } from 'axios';
@@ -27,8 +26,6 @@ import Paper from '@material-ui/core/Paper';
 import errorMessages from '../../../constants/errorMessages.json';
 import { useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { selectCurrentCustomer, selectCustomerHeaders, customerRemove } from '../../../slices/customer';
 import { selectCurrentTrainer, selectTrainerHeaders, trainerRemove, } from '../../../slices/trainer';
 import { selectCurrentAdmin, selectAdminHeaders, adminRemove, } from '../../../slices/admin';
 import { selectCurrentMasterAdmin, selectMasterAdminHeaders, masterAdminRemove, } from '../../../slices/master_admin'

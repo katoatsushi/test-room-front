@@ -19,7 +19,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CreateTableCellEdit from './create_shifts'
 import ShiftTableCellEdit from './update_shifts.jsx'
-import { useHistory } from 'react-router-dom';
+import ReactVirtualizedTable from './sample'
 
 const useStyles = makeStyles(() => ({
   table: {
@@ -30,7 +30,6 @@ const useStyles = makeStyles(() => ({
     flexWrap: 'wrap',
   },
   textField: {
-    // width: 200,
     marginLeft: 10,
     marginRight: 10
   },
@@ -93,23 +92,14 @@ export default function ThisMonthTrainerShift(props){
     const [deleteData, setDeleteData] = useState([]);
     const [stores, setStores] = useState([]);
     const [days, setDays] = useState([]);
-    // eslint-disable-next-line no-unused-vars
-    const [checked, setChecked] = React.useState(false);
     const [submitOpen, setSubmitOpen] = React.useState(false);
     const [shiftEdit, setShiftEdit] = React.useState(false);
     const [edit, setEdit] = React.useState(false);
-    console.log({props})
     const month = props.match.params.month
     const today = new Date()
-    const this_month = today.getMonth() + 1
-
     const year = today.getFullYear();
-    const history = useHistory();
 
     // eslint-disable-next-line no-unused-vars
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-    };
     function handleSubmitButtonChange(){
         setEdit(true);
     }
@@ -174,8 +164,14 @@ export default function ThisMonthTrainerShift(props){
         setSubmitOpen(false)
     }
 
+    useEffect(()=>{
+        console.log({submitData: submitData, deleteData: deleteData})
+    },[deleteData, submitData])
+
     return(
         <>
+
+        {/* <ReactVirtualizedTable/> */}
         <TableContainer component={Paper}>
         <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
@@ -209,7 +205,6 @@ export default function ThisMonthTrainerShift(props){
                     
                     {row.data.map((r) => (
                         <>
-                            {/* {r.shifts.length?( */}
                             {r.shifts?(
                                 <>
                                 {edit? (<>
@@ -241,7 +236,6 @@ export default function ThisMonthTrainerShift(props){
                                     className={classes.textField}
                                     InputLabelProps={{shrink: true,}}
                                     inputProps={{step: 300, }}
-                                    // style={{display: 'inline-block', display: 'inline', color: 'blue'}}
                                     style={{display: 'inline-block',color: 'blue'}}
                                 /><hr/>
                                 <InputBase
@@ -251,7 +245,6 @@ export default function ThisMonthTrainerShift(props){
                                     className={classes.textField}
                                     InputLabelProps={{shrink: true,}}
                                     inputProps={{step: 300, }}
-                                    // style={{display: 'inline-block', display: 'inline', color: 'blue'}}
                                     style={{display: 'inline-block',color: 'blue'}}
                                 />
                                 </TableCell>

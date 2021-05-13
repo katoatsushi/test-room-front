@@ -20,8 +20,24 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import CreateTableCellEdit from './create_shifts'
 import ShiftTableCellEdit from './update_shifts.jsx'
 import { useHistory } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const useStyles = makeStyles(() => ({
+// const useStyles = makeStyles(() => ({
+//   table: {
+//     minWidth: 650
+//   },
+//   container: {
+//     display: 'flex',
+//     flexWrap: 'wrap',
+//   },
+//   textField: {
+//     // width: 200,
+//     marginLeft: 10,
+//     marginRight: 10
+//   },
+// }));
+
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650
   },
@@ -33,6 +49,46 @@ const useStyles = makeStyles(() => ({
     // width: 200,
     marginLeft: 10,
     marginRight: 10
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  // ロード
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: '#4DA7F0',
+    '&:hover': {
+      backgroundColor: '#4DA7F0',
+    },
+  },
+  buttonProgress: {
+    color: '#4DA7F0',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   },
 }));
 
@@ -101,6 +157,9 @@ export default function ManageTrainerShift(){
     const next_month = today.getMonth() + 2
     const year = today.getFullYear();
     const history = useHistory();
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const [dataSubmited, setDataSubmited] = React.useState(false);
 
     // eslint-disable-next-line no-unused-vars
     const handleChange = (event) => {
@@ -135,6 +194,11 @@ export default function ManageTrainerShift(){
         console.log({submitData: submitData, deleteData: deleteData})
     },[deleteData, submitData])
 
+    useEffect(()=>{
+        console.log("再レンダリング")
+    },[dataSubmited])
+
+
     function submitDialogOpen(){
         setSubmitOpen(true)
     }
@@ -142,36 +206,61 @@ export default function ManageTrainerShift(){
         setSubmitOpen(false)
     }
     function handleSubmit(){
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+        }
         const submit_url = `/update_trainer_shift`
         axios.put(submit_url, {
             data: submitData,
             delete: deleteData
         })
         .then(function (response) {
-            axios.get(url, {
-            params: {
-                year: year,
-                month: next_month,
-                company_id: currentAdmin.company_id
-            }})
-            .then(function (response) {
-                setTrainerShifts(response.data.data)
-                setDays(response.data.date_infos)
-                setSubmitData(response.data.submit_data)
-                setStores(response.data.stores)
-                // ダイアログ、ボタンを元に戻す
-                setEdit(false)
-                setShiftEdit(false)
-            })
-            .catch(function (response) {
-                console.log("error", {response})
-            })
+            // ダイアログ、ボタンを元に戻す
+            setEdit(false)
+            setShiftEdit(false)
+            // ダイアログを閉じる
+            setSuccess(true);
+            setLoading(false);
+            setSubmitOpen(false)
+
+            setDataSubmited(!dataSubmited)
+            // 更新成功
+            // axios.get(url, {
+            // params: {
+            //     year: year,
+            //     month: next_month,
+            //     company_id: currentAdmin.company_id
+            // }})
+            // .then(function (response) {
+            //     setTrainerShifts(response.data.data)
+            //     setDays(response.data.date_infos)
+            //     setSubmitData(response.data.submit_data)
+            //     setStores(response.data.stores)
+            //     // ダイアログ、ボタンを元に戻す
+            //     setEdit(false)
+            //     setShiftEdit(false)
+            //     // ダイアログを閉じる
+            //     setSuccess(true);
+            //     setLoading(false);
+            //     setSubmitOpen(false)
+            // })
+            // .catch(function (response) {
+            //     console.log("error", {response})
+            //     // ダイアログを閉じる
+            //     setSuccess(true);
+            //     setLoading(false);
+            //     setSubmitOpen(false)
+            // })
         })
         .catch(function (response) {
+            // 更新失敗
             console.log("error", {response})
+            // ダイアログを閉じる
+            setSuccess(true);
+            setLoading(false);
+            setSubmitOpen(false)
         })
-        // ダイアログを閉じる
-        setSubmitOpen(false)
     }
 
     return(
@@ -292,9 +381,12 @@ export default function ManageTrainerShift(){
             <Button onClick={handleClose} variant="contained">
                 キャンセル
             </Button>
-            <Button onClick={handleSubmit} variant="contained" color="secondary">
-                変更を送信
-            </Button>
+            <div className={classes.wrapper}>
+                <Button onClick={handleSubmit} disabled={loading || success} variant="contained" color="secondary">
+                    変更を送信
+                </Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+            </div>
             </DialogActions>
         </Dialog>
         </>

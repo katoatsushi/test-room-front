@@ -185,6 +185,7 @@ export default function ShiftTableCellEdit({data, stores, setSubmitData, submitD
         const newDate = `${hour}:` + `${min}`
         return newDate
     }
+    data.shifts.weekend
 
     return(<>
         {checked? (<>
