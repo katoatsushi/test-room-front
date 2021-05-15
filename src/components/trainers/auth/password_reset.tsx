@@ -66,7 +66,7 @@ export default function TrainerPasswordReset() {
         redirect_url = 'http://localhost:3001/trainer/password/'
         break;
     case 'production':
-        redirect_url = 'https://room-backend-sample.herokuapp.com/'
+        redirect_url = 'https://test-room-app.herokuapp.com/'
         break;
     default:
         redirect_url  = 'http://localhost:3001/trainer/password/';

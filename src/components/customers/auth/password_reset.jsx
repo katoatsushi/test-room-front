@@ -67,7 +67,7 @@ export default function CustomerPasswordReset() {
         redirect_url = 'http://localhost:3001/customer/password/'
         break;
     case 'production':
-        redirect_url = 'https://room-backend-sample.herokuapp.com/'
+        redirect_url = 'https://test-room-app.herokuapp.com/'
         break;
     default:
         redirect_url  = 'http://localhost:3001/customer/password/';
