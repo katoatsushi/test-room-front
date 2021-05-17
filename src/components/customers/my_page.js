@@ -396,7 +396,11 @@ export default function CustomerMyPage(props) {
           {/* <Grid item xs={2}/> */}
         </Grid>{/* <Grid container> */}
         {/* 予約中のカルテ */}
-        <CustomerHome props={props}/>
+        {currentCustomer? (<>
+          {(currentCustomer.id == props.match.params.id)? (
+              <CustomerHome props={props}/>
+          ):<></>}
+        </>):<></>}
         </Grid>{/* <Grid container> */}
         </Paper>
         <div style={{margin: 20}}/>
