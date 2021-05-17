@@ -232,9 +232,8 @@ function Header() {
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               {company? (<>
-                https://main.d3udfnrfdm3q44.amplifyapp.com/customer/sign_up/company/{company.id}     
+                  https://main.d1k6zxz720ew11.amplifyapp.com/customer/sign_up/company/{company.id}
                 <br/>
-                {/* http://localhost:3001/customer/sign_up/company/{company.id} */}
               </>):(<></>)}
             </DialogContentText>
           </DialogContent>
