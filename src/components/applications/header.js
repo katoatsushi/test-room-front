@@ -251,7 +251,8 @@ function Header() {
       <AppBar position="static" style={{backgroundColor: '#4DA7F0'}}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Link color="inherit" href="/">Room</Link>
+            Room
+            {/* <Link color="inherit" href="/">Room</Link> */}
           </Typography>
           {currentCustomer?.id ? (
             <div>
